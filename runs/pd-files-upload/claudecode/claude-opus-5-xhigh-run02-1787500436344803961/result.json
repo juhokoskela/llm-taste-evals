@@ -1,0 +1,53 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "claudecode",
+  "model": "claude-opus-5",
+  "effort": "xhigh",
+  "run_id": "claude-opus-5-xhigh-run02-1787500436344803961",
+  "started_at": "2026-08-23T15:53:57.231231878Z",
+  "duration_sec": 701.568996568,
+  "turns": 1,
+  "end_reason": "simulator_end",
+  "gates_failed": 0,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": true,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "27/87",
+    "delegates_to_add": "false",
+    "diff_shortstat": "9 files changed, 669 insertions(+), 2 deletions(-)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "9",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "internal/multipartbody/multipartbody.go pipedrive/raw.go pipedrive/raw_test.go pipedrive/retry.go",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "true"
+  },
+  "metrics": {
+    "turns": 1,
+    "tool_calls": 63,
+    "reads": 0,
+    "edits": 1,
+    "shell_commands": 45,
+    "test_runs": 17,
+    "questions_asked": 0,
+    "edited_without_read": [
+      "/agent/workspace/internal/multipartbody/multipartbody.go"
+    ]
+  },
+  "usage": {
+    "input_tokens": 6344385,
+    "cache_read_tokens": 6209199,
+    "cache_creation_tokens": 135058,
+    "output_tokens": 50057,
+    "cost_usd": 5.708533499999998
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/claudecode/claude-opus-5-xhigh-run02-1787500436344803961/workspace"
+}

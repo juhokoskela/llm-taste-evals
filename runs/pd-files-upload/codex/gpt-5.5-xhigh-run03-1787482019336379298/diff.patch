@@ -1,0 +1,339 @@
+diff --git a/pipedrive/raw.go b/pipedrive/raw.go
+index 8f667bb..ca6057b 100644
+--- a/pipedrive/raw.go
++++ b/pipedrive/raw.go
+@@ -57,10 +57,15 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
+ 	}
+ 
+ 	var reqBody io.Reader
++	var reqGetBody func() (io.ReadCloser, error)
+ 	if body != nil {
+ 		switch b := body.(type) {
+ 		case io.Reader:
+-			reqBody = b
++			var err error
++			reqBody, reqGetBody, err = prepareReaderForRequest(b)
++			if err != nil {
++				return err
++			}
+ 		default:
+ 			buf, err := json.Marshal(b)
+ 			if err != nil {
+@@ -74,6 +79,9 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
+ 	if err != nil {
+ 		return fmt.Errorf("build request: %w", err)
+ 	}
++	if reqGetBody != nil {
++		req.GetBody = reqGetBody
++	}
+ 
+ 	req.Header.Set("Accept", "application/json")
+ 	if body != nil {
+@@ -117,3 +125,53 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
+ 	}
+ 	return nil
+ }
++
++func prepareReaderForRequest(body io.Reader) (io.Reader, func() (io.ReadCloser, error), error) {
++	switch body.(type) {
++	case *bytes.Buffer, *bytes.Reader, *strings.Reader:
++		return body, nil, nil
++	}
++
++	seeker, ok := body.(io.ReadSeeker)
++	if !ok {
++		return body, nil, nil
++	}
++
++	start, err := seeker.Seek(0, io.SeekCurrent)
++	if err != nil {
++		return nil, nil, fmt.Errorf("record body position: %w", err)
++	}
++	if readerAt, ok := body.(io.ReaderAt); ok {
++		end, err := seeker.Seek(0, io.SeekEnd)
++		if err != nil {
++			return nil, nil, fmt.Errorf("measure body length: %w", err)
++		}
++		if _, err := seeker.Seek(start, io.SeekStart); err != nil {
++			return nil, nil, fmt.Errorf("restore body position: %w", err)
++		}
++		getBody := func() (io.ReadCloser, error) {
++			return io.NopCloser(io.NewSectionReader(readerAt, start, end-start)), nil
++		}
++		body, err := getBody()
++		if err != nil {
++			return nil, nil, err
++		}
++		return body, getBody, nil
++	}
++
++	getBody := func() (io.ReadCloser, error) {
++		if _, err := seeker.Seek(start, io.SeekStart); err != nil {
++			return nil, err
++		}
++		return replayableReadCloser{ReadSeeker: seeker}, nil
++	}
++	return replayableReadCloser{ReadSeeker: seeker}, getBody, nil
++}
++
++type replayableReadCloser struct {
++	io.ReadSeeker
++}
++
++func (replayableReadCloser) Close() error {
++	return nil
++}
+diff --git a/pipedrive/v1/files.go b/pipedrive/v1/files.go
+index 99c0276..e763397 100644
+--- a/pipedrive/v1/files.go
++++ b/pipedrive/v1/files.go
+@@ -8,6 +8,7 @@ import (
+ 	"net/url"
+ 	"strings"
+ 
++	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+ 
+@@ -112,7 +113,36 @@ func (s *FilesService) Get(ctx context.Context, id FileID, opts ...FilesOption)
+ 	return payload.Data, nil
+ }
+ 
+-func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType string, opts ...FilesOption) (*File, error) {
++func (s *FilesService) Add(ctx context.Context, fileNameOrBody any, contentOrContentType any, opts ...FilesOption) (*File, error) {
++	switch first := fileNameOrBody.(type) {
++	case string:
++		content, ok := contentOrContentType.(io.Reader)
++		if !ok {
++			return nil, fmt.Errorf("file content must implement io.Reader")
++		}
++		return s.AddFile(ctx, first, content, opts...)
++	case io.Reader:
++		contentType, ok := contentOrContentType.(string)
++		if !ok {
++			return nil, fmt.Errorf("content type is required")
++		}
++		return s.addRaw(ctx, first, contentType, opts...)
++	case nil:
++		return nil, fmt.Errorf("file body is required")
++	default:
++		return nil, fmt.Errorf("file name or body is required")
++	}
++}
++
++func (s *FilesService) AddFile(ctx context.Context, fileName string, content io.Reader, opts ...FilesOption) (*File, error) {
++	contentType, body, err := multipartbody.NewFile("file", fileName, content)
++	if err != nil {
++		return nil, err
++	}
++	return s.addRaw(ctx, body, contentType, opts...)
++}
++
++func (s *FilesService) addRaw(ctx context.Context, body io.Reader, contentType string, opts ...FilesOption) (*File, error) {
+ 	cfg := newFilesOptions(opts)
+ 	if body == nil {
+ 		return nil, fmt.Errorf("file body is required")
+diff --git a/pipedrive/v1/files_test.go b/pipedrive/v1/files_test.go
+index 664e1c7..04ee22d 100644
+--- a/pipedrive/v1/files_test.go
++++ b/pipedrive/v1/files_test.go
+@@ -4,8 +4,12 @@ import (
+ 	"bytes"
+ 	"context"
+ 	"errors"
++	"io"
++	"mime"
+ 	"net/http"
+ 	"net/url"
++	"os"
++	"path/filepath"
+ 	"strings"
+ 	"testing"
+ 
+@@ -103,6 +107,186 @@ func TestFilesService_Add(t *testing.T) {
+ 	}
+ }
+ 
++func TestFilesService_Add_BuildsMultipartFromFileNameAndReader(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/files" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		if got := r.Header.Get("X-Test"); got != "upload" {
++			t.Fatalf("unexpected X-Test header: %q", got)
++		}
++		mediaType, params, err := mime.ParseMediaType(r.Header.Get("Content-Type"))
++		if err != nil {
++			t.Fatalf("parse content type: %v", err)
++		}
++		if mediaType != "multipart/form-data" || params["boundary"] == "" {
++			t.Fatalf("unexpected content type: %q", r.Header.Get("Content-Type"))
++		}
++
++		part, err := r.MultipartReader()
++		if err != nil {
++			t.Fatalf("multipart reader: %v", err)
++		}
++		filePart, err := part.NextPart()
++		if err != nil {
++			t.Fatalf("multipart part: %v", err)
++		}
++		if filePart.FormName() != "file" {
++			t.Fatalf("unexpected form field: %q", filePart.FormName())
++		}
++		if filePart.FileName() != "contract.pdf" {
++			t.Fatalf("unexpected file name: %q", filePart.FileName())
++		}
++		content, err := io.ReadAll(filePart)
++		if err != nil {
++			t.Fatalf("read multipart part: %v", err)
++		}
++		if string(content) != "file-content" {
++			t.Fatalf("unexpected file content: %q", string(content))
++		}
++
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":13,"name":"contract.pdf"}}`))
++	})
++
++	file, err := client.Files.Add(
++		context.Background(),
++		"contract.pdf",
++		strings.NewReader("file-content"),
++		WithFilesRequestOptions(pipedrive.WithHeader("X-Test", "upload")),
++	)
++	if err != nil {
++		t.Fatalf("Add error: %v", err)
++	}
++	if file.ID != 13 || file.Name != "contract.pdf" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
++func TestFilesService_Add_RetriesMultipartUploadAfterRateLimit(t *testing.T) {
++	t.Parallel()
++
++	path := filepath.Join(t.TempDir(), "bulk.pdf")
++	if err := os.WriteFile(path, []byte("bulk-file"), 0o600); err != nil {
++		t.Fatalf("write temp file: %v", err)
++	}
++	f, err := os.Open(path)
++	if err != nil {
++		t.Fatalf("open temp file: %v", err)
++	}
++	defer f.Close()
++
++	var calls int
++	client := newTestClientWithConfig(t, pipedrive.Config{
++		RetryPolicy: &pipedrive.RetryPolicy{
++			MaxAttempts:     2,
++			BaseDelay:       0,
++			RetryAllMethods: true,
++		},
++	}, func(w http.ResponseWriter, r *http.Request) {
++		calls++
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/files" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		reader, err := r.MultipartReader()
++		if err != nil {
++			t.Fatalf("multipart reader: %v", err)
++		}
++		part, err := reader.NextPart()
++		if err != nil {
++			t.Fatalf("multipart part: %v", err)
++		}
++		if part.FileName() != "bulk.pdf" {
++			t.Fatalf("unexpected file name: %q", part.FileName())
++		}
++		content, err := io.ReadAll(part)
++		if err != nil {
++			t.Fatalf("read multipart part: %v", err)
++		}
++		if string(content) != "bulk-file" {
++			t.Fatalf("unexpected body on attempt %d: %q", calls, string(content))
++		}
++
++		w.Header().Set("Content-Type", "application/json")
++		if calls == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			_, _ = w.Write([]byte(`{"success":false}`))
++			return
++		}
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":14,"name":"bulk.pdf"}}`))
++	})
++
++	file, err := client.Files.Add(context.Background(), "bulk.pdf", f)
++	if err != nil {
++		t.Fatalf("Add error: %v", err)
++	}
++	if calls != 2 {
++		t.Fatalf("expected 2 calls, got %d", calls)
++	}
++	if file.ID != 14 || file.Name != "bulk.pdf" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
++func TestFilesService_Add_RetriesReplayableRawBodyAfterRateLimit(t *testing.T) {
++	t.Parallel()
++
++	path := filepath.Join(t.TempDir(), "raw-body.txt")
++	if err := os.WriteFile(path, []byte("raw-file"), 0o600); err != nil {
++		t.Fatalf("write temp file: %v", err)
++	}
++	f, err := os.Open(path)
++	if err != nil {
++		t.Fatalf("open temp file: %v", err)
++	}
++	defer f.Close()
++
++	var calls int
++	client := newTestClientWithConfig(t, pipedrive.Config{
++		RetryPolicy: &pipedrive.RetryPolicy{
++			MaxAttempts:     2,
++			BaseDelay:       0,
++			RetryAllMethods: true,
++		},
++	}, func(w http.ResponseWriter, r *http.Request) {
++		calls++
++		body, err := io.ReadAll(r.Body)
++		if err != nil {
++			t.Fatalf("read body: %v", err)
++		}
++		if string(body) != "raw-file" {
++			t.Fatalf("unexpected body on attempt %d: %q", calls, string(body))
++		}
++
++		w.Header().Set("Content-Type", "application/json")
++		if calls == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			_, _ = w.Write([]byte(`{"success":false}`))
++			return
++		}
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":15,"name":"raw-body.txt"}}`))
++	})
++
++	file, err := client.Files.Add(context.Background(), f, "text/plain")
++	if err != nil {
++		t.Fatalf("Add error: %v", err)
++	}
++	if calls != 2 {
++		t.Fatalf("expected 2 calls, got %d", calls)
++	}
++	if file.ID != 15 || file.Name != "raw-body.txt" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
+ func TestFilesService_AddRemoteFile(t *testing.T) {
+ 	t.Parallel()
+ 

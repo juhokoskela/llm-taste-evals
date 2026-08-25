@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"01a03064-9cb9-72b1-8ab5-98716590d970"}
+{"type":"turn.started"}
+{"type":"error","message":"Invalid prompt: your prompt was flagged as potentially violating our usage policy. Please try again with a different prompt: https://platform.openai.com/docs/guides/reasoning#advice-on-prompting"}
+{"type":"turn.failed","error":{"message":"Invalid prompt: your prompt was flagged as potentially violating our usage policy. Please try again with a different prompt: https://platform.openai.com/docs/guides/reasoning#advice-on-prompting"}}

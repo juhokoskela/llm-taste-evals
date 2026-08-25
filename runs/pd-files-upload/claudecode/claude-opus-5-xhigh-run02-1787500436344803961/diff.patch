@@ -1,0 +1,853 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index ea1a1a0..e4a62d5 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -7,6 +7,37 @@ Semantic Versioning.
+ 
+ ## [Unreleased]
+ 
++### Added
++
++- Add `v1.FilesService.Upload`, which uploads a file from a name and an
++  `io.Reader` and encodes the `multipart/form-data` body itself, mirroring
++  `CallLogs.AddRecording`. Associate the upload with a record through
++  `WithFileDealID`, `WithFilePersonID`, `WithFileOrganizationID`,
++  `WithFileProductID`, `WithFileActivityID`, `WithFileLeadID`, or set any
++  other form field with `WithFileFormValue`. `Files.Add` still takes a
++  pre-encoded body.
++
++### Fixed
++
++- Retry request bodies supplied as an `io.Reader` that can seek, such as the
++  `*os.File` returned by `os.Open`. `http.NewRequest` only derives `GetBody`
++  for `*bytes.Reader`, `*bytes.Buffer` and `*strings.Reader`, so the retry
++  transport treated every other reader as unreplayable and file uploads
++  through `Files.Add`, `Files.Update` and `Persons.AddPicture` failed on the
++  first 429 or 5xx while other calls retried. Such a body is now rewound and
++  resent, and it is no longer closed by the transport, so the caller keeps
++  ownership of the reader it passed in. A reader that cannot seek is still
++  sent exactly once, because the SDK does not buffer arbitrary streams.
++
++### Changed
++
++- `WithFilesQuery` and `WithFilesRequestOptions` now return
++  `v1.FilesRequestOption`, which also satisfies the new
++  `v1.UploadFileOption`, so they can be passed to `Files.Upload`. They
++  remain usable everywhere `v1.FilesOption` is accepted.
++- Document that `RetryPolicy.MaxAttempts` counts the first attempt and that
++  a zero value disables retries.
++
+ ## [1.11.0] - 2026-08-18
+ 
+ ### Added
+diff --git a/README.md b/README.md
+index 04473fb..18131ae 100644
+--- a/README.md
++++ b/README.md
+@@ -176,6 +176,35 @@ deal, err := client.Deals.Get(
+ )
+ ```
+ 
++`MaxAttempts` counts the first attempt, so `MaxAttempts: 4` allows three
++retries and `MaxAttempts: 1` disables them. Start from
++`DefaultRetryPolicy()` when you only want to change one field: a bare
++`pipedrive.RetryPolicy{RetryAllMethods: true}` leaves `MaxAttempts` at zero
++and turns retries off.
++
++A retry has to resend the request body. Bodies the SDK encodes itself are
++always replayable, and so is a body you pass as an `io.Reader` that can also
++seek, such as an `*os.File` from `os.Open`: it is rewound and resent, and the
++SDK leaves it open for you to close. A reader that cannot seek is sent once
++and is never retried, because the SDK will not buffer an arbitrary stream.
++For v1 file uploads, `Files.Upload` encodes the multipart body for you, which
++keeps it replayable whatever the source reader is:
++
++```go
++f, err := os.Open("invoice.pdf")
++if err != nil {
++	log.Fatal(err)
++}
++defer f.Close()
++
++file, err := v1Client.Files.Upload(
++	ctx,
++	"invoice.pdf",
++	f,
++	v1.WithFileDealID(v1.DealID(123)),
++)
++```
++
+ Response bodies are capped at 64 MiB by default. Override globally with
+ `Config.MaxResponseSize`, per request with `WithResponseSizeLimit` or
+ `WithNoResponseSizeLimit`, and use `client.Files.DownloadTo` to stream large
+diff --git a/internal/multipartbody/multipartbody.go b/internal/multipartbody/multipartbody.go
+index 3e17f13..7bdba3e 100644
+--- a/internal/multipartbody/multipartbody.go
++++ b/internal/multipartbody/multipartbody.go
+@@ -5,6 +5,8 @@ import (
+ 	"fmt"
+ 	"io"
+ 	"mime/multipart"
++	"net/url"
++	"sort"
+ )
+ 
+ // NewFile encodes src as a multipart/form-data body with a single file part.
+@@ -14,6 +16,14 @@ import (
+ // the resulting request automatically gets a working GetBody, which
+ // makes retries (e.g. on 429 / 5xx) safe without any extra wiring.
+ func NewFile(fieldName, fileName string, src io.Reader) (string, *bytes.Reader, error) {
++	return NewFileWithFields(fieldName, fileName, src, nil)
++}
++
++// NewFileWithFields encodes src as a multipart/form-data body with a single
++// file part preceded by the given form fields, which are written in sorted
++// key order so the same input always produces the same body. It shares the
++// replayability guarantees of NewFile.
++func NewFileWithFields(fieldName, fileName string, src io.Reader, fields url.Values) (string, *bytes.Reader, error) {
+ 	if fieldName == "" {
+ 		return "", nil, fmt.Errorf("multipart field name is required")
+ 	}
+@@ -27,6 +37,19 @@ func NewFile(fieldName, fileName string, src io.Reader) (string, *bytes.Reader,
+ 	var buf bytes.Buffer
+ 	writer := multipart.NewWriter(&buf)
+ 
++	keys := make([]string, 0, len(fields))
++	for key := range fields {
++		keys = append(keys, key)
++	}
++	sort.Strings(keys)
++	for _, key := range keys {
++		for _, value := range fields[key] {
++			if err := writer.WriteField(key, value); err != nil {
++				return "", nil, fmt.Errorf("write multipart field %s: %w", key, err)
++			}
++		}
++	}
++
+ 	part, err := writer.CreateFormFile(fieldName, fileName)
+ 	if err != nil {
+ 		return "", nil, fmt.Errorf("create multipart file: %w", err)
+diff --git a/pipedrive/raw.go b/pipedrive/raw.go
+index 8f667bb..96f76dc 100644
+--- a/pipedrive/raw.go
++++ b/pipedrive/raw.go
+@@ -37,6 +37,14 @@ func NewRawClient(baseURL string, httpClient *http.Client) (*RawClient, error) {
+ 	}, nil
+ }
+ 
++// Do sends a request to path and decodes a JSON response into out.
++//
++// A body that is not an io.Reader is encoded as JSON. An io.Reader body is
++// sent as-is and, when it also implements io.Seeker (an *os.File, for
++// example), it is rewound and resent if the retry policy retries the
++// request; the reader is then not closed, because the caller still owns it.
++// A reader that cannot seek is sent exactly once and never retried, since
++// the SDK will not buffer an arbitrary stream to make it replayable.
+ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Values, body any, out any, opts ...RequestOption) error {
+ 	if c == nil {
+ 		return errors.New("nil RawClient")
+@@ -74,6 +82,7 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
+ 	if err != nil {
+ 		return fmt.Errorf("build request: %w", err)
+ 	}
++	makeBodyReplayable(req, reqBody)
+ 
+ 	req.Header.Set("Accept", "application/json")
+ 	if body != nil {
+@@ -117,3 +126,40 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
+ 	}
+ 	return nil
+ }
++
++// makeBodyReplayable lets the retry transport resend a caller-supplied
++// reader body. http.NewRequest only populates GetBody for *bytes.Reader,
++// *bytes.Buffer and *strings.Reader, so a body such as the *os.File behind
++// os.Open arrives without one and the retry transport has to treat the
++// request as unreplayable: file uploads fail on the first 429 while every
++// other call retries.
++//
++// A reader that can seek needs no buffering, because rewinding to the
++// offset the body started at reproduces it byte for byte. Such a body is
++// also wrapped so the transport cannot close it: a closed reader cannot be
++// rewound for the next attempt, and the caller owns the reader it passed
++// in. A reader that cannot seek is streamed exactly once, as before.
++func makeBodyReplayable(req *http.Request, body io.Reader) {
++	if body == nil || req.Body == nil || req.GetBody != nil {
++		return
++	}
++	seeker, ok := body.(io.Seeker)
++	if !ok {
++		return
++	}
++	start, err := seeker.Seek(0, io.SeekCurrent)
++	if err != nil {
++		// Implementing io.Seeker does not guarantee a seekable stream;
++		// an *os.File over a pipe is one example. Keep streaming the
++		// body once instead of failing a request that would succeed.
++		return
++	}
++
++	req.Body = io.NopCloser(body)
++	req.GetBody = func() (io.ReadCloser, error) {
++		if _, err := seeker.Seek(start, io.SeekStart); err != nil {
++			return nil, fmt.Errorf("rewind request body: %w", err)
++		}
++		return io.NopCloser(body), nil
++	}
++}
+diff --git a/pipedrive/raw_test.go b/pipedrive/raw_test.go
+index 0d7a508..7f639bb 100644
+--- a/pipedrive/raw_test.go
++++ b/pipedrive/raw_test.go
+@@ -4,9 +4,14 @@ import (
+ 	"context"
+ 	"encoding/json"
+ 	"errors"
++	"io"
+ 	"net/http"
+ 	"net/http/httptest"
+ 	"net/url"
++	"os"
++	"path/filepath"
++	"strings"
++	"sync"
+ 	"testing"
+ 	"time"
+ )
+@@ -294,3 +299,152 @@ func TestRawClient_Do_SendsQueryAndJSONBody(t *testing.T) {
+ 		t.Fatalf("expected ok")
+ 	}
+ }
++
++func TestRawClient_Do_RetriesSeekableReaderBody(t *testing.T) {
++	t.Parallel()
++
++	var mu sync.Mutex
++	var bodies []string
++	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++		body, err := io.ReadAll(r.Body)
++		if err != nil {
++			t.Errorf("read request body: %v", err)
++			return
++		}
++		mu.Lock()
++		bodies = append(bodies, string(body))
++		attempt := len(bodies)
++		mu.Unlock()
++
++		if attempt == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			_, _ = w.Write([]byte(`{"message":"rate limited"}`))
++			return
++		}
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"ok":true}`))
++	}))
++	t.Cleanup(srv.Close)
++
++	httpClient := NewHTTPClient(Config{
++		HTTPClient:  srv.Client(),
++		RetryPolicy: &RetryPolicy{MaxAttempts: 2},
++	})
++
++	raw, err := NewRawClient(srv.URL, httpClient)
++	if err != nil {
++		t.Fatalf("NewRawClient error: %v", err)
++	}
++
++	file := tempFileWithContent(t, "upload payload")
++
++	var out struct {
++		Ok bool `json:"ok"`
++	}
++	if err := raw.Do(context.Background(), http.MethodPost, "/files", nil, file, &out); err != nil {
++		t.Fatalf("Do error: %v", err)
++	}
++	if !out.Ok {
++		t.Fatalf("expected ok=true")
++	}
++
++	mu.Lock()
++	defer mu.Unlock()
++	if len(bodies) != 2 {
++		t.Fatalf("expected 2 attempts, got %d", len(bodies))
++	}
++	for i, body := range bodies {
++		if body != "upload payload" {
++			t.Fatalf("attempt %d sent %q, want %q", i+1, body, "upload payload")
++		}
++	}
++}
++
++func TestRawClient_Do_DoesNotCloseSeekableReaderBody(t *testing.T) {
++	t.Parallel()
++
++	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++		_, _ = io.Copy(io.Discard, r.Body)
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"ok":true}`))
++	}))
++	t.Cleanup(srv.Close)
++
++	raw, err := NewRawClient(srv.URL, srv.Client())
++	if err != nil {
++		t.Fatalf("NewRawClient error: %v", err)
++	}
++
++	file := tempFileWithContent(t, "payload")
++	if err := raw.Do(context.Background(), http.MethodPost, "/files", nil, file, nil); err != nil {
++		t.Fatalf("Do error: %v", err)
++	}
++
++	// The caller owns the reader: it must still be usable (and closable)
++	// after the request, so a retry can rewind it.
++	if _, err := file.Seek(0, io.SeekStart); err != nil {
++		t.Fatalf("seek after request: %v", err)
++	}
++	if err := file.Close(); err != nil {
++		t.Fatalf("close after request: %v", err)
++	}
++}
++
++func TestRawClient_Do_StreamsNonSeekableReaderBodyOnce(t *testing.T) {
++	t.Parallel()
++
++	var mu sync.Mutex
++	var bodies []string
++	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++		body, err := io.ReadAll(r.Body)
++		if err != nil {
++			t.Errorf("read request body: %v", err)
++			return
++		}
++		mu.Lock()
++		bodies = append(bodies, string(body))
++		mu.Unlock()
++
++		w.WriteHeader(http.StatusTooManyRequests)
++		_, _ = w.Write([]byte(`{"message":"rate limited"}`))
++	}))
++	t.Cleanup(srv.Close)
++
++	httpClient := NewHTTPClient(Config{
++		HTTPClient:  srv.Client(),
++		RetryPolicy: &RetryPolicy{MaxAttempts: 3},
++	})
++
++	raw, err := NewRawClient(srv.URL, httpClient)
++	if err != nil {
++		t.Fatalf("NewRawClient error: %v", err)
++	}
++
++	body := struct{ io.Reader }{strings.NewReader("stream")}
++	err = raw.Do(context.Background(), http.MethodPost, "/files", nil, body, nil)
++	var rlErr *RateLimitError
++	if !errors.As(err, &rlErr) {
++		t.Fatalf("expected RateLimitError, got %T (%v)", err, err)
++	}
++
++	mu.Lock()
++	defer mu.Unlock()
++	if len(bodies) != 1 {
++		t.Fatalf("expected 1 attempt for an unreplayable body, got %d", len(bodies))
++	}
++}
++
++func tempFileWithContent(t *testing.T, content string) *os.File {
++	t.Helper()
++
++	path := filepath.Join(t.TempDir(), "upload.txt")
++	if err := os.WriteFile(path, []byte(content), 0o600); err != nil {
++		t.Fatalf("write temp file: %v", err)
++	}
++	file, err := os.Open(path)
++	if err != nil {
++		t.Fatalf("open temp file: %v", err)
++	}
++	t.Cleanup(func() { _ = file.Close() })
++	return file
++}
+diff --git a/pipedrive/retry.go b/pipedrive/retry.go
+index 3da8343..e962e49 100644
+--- a/pipedrive/retry.go
++++ b/pipedrive/retry.go
+@@ -11,6 +11,10 @@ import (
+ )
+ 
+ type RetryPolicy struct {
++	// MaxAttempts is the total number of attempts per request, the first
++	// one included, so 4 allows 3 retries. Zero or one disables retries;
++	// start from DefaultRetryPolicy() when you only want to adjust a
++	// single field.
+ 	MaxAttempts int
+ 	BaseDelay   time.Duration
+ 	MaxDelay    time.Duration
+diff --git a/pipedrive/v1/files.go b/pipedrive/v1/files.go
+index 99c0276..a7b5ef6 100644
+--- a/pipedrive/v1/files.go
++++ b/pipedrive/v1/files.go
+@@ -6,8 +6,10 @@ import (
+ 	"io"
+ 	"net/http"
+ 	"net/url"
++	"strconv"
+ 	"strings"
+ 
++	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+ 
+@@ -40,29 +42,100 @@ type FilesOption interface {
+ 	applyFiles(*filesOptions)
+ }
+ 
++// UploadFileOption configures FilesService.Upload. Options that apply to
++// every Files call satisfy FilesRequestOption and can be passed here too.
++type UploadFileOption interface {
++	applyUploadFile(*uploadFileOptions)
++}
++
++// FilesRequestOption is accepted by every Files call, Upload included.
++type FilesRequestOption interface {
++	FilesOption
++	UploadFileOption
++}
++
+ type filesOptions struct {
+ 	query          url.Values
+ 	requestOptions []pipedrive.RequestOption
+ }
+ 
++type uploadFileOptions struct {
++	filesOptions
++	form url.Values
++}
++
+ type filesOptionFunc func(*filesOptions)
+ 
+ func (f filesOptionFunc) applyFiles(cfg *filesOptions) {
+ 	f(cfg)
+ }
+ 
+-func WithFilesQuery(values url.Values) FilesOption {
++func (f filesOptionFunc) applyUploadFile(cfg *uploadFileOptions) {
++	f(&cfg.filesOptions)
++}
++
++type uploadFileOptionFunc func(*uploadFileOptions)
++
++func (f uploadFileOptionFunc) applyUploadFile(cfg *uploadFileOptions) {
++	f(cfg)
++}
++
++func WithFilesQuery(values url.Values) FilesRequestOption {
+ 	return filesOptionFunc(func(cfg *filesOptions) {
+ 		cfg.query = mergeQueryValues(cfg.query, values)
+ 	})
+ }
+ 
+-func WithFilesRequestOptions(opts ...pipedrive.RequestOption) FilesOption {
++func WithFilesRequestOptions(opts ...pipedrive.RequestOption) FilesRequestOption {
+ 	return filesOptionFunc(func(cfg *filesOptions) {
+ 		cfg.requestOptions = append(cfg.requestOptions, opts...)
+ 	})
+ }
+ 
++// WithFileFormValue sets a raw multipart form field on an upload, for
++// fields the typed options do not cover yet.
++func WithFileFormValue(key, value string) UploadFileOption {
++	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
++		if key == "" {
++			return
++		}
++		if cfg.form == nil {
++			cfg.form = url.Values{}
++		}
++		cfg.form.Set(key, value)
++	})
++}
++
++// WithFileDealID associates the uploaded file with a deal.
++func WithFileDealID(id DealID) UploadFileOption {
++	return WithFileFormValue("deal_id", strconv.FormatInt(int64(id), 10))
++}
++
++// WithFilePersonID associates the uploaded file with a person.
++func WithFilePersonID(id PersonID) UploadFileOption {
++	return WithFileFormValue("person_id", strconv.FormatInt(int64(id), 10))
++}
++
++// WithFileOrganizationID associates the uploaded file with an organization.
++func WithFileOrganizationID(id OrganizationID) UploadFileOption {
++	return WithFileFormValue("org_id", strconv.FormatInt(int64(id), 10))
++}
++
++// WithFileProductID associates the uploaded file with a product.
++func WithFileProductID(id ProductID) UploadFileOption {
++	return WithFileFormValue("product_id", strconv.FormatInt(int64(id), 10))
++}
++
++// WithFileActivityID associates the uploaded file with an activity.
++func WithFileActivityID(id ActivityID) UploadFileOption {
++	return WithFileFormValue("activity_id", strconv.FormatInt(int64(id), 10))
++}
++
++// WithFileLeadID associates the uploaded file with a lead.
++func WithFileLeadID(id LeadID) UploadFileOption {
++	return WithFileFormValue("lead_id", string(id))
++}
++
+ func newFilesOptions(opts []FilesOption) filesOptions {
+ 	var cfg filesOptions
+ 	for _, opt := range opts {
+@@ -74,6 +147,17 @@ func newFilesOptions(opts []FilesOption) filesOptions {
+ 	return cfg
+ }
+ 
++func newUploadFileOptions(opts []UploadFileOption) uploadFileOptions {
++	var cfg uploadFileOptions
++	for _, opt := range opts {
++		if opt == nil {
++			continue
++		}
++		opt.applyUploadFile(&cfg)
++	}
++	return cfg
++}
++
+ func (s *FilesService) List(ctx context.Context, opts ...FilesOption) ([]File, *Pagination, error) {
+ 	cfg := newFilesOptions(opts)
+ 
+@@ -112,6 +196,51 @@ func (s *FilesService) Get(ctx context.Context, id FileID, opts ...FilesOption)
+ 	return payload.Data, nil
+ }
+ 
++// Upload adds a file, encoding the multipart/form-data body from a file
++// name and a reader over the content. Associate the file with a record
++// through options such as WithFileDealID.
++//
++// The content is buffered while it is encoded, so the request body is
++// replayable and a rate-limited or failed upload is retried under the
++// configured retry policy. Use Add instead to stream a body you have
++// encoded yourself.
++func (s *FilesService) Upload(ctx context.Context, fileName string, content io.Reader, opts ...UploadFileOption) (*File, error) {
++	cfg := newUploadFileOptions(opts)
++	if fileName == "" {
++		return nil, fmt.Errorf("file name is required")
++	}
++	if content == nil {
++		return nil, fmt.Errorf("file content is required")
++	}
++
++	contentType, body, err := multipartbody.NewFileWithFields("file", fileName, content, cfg.form)
++	if err != nil {
++		return nil, err
++	}
++
++	reqOpts := append([]pipedrive.RequestOption{}, cfg.requestOptions...)
++	reqOpts = append(reqOpts, pipedrive.WithHeader("Content-Type", contentType))
++
++	var payload struct {
++		Data *File `json:"data"`
++	}
++	if err := s.client.Raw.Do(ctx, http.MethodPost, "/files", cfg.query, body, &payload, reqOpts...); err != nil {
++		return nil, err
++	}
++	if payload.Data == nil {
++		return nil, fmt.Errorf("missing file data in response")
++	}
++	return payload.Data, nil
++}
++
++// Add posts a request body you have encoded yourself, using contentType as
++// the Content-Type header. Prefer Upload, which builds the
++// multipart/form-data body for you.
++//
++// A body that implements io.Seeker (an *os.File, for example) is rewound
++// and resent when a request is retried, and it is left open for the caller
++// to close. A body that cannot seek is sent once and never retried,
++// because the SDK will not buffer an arbitrary stream.
+ func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType string, opts ...FilesOption) (*File, error) {
+ 	cfg := newFilesOptions(opts)
+ 	if body == nil {
+diff --git a/pipedrive/v1/files_test.go b/pipedrive/v1/files_test.go
+index 664e1c7..f1a8d52 100644
+--- a/pipedrive/v1/files_test.go
++++ b/pipedrive/v1/files_test.go
+@@ -4,9 +4,13 @@ import (
+ 	"bytes"
+ 	"context"
+ 	"errors"
++	"io"
+ 	"net/http"
+ 	"net/url"
++	"os"
++	"path/filepath"
+ 	"strings"
++	"sync"
+ 	"testing"
+ 
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+@@ -292,3 +296,208 @@ func TestFilesService_DownloadTo_DisablesResponseLimit(t *testing.T) {
+ 		t.Fatalf("unexpected payload: %q", got)
+ 	}
+ }
++
++func TestFilesService_Add_RetriesRateLimitedFileUpload(t *testing.T) {
++	t.Parallel()
++
++	contentType := "multipart/form-data; boundary=test"
++	var mu sync.Mutex
++	var bodies []string
++
++	policy := pipedrive.DefaultRetryPolicy()
++	policy.MaxAttempts = 2
++	policy.BaseDelay = 0
++
++	client := newTestClientWithConfig(t, pipedrive.Config{RetryPolicy: &policy}, func(w http.ResponseWriter, r *http.Request) {
++		body, err := io.ReadAll(r.Body)
++		if err != nil {
++			t.Errorf("read request body: %v", err)
++			return
++		}
++		mu.Lock()
++		bodies = append(bodies, string(body))
++		attempt := len(bodies)
++		mu.Unlock()
++
++		if attempt == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			_, _ = w.Write([]byte(`{"message":"rate limited"}`))
++			return
++		}
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":12,"name":"upload.txt"}}`))
++	})
++
++	file := openTestFile(t, "upload payload")
++	fileToUpload, err := client.Files.Add(context.Background(), file, contentType)
++	if err != nil {
++		t.Fatalf("Add error: %v", err)
++	}
++	if fileToUpload.ID != 12 {
++		t.Fatalf("unexpected file: %#v", fileToUpload)
++	}
++
++	mu.Lock()
++	defer mu.Unlock()
++	if len(bodies) != 2 {
++		t.Fatalf("expected 2 attempts, got %d", len(bodies))
++	}
++	for i, body := range bodies {
++		if body != "upload payload" {
++			t.Fatalf("attempt %d sent %q, want %q", i+1, body, "upload payload")
++		}
++	}
++}
++
++func TestFilesService_Upload_EncodesMultipartBody(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/files" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		if got := r.Header.Get("X-Test"); got != "1" {
++			t.Fatalf("unexpected header X-Test: %q", got)
++		}
++		if err := r.ParseMultipartForm(1 << 20); err != nil {
++			t.Fatalf("parse multipart form: %v", err)
++		}
++		part, header, err := r.FormFile("file")
++		if err != nil {
++			t.Fatalf("form file: %v", err)
++		}
++		defer part.Close()
++		if header.Filename != "invoice.pdf" {
++			t.Fatalf("unexpected file name: %q", header.Filename)
++		}
++		content, err := io.ReadAll(part)
++		if err != nil {
++			t.Fatalf("read file part: %v", err)
++		}
++		if string(content) != "invoice bytes" {
++			t.Fatalf("unexpected file content: %q", string(content))
++		}
++		if got := r.FormValue("deal_id"); got != "7" {
++			t.Fatalf("unexpected deal_id: %q", got)
++		}
++		if got := r.FormValue("person_id"); got != "9" {
++			t.Fatalf("unexpected person_id: %q", got)
++		}
++		if got := r.FormValue("lead_id"); got != "adf21080-0e10-11eb-879b-05d71fb426ec" {
++			t.Fatalf("unexpected lead_id: %q", got)
++		}
++
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":15,"name":"invoice.pdf"}}`))
++	})
++
++	file, err := client.Files.Upload(
++		context.Background(),
++		"invoice.pdf",
++		strings.NewReader("invoice bytes"),
++		WithFileDealID(DealID(7)),
++		WithFilePersonID(PersonID(9)),
++		WithFileLeadID(LeadID("adf21080-0e10-11eb-879b-05d71fb426ec")),
++		WithFilesRequestOptions(pipedrive.WithHeader("X-Test", "1")),
++	)
++	if err != nil {
++		t.Fatalf("Upload error: %v", err)
++	}
++	if file.ID != 15 || file.Name != "invoice.pdf" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
++func TestFilesService_Upload_RetriesRateLimitedUpload(t *testing.T) {
++	t.Parallel()
++
++	var mu sync.Mutex
++	var uploads []string
++
++	policy := pipedrive.DefaultRetryPolicy()
++	policy.MaxAttempts = 2
++	policy.BaseDelay = 0
++
++	client := newTestClientWithConfig(t, pipedrive.Config{RetryPolicy: &policy}, func(w http.ResponseWriter, r *http.Request) {
++		if err := r.ParseMultipartForm(1 << 20); err != nil {
++			t.Errorf("parse multipart form: %v", err)
++			return
++		}
++		part, header, err := r.FormFile("file")
++		if err != nil {
++			t.Errorf("form file: %v", err)
++			return
++		}
++		defer part.Close()
++		content, err := io.ReadAll(part)
++		if err != nil {
++			t.Errorf("read file part: %v", err)
++			return
++		}
++
++		mu.Lock()
++		uploads = append(uploads, header.Filename+":"+string(content))
++		attempt := len(uploads)
++		mu.Unlock()
++
++		if attempt == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			_, _ = w.Write([]byte(`{"message":"rate limited"}`))
++			return
++		}
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":16,"name":"report.csv"}}`))
++	})
++
++	file, err := client.Files.Upload(context.Background(), "report.csv", openTestFile(t, "a,b,c"))
++	if err != nil {
++		t.Fatalf("Upload error: %v", err)
++	}
++	if file.ID != 16 {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++
++	mu.Lock()
++	defer mu.Unlock()
++	if len(uploads) != 2 {
++		t.Fatalf("expected 2 attempts, got %d", len(uploads))
++	}
++	for i, upload := range uploads {
++		if upload != "report.csv:a,b,c" {
++			t.Fatalf("attempt %d sent %q", i+1, upload)
++		}
++	}
++}
++
++func TestFilesService_Upload_ValidatesArguments(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		t.Fatalf("unexpected request: %s %s", r.Method, r.URL.Path)
++	})
++
++	if _, err := client.Files.Upload(context.Background(), "", strings.NewReader("x")); err == nil {
++		t.Fatalf("expected error for empty file name")
++	}
++	if _, err := client.Files.Upload(context.Background(), "doc.pdf", nil); err == nil {
++		t.Fatalf("expected error for nil content")
++	}
++}
++
++func openTestFile(t *testing.T, content string) *os.File {
++	t.Helper()
++
++	path := filepath.Join(t.TempDir(), "upload.bin")
++	if err := os.WriteFile(path, []byte(content), 0o600); err != nil {
++		t.Fatalf("write temp file: %v", err)
++	}
++	file, err := os.Open(path)
++	if err != nil {
++		t.Fatalf("open temp file: %v", err)
++	}
++	t.Cleanup(func() { _ = file.Close() })
++	return file
++}
+diff --git a/pipedrive/v1/options_line_coverage_test.go b/pipedrive/v1/options_line_coverage_test.go
+index bea88d1..3098efa 100644
+--- a/pipedrive/v1/options_line_coverage_test.go
++++ b/pipedrive/v1/options_line_coverage_test.go
+@@ -269,6 +269,48 @@ func TestFilesOptionsApplyQueryAndRequestOptions(t *testing.T) {
+ 	requireOneV1RequestOption(t, "files", cfg.requestOptions)
+ }
+ 
++func TestUploadFileOptionsApplyFormQueryAndRequestOptions(t *testing.T) {
++	t.Parallel()
++
++	query := url.Values{"include_fields": []string{"file_size"}}
++	cfg := newUploadFileOptions([]UploadFileOption{
++		nil,
++		WithFilesQuery(query),
++		WithFilesRequestOptions(pipedrive.WithHeader("X-Test", "1")),
++		WithFileDealID(DealID(7)),
++		WithFilePersonID(PersonID(8)),
++		WithFileOrganizationID(OrganizationID(9)),
++		WithFileProductID(ProductID(10)),
++		WithFileActivityID(ActivityID(11)),
++		WithFileLeadID(LeadID("adf21080-0e10-11eb-879b-05d71fb426ec")),
++		WithFileFormValue("description", "signed copy"),
++		WithFileFormValue("", "ignored"),
++	})
++
++	if got := cfg.query.Get("include_fields"); got != "file_size" {
++		t.Fatalf("unexpected include_fields query: %q", got)
++	}
++	requireOneV1RequestOption(t, "upload file", cfg.requestOptions)
++
++	want := map[string]string{
++		"deal_id":     "7",
++		"person_id":   "8",
++		"org_id":      "9",
++		"product_id":  "10",
++		"activity_id": "11",
++		"lead_id":     "adf21080-0e10-11eb-879b-05d71fb426ec",
++		"description": "signed copy",
++	}
++	for key, value := range want {
++		if got := cfg.form.Get(key); got != value {
++			t.Fatalf("form %s = %q, want %q", key, got, value)
++		}
++	}
++	if len(cfg.form) != len(want) {
++		t.Fatalf("unexpected form fields: %v", cfg.form)
++	}
++}
++
+ func TestV1OptionFuncsInvokeCallbacks(t *testing.T) {
+ 	t.Parallel()
+ 

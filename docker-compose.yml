@@ -1,0 +1,57 @@
+services:
+  egress:
+    image: ubuntu/squid:latest
+    volumes:
+      - ./docker/squid.conf:/etc/squid/squid.conf:ro
+      - ./docker/allowlist.txt:/etc/squid/allowlist.txt:ro
+    networks:
+      - internal
+      - egress
+
+  runner:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    depends_on:
+      - egress
+    cap_add:
+      # The entrypoint installs an owner-based firewall rule for UID 1001.
+      # Contestant and scorer processes drop all capabilities before exec.
+      - NET_ADMIN
+    environment:
+      # The runner stays root and drops contestant CLIs to this identity. Only
+      # /agent is writable and visible to that identity.
+      EVAL_AGENT_ROOT: /agent
+      EVAL_AGENT_UID: "1000"
+      EVAL_AGENT_GID: "1000"
+      EVAL_SCORER_ROOT: /score
+      EVAL_SCORER_UID: "1001"
+      EVAL_SCORER_GID: "1001"
+      HTTP_PROXY: http://egress:3128
+      HTTPS_PROXY: http://egress:3128
+      http_proxy: http://egress:3128
+      https_proxy: http://egress:3128
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      # Subscription auth for Claude Code runs (`claude setup-token` on the
+      # host prints one). The contestant bills to the subscription; the
+      # simulator still needs one of the API keys below.
+      CLAUDE_CODE_OAUTH_TOKEN: ${CLAUDE_CODE_OAUTH_TOKEN:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      FIREWORKS_API_KEY: ${FIREWORKS_API_KEY:-}
+    volumes:
+      # All evaluator inputs and stored attempts sit behind /eval-private,
+      # whose root-only permissions keep them outside contestant reach.
+      - ./tasks:/eval-private/tasks:ro
+      - ./runs:/eval-private/runs
+      # Local mirror of the task repo; cloned inside the container so no
+      # network is needed for repo access. Private tasks and their mirrors
+      # are mounted from docker-compose.override.yml (see README).
+      - ${PD_MIRROR:-../pipedrive-go}:/eval-private/mirrors/pipedrive-go:ro
+    networks:
+      - internal
+
+networks:
+  # No direct route out; the egress proxy is the only path.
+  internal:
+    internal: true
+  egress: {}

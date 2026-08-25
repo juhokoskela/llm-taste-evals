@@ -1,0 +1,7 @@
+# Domains the agent container may reach (model APIs only, one per line;
+# a leading dot allows subdomains). GitHub and the Go module proxy stay
+# blocked so agents cannot fetch a task's published solution.
+.anthropic.com
+.openai.com
+.chatgpt.com
+.fireworks.ai

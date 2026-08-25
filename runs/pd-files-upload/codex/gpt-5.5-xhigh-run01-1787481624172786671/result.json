@@ -1,0 +1,49 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "codex",
+  "model": "gpt-5.5",
+  "effort": "xhigh",
+  "run_id": "gpt-5.5-xhigh-run01-1787481624172786671",
+  "started_at": "2026-08-23T10:40:25.314375463Z",
+  "duration_sec": 178.738082915,
+  "turns": 1,
+  "end_reason": "simulator_end",
+  "gates_failed": 1,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": false,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "0/12",
+    "delegates_to_add": "true",
+    "diff_shortstat": "3 files changed, 192 insertions(+)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "3",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "pipedrive/raw.go",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "false"
+  },
+  "metrics": {
+    "turns": 1,
+    "tool_calls": 52,
+    "reads": 0,
+    "edits": 6,
+    "shell_commands": 37,
+    "test_runs": 8,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 2251045,
+    "cache_read_tokens": 2146560,
+    "output_tokens": 15646
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/codex/gpt-5.5-xhigh-run01-1787481624172786671/workspace"
+}

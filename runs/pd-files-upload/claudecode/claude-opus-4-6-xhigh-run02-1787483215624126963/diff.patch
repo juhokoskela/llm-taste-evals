@@ -1,0 +1,210 @@
+diff --git a/pipedrive/v1/files.go b/pipedrive/v1/files.go
+index 99c0276..ab5217e 100644
+--- a/pipedrive/v1/files.go
++++ b/pipedrive/v1/files.go
+@@ -8,6 +8,7 @@ import (
+ 	"net/url"
+ 	"strings"
+ 
++	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+ 
+@@ -136,6 +137,19 @@ func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType stri
+ 	return payload.Data, nil
+ }
+ 
++func (s *FilesService) Upload(ctx context.Context, fileName string, content io.Reader, opts ...FilesOption) (*File, error) {
++	if fileName == "" || content == nil {
++		return nil, fmt.Errorf("file name and content are required")
++	}
++
++	contentType, body, err := multipartbody.NewFile("file", fileName, content)
++	if err != nil {
++		return nil, err
++	}
++
++	return s.Add(ctx, body, contentType, opts...)
++}
++
+ func (s *FilesService) AddRemoteFile(ctx context.Context, form url.Values, opts ...FilesOption) (*File, error) {
+ 	cfg := newFilesOptions(opts)
+ 	if len(form) == 0 {
+diff --git a/pipedrive/v1/files_test.go b/pipedrive/v1/files_test.go
+index 664e1c7..1f7d729 100644
+--- a/pipedrive/v1/files_test.go
++++ b/pipedrive/v1/files_test.go
+@@ -4,9 +4,11 @@ import (
+ 	"bytes"
+ 	"context"
+ 	"errors"
++	"io"
+ 	"net/http"
+ 	"net/url"
+ 	"strings"
++	"sync/atomic"
+ 	"testing"
+ 
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+@@ -103,6 +105,79 @@ func TestFilesService_Add(t *testing.T) {
+ 	}
+ }
+ 
++func TestFilesService_Upload(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/files" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		ct := r.Header.Get("Content-Type")
++		if !strings.HasPrefix(ct, "multipart/form-data") {
++			t.Fatalf("unexpected content type: %q", ct)
++		}
++		if err := r.ParseMultipartForm(1 << 20); err != nil {
++			t.Fatalf("parse multipart: %v", err)
++		}
++		f, fh, err := r.FormFile("file")
++		if err != nil {
++			t.Fatalf("form file: %v", err)
++		}
++		defer f.Close()
++		if fh.Filename != "upload.txt" {
++			t.Fatalf("unexpected filename: %q", fh.Filename)
++		}
++
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":12,"name":"upload.txt"}}`))
++	})
++
++	file, err := client.Files.Upload(context.Background(), "upload.txt", strings.NewReader("file content"))
++	if err != nil {
++		t.Fatalf("Upload error: %v", err)
++	}
++	if file.ID != 12 || file.Name != "upload.txt" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
++func TestFilesService_Upload_RetriesOn429(t *testing.T) {
++	t.Parallel()
++
++	var calls atomic.Int32
++	client := newTestClientWithConfig(t, pipedrive.Config{
++		RetryPolicy: &pipedrive.RetryPolicy{
++			MaxAttempts:     3,
++			RetryAllMethods: true,
++		},
++	}, func(w http.ResponseWriter, r *http.Request) {
++		n := calls.Add(1)
++		if n == 1 {
++			w.Header().Set("Retry-After", "0")
++			w.WriteHeader(http.StatusTooManyRequests)
++			return
++		}
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":99,"name":"retried.txt"}}`))
++	})
++
++	// Use a non-seekable reader to prove the SDK buffers internally.
++	r := io.NopCloser(strings.NewReader("data"))
++	file, err := client.Files.Upload(context.Background(), "retried.txt", r)
++	if err != nil {
++		t.Fatalf("Upload error: %v", err)
++	}
++	if file.ID != 99 {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++	if got := calls.Load(); got != 2 {
++		t.Fatalf("expected 2 server calls (1 retry), got %d", got)
++	}
++}
++
+ func TestFilesService_AddRemoteFile(t *testing.T) {
+ 	t.Parallel()
+ 
+diff --git a/pipedrive/v1/persons.go b/pipedrive/v1/persons.go
+index 501b621..528edb7 100644
+--- a/pipedrive/v1/persons.go
++++ b/pipedrive/v1/persons.go
+@@ -7,6 +7,7 @@ import (
+ 	"net/http"
+ 	"net/url"
+ 
++	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+ 
+@@ -249,6 +250,19 @@ func (s *PersonsService) AddPicture(ctx context.Context, id PersonID, body io.Re
+ 	return payload.Data, nil
+ }
+ 
++func (s *PersonsService) UploadPicture(ctx context.Context, id PersonID, fileName string, content io.Reader, opts ...PersonsOption) (map[string]any, error) {
++	if fileName == "" || content == nil {
++		return nil, fmt.Errorf("file name and content are required")
++	}
++
++	contentType, body, err := multipartbody.NewFile("file", fileName, content)
++	if err != nil {
++		return nil, err
++	}
++
++	return s.AddPicture(ctx, id, body, contentType, opts...)
++}
++
+ func (s *PersonsService) DeletePicture(ctx context.Context, id PersonID, opts ...PersonsOption) (PersonID, error) {
+ 	if err := validateID(id, "person id"); err != nil {
+ 		return 0, err
+diff --git a/pipedrive/v1/persons_test.go b/pipedrive/v1/persons_test.go
+index 755d657..c6c56ba 100644
+--- a/pipedrive/v1/persons_test.go
++++ b/pipedrive/v1/persons_test.go
+@@ -246,6 +246,45 @@ func TestPersonsService_AddPictureRequiresContentType(t *testing.T) {
+ 	}
+ }
+ 
++func TestPersonsService_UploadPicture(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/persons/25/picture" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		ct := r.Header.Get("Content-Type")
++		if !strings.HasPrefix(ct, "multipart/form-data") {
++			t.Fatalf("unexpected content type: %q", ct)
++		}
++		if err := r.ParseMultipartForm(1 << 20); err != nil {
++			t.Fatalf("parse multipart: %v", err)
++		}
++		f, fh, err := r.FormFile("file")
++		if err != nil {
++			t.Fatalf("form file: %v", err)
++		}
++		defer f.Close()
++		if fh.Filename != "photo.jpg" {
++			t.Fatalf("unexpected filename: %q", fh.Filename)
++		}
++
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":123}}`))
++	})
++
++	data, err := client.Persons.UploadPicture(context.Background(), PersonID(25), "photo.jpg", strings.NewReader("image data"))
++	if err != nil {
++		t.Fatalf("UploadPicture error: %v", err)
++	}
++	if data["id"] != float64(123) {
++		t.Fatalf("unexpected data: %#v", data)
++	}
++}
++
+ func TestPersonsService_DeletePicture(t *testing.T) {
+ 	t.Parallel()
+ 

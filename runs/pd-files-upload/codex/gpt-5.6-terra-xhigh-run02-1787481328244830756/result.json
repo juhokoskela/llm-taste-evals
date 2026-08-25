@@ -1,0 +1,50 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "codex",
+  "model": "gpt-5.6-terra",
+  "effort": "xhigh",
+  "run_id": "gpt-5.6-terra-xhigh-run02-1787481328244830756",
+  "started_at": "2026-08-23T10:35:29.35075584Z",
+  "duration_sec": 130.938514601,
+  "turns": 2,
+  "end_reason": "simulator_end",
+  "gates_failed": 2,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": false,
+    "legacy_add_intact": false,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "9/25",
+    "delegates_to_add": "true",
+    "diff_shortstat": "3 files changed, 123 insertions(+), 1 deletion(-)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "3",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "none",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "false"
+  },
+  "metrics": {
+    "turns": 2,
+    "tool_calls": 29,
+    "reads": 0,
+    "edits": 4,
+    "shell_commands": 19,
+    "test_runs": 6,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 1840985,
+    "cache_read_tokens": 1706939,
+    "cache_creation_tokens": 133944,
+    "output_tokens": 20885
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/codex/gpt-5.6-terra-xhigh-run02-1787481328244830756/workspace"
+}

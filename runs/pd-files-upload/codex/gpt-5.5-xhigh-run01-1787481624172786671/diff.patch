@@ -1,0 +1,250 @@
+diff --git a/pipedrive/raw.go b/pipedrive/raw.go
+index 8f667bb..8c07863 100644
+--- a/pipedrive/raw.go
++++ b/pipedrive/raw.go
+@@ -74,6 +74,7 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
+ 	if err != nil {
+ 		return fmt.Errorf("build request: %w", err)
+ 	}
++	makeSeekableRequestBodyReplayable(req, reqBody)
+ 
+ 	req.Header.Set("Accept", "application/json")
+ 	if body != nil {
+@@ -117,3 +118,26 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
+ 	}
+ 	return nil
+ }
++
++func makeSeekableRequestBodyReplayable(req *http.Request, body io.Reader) {
++	if req == nil || body == nil || req.GetBody != nil {
++		return
++	}
++
++	seeker, ok := body.(io.ReadSeeker)
++	if !ok {
++		return
++	}
++	offset, err := seeker.Seek(0, io.SeekCurrent)
++	if err != nil {
++		return
++	}
++
++	req.Body = io.NopCloser(seeker)
++	req.GetBody = func() (io.ReadCloser, error) {
++		if _, err := seeker.Seek(offset, io.SeekStart); err != nil {
++			return nil, err
++		}
++		return io.NopCloser(seeker), nil
++	}
++}
+diff --git a/pipedrive/v1/files.go b/pipedrive/v1/files.go
+index 99c0276..97f7a5a 100644
+--- a/pipedrive/v1/files.go
++++ b/pipedrive/v1/files.go
+@@ -8,6 +8,7 @@ import (
+ 	"net/url"
+ 	"strings"
+ 
++	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+ 
+@@ -136,6 +137,19 @@ func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType stri
+ 	return payload.Data, nil
+ }
+ 
++func (s *FilesService) AddFile(ctx context.Context, fileName string, content io.Reader, opts ...FilesOption) (*File, error) {
++	if fileName == "" || content == nil {
++		return nil, fmt.Errorf("file name and content are required")
++	}
++
++	contentType, body, err := multipartbody.NewFile("file", fileName, content)
++	if err != nil {
++		return nil, err
++	}
++
++	return s.Add(ctx, body, contentType, opts...)
++}
++
+ func (s *FilesService) AddRemoteFile(ctx context.Context, form url.Values, opts ...FilesOption) (*File, error) {
+ 	cfg := newFilesOptions(opts)
+ 	if len(form) == 0 {
+diff --git a/pipedrive/v1/files_test.go b/pipedrive/v1/files_test.go
+index 664e1c7..5e761a5 100644
+--- a/pipedrive/v1/files_test.go
++++ b/pipedrive/v1/files_test.go
+@@ -4,9 +4,13 @@ import (
+ 	"bytes"
+ 	"context"
+ 	"errors"
++	"io"
++	"mime/multipart"
+ 	"net/http"
+ 	"net/url"
++	"os"
+ 	"strings"
++	"sync/atomic"
+ 	"testing"
+ 
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+@@ -103,6 +107,104 @@ func TestFilesService_Add(t *testing.T) {
+ 	}
+ }
+ 
++func TestFilesService_Add_RetriesSeekableBodyOnRateLimit(t *testing.T) {
++	t.Parallel()
++
++	content := []byte("file contents")
++	body, contentType := newMultipartTempFile(t, "file", "document.txt", content)
++
++	policy := pipedrive.RetryPolicy{
++		MaxAttempts:     2,
++		BaseDelay:       0,
++		RetryAllMethods: true,
++	}
++	var attempts atomic.Int32
++	client := newTestClientWithConfig(t, pipedrive.Config{RetryPolicy: &policy}, func(w http.ResponseWriter, r *http.Request) {
++		attempt := attempts.Add(1)
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/files" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		if got := r.Header.Get("Content-Type"); got != contentType {
++			t.Fatalf("unexpected content type: %q", got)
++		}
++		assertMultipartFile(t, r, "file", "document.txt", content)
++
++		w.Header().Set("Content-Type", "application/json")
++		if attempt == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			_, _ = w.Write([]byte(`{"success":false}`))
++			return
++		}
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":12,"name":"document.txt"}}`))
++	})
++
++	file, err := client.Files.Add(context.Background(), body, contentType)
++	if err != nil {
++		t.Fatalf("Add error: %v", err)
++	}
++	if got := attempts.Load(); got != 2 {
++		t.Fatalf("expected 2 attempts, got %d", got)
++	}
++	if file.ID != 12 || file.Name != "document.txt" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
++func TestFilesService_AddFile_RetriesOnRateLimit(t *testing.T) {
++	t.Parallel()
++
++	content := []byte("file contents")
++	policy := pipedrive.RetryPolicy{
++		MaxAttempts:     2,
++		BaseDelay:       0,
++		RetryAllMethods: true,
++	}
++	var attempts atomic.Int32
++	client := newTestClientWithConfig(t, pipedrive.Config{RetryPolicy: &policy}, func(w http.ResponseWriter, r *http.Request) {
++		attempt := attempts.Add(1)
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/files" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		if ct := r.Header.Get("Content-Type"); !strings.HasPrefix(ct, "multipart/form-data;") {
++			t.Fatalf("unexpected content type: %q", ct)
++		}
++		if got := r.Header.Get("X-Test"); got != "upload" {
++			t.Fatalf("unexpected X-Test header: %q", got)
++		}
++		assertMultipartFile(t, r, "file", "document.txt", content)
++
++		w.Header().Set("Content-Type", "application/json")
++		if attempt == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			_, _ = w.Write([]byte(`{"success":false}`))
++			return
++		}
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":12,"name":"document.txt"}}`))
++	})
++
++	file, err := client.Files.AddFile(
++		context.Background(),
++		"document.txt",
++		bytes.NewReader(content),
++		WithFilesRequestOptions(pipedrive.WithHeader("X-Test", "upload")),
++	)
++	if err != nil {
++		t.Fatalf("AddFile error: %v", err)
++	}
++	if got := attempts.Load(); got != 2 {
++		t.Fatalf("expected 2 attempts, got %d", got)
++	}
++	if file.ID != 12 || file.Name != "document.txt" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
+ func TestFilesService_AddRemoteFile(t *testing.T) {
+ 	t.Parallel()
+ 
+@@ -292,3 +394,55 @@ func TestFilesService_DownloadTo_DisablesResponseLimit(t *testing.T) {
+ 		t.Fatalf("unexpected payload: %q", got)
+ 	}
+ }
++
++func newMultipartTempFile(t *testing.T, fieldName, fileName string, content []byte) (*os.File, string) {
++	t.Helper()
++
++	file, err := os.CreateTemp(t.TempDir(), "multipart-*.body")
++	if err != nil {
++		t.Fatalf("create temp file: %v", err)
++	}
++	t.Cleanup(func() { _ = file.Close() })
++
++	writer := multipart.NewWriter(file)
++	part, err := writer.CreateFormFile(fieldName, fileName)
++	if err != nil {
++		t.Fatalf("create form file: %v", err)
++	}
++	if _, err := part.Write(content); err != nil {
++		t.Fatalf("write form file: %v", err)
++	}
++	if err := writer.Close(); err != nil {
++		t.Fatalf("close multipart writer: %v", err)
++	}
++	if _, err := file.Seek(0, io.SeekStart); err != nil {
++		t.Fatalf("seek temp file: %v", err)
++	}
++	return file, writer.FormDataContentType()
++}
++
++func assertMultipartFile(t *testing.T, r *http.Request, fieldName, fileName string, content []byte) {
++	t.Helper()
++
++	reader, err := r.MultipartReader()
++	if err != nil {
++		t.Fatalf("multipart reader: %v", err)
++	}
++	part, err := reader.NextPart()
++	if err != nil {
++		t.Fatalf("multipart part: %v", err)
++	}
++	if part.FormName() != fieldName {
++		t.Fatalf("unexpected form name: %q", part.FormName())
++	}
++	if part.FileName() != fileName {
++		t.Fatalf("unexpected file name: %q", part.FileName())
++	}
++	body, err := io.ReadAll(part)
++	if err != nil {
++		t.Fatalf("read part: %v", err)
++	}
++	if !bytes.Equal(body, content) {
++		t.Fatalf("unexpected body: %q", string(body))
++	}
++}

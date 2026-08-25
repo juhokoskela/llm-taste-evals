@@ -1,0 +1,51 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "claudecode",
+  "model": "claude-sonnet-5",
+  "effort": "xhigh",
+  "run_id": "claude-sonnet-5-xhigh-run01-1787502347821666304",
+  "started_at": "2026-08-23T16:25:57.184982419Z",
+  "duration_sec": 442.925520871,
+  "turns": 2,
+  "end_reason": "simulator_end",
+  "gates_failed": 0,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": true,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "5/24",
+    "delegates_to_add": "false",
+    "diff_shortstat": "3 files changed, 133 insertions(+)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "3",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "none",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "true"
+  },
+  "metrics": {
+    "turns": 2,
+    "tool_calls": 60,
+    "reads": 20,
+    "edits": 10,
+    "shell_commands": 28,
+    "test_runs": 2,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 5293701,
+    "cache_read_tokens": 5056256,
+    "cache_creation_tokens": 237329,
+    "output_tokens": 38848,
+    "cost_usd": 3.525197799999999
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/claudecode/claude-sonnet-5-xhigh-run01-1787502347821666304/workspace"
+}

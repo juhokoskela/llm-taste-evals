@@ -1,0 +1,136 @@
+diff --git a/pipedrive/v1/files.go b/pipedrive/v1/files.go
+index 99c0276..ab5217e 100644
+--- a/pipedrive/v1/files.go
++++ b/pipedrive/v1/files.go
+@@ -8,6 +8,7 @@ import (
+ 	"net/url"
+ 	"strings"
+ 
++	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+ 
+@@ -136,6 +137,19 @@ func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType stri
+ 	return payload.Data, nil
+ }
+ 
++func (s *FilesService) Upload(ctx context.Context, fileName string, content io.Reader, opts ...FilesOption) (*File, error) {
++	if fileName == "" || content == nil {
++		return nil, fmt.Errorf("file name and content are required")
++	}
++
++	contentType, body, err := multipartbody.NewFile("file", fileName, content)
++	if err != nil {
++		return nil, err
++	}
++
++	return s.Add(ctx, body, contentType, opts...)
++}
++
+ func (s *FilesService) AddRemoteFile(ctx context.Context, form url.Values, opts ...FilesOption) (*File, error) {
+ 	cfg := newFilesOptions(opts)
+ 	if len(form) == 0 {
+diff --git a/pipedrive/v1/files_test.go b/pipedrive/v1/files_test.go
+index 664e1c7..4343f50 100644
+--- a/pipedrive/v1/files_test.go
++++ b/pipedrive/v1/files_test.go
+@@ -4,10 +4,12 @@ import (
+ 	"bytes"
+ 	"context"
+ 	"errors"
++	"io"
+ 	"net/http"
+ 	"net/url"
+ 	"strings"
+ 	"testing"
++	"time"
+ 
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+@@ -103,6 +105,86 @@ func TestFilesService_Add(t *testing.T) {
+ 	}
+ }
+ 
++func TestFilesService_Upload(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/files" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		if ct := r.Header.Get("Content-Type"); !strings.HasPrefix(ct, "multipart/form-data; boundary=") {
++			t.Fatalf("unexpected content type: %q", ct)
++		}
++		if err := r.ParseMultipartForm(1 << 20); err != nil {
++			t.Fatalf("parse multipart form: %v", err)
++		}
++		file, header, err := r.FormFile("file")
++		if err != nil {
++			t.Fatalf("form file: %v", err)
++		}
++		defer file.Close()
++		if header.Filename != "upload.txt" {
++			t.Fatalf("unexpected file name: %q", header.Filename)
++		}
++		data, err := io.ReadAll(file)
++		if err != nil {
++			t.Fatalf("read uploaded file: %v", err)
++		}
++		if string(data) != "file content" {
++			t.Fatalf("unexpected file content: %q", string(data))
++		}
++
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":21,"name":"upload.txt"}}`))
++	})
++
++	file, err := client.Files.Upload(context.Background(), "upload.txt", strings.NewReader("file content"))
++	if err != nil {
++		t.Fatalf("Upload error: %v", err)
++	}
++	if file.ID != 21 || file.Name != "upload.txt" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
++func TestFilesService_Upload_RetriesOn429(t *testing.T) {
++	t.Parallel()
++
++	var calls int
++	client := newTestClientWithConfig(t, pipedrive.Config{
++		RetryPolicy: &pipedrive.RetryPolicy{
++			MaxAttempts: 2,
++			BaseDelay:   time.Millisecond,
++			MaxDelay:    time.Millisecond,
++			Jitter:      func(d time.Duration) time.Duration { return d },
++		},
++	}, func(w http.ResponseWriter, r *http.Request) {
++		calls++
++		if calls == 1 {
++			w.Header().Set("Content-Type", "application/json")
++			w.WriteHeader(http.StatusTooManyRequests)
++			_, _ = w.Write([]byte(`{"message":"rate limited"}`))
++			return
++		}
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":22,"name":"upload.txt"}}`))
++	})
++
++	file, err := client.Files.Upload(context.Background(), "upload.txt", strings.NewReader("file content"))
++	if err != nil {
++		t.Fatalf("Upload error: %v", err)
++	}
++	if file.ID != 22 {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++	if calls != 2 {
++		t.Fatalf("expected 2 calls, got %d", calls)
++	}
++}
++
+ func TestFilesService_AddRemoteFile(t *testing.T) {
+ 	t.Parallel()
+ 

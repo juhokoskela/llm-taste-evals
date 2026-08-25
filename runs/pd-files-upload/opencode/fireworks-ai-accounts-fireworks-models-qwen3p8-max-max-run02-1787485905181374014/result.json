@@ -1,0 +1,50 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "opencode",
+  "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+  "effort": "max",
+  "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run02-1787485905181374014",
+  "started_at": "2026-08-23T11:51:46.932894209Z",
+  "duration_sec": 436.929104825,
+  "turns": 2,
+  "end_reason": "simulator_end",
+  "gates_failed": 2,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": false,
+    "legacy_add_intact": false,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "20/149",
+    "delegates_to_add": "false",
+    "diff_shortstat": "10 files changed, 590 insertions(+), 37 deletions(-)",
+    "existing_test_lines_deleted": "16",
+    "files_changed": "10",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/raw.go",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "false"
+  },
+  "metrics": {
+    "turns": 2,
+    "tool_calls": 112,
+    "reads": 32,
+    "edits": 22,
+    "shell_commands": 47,
+    "test_runs": 9,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 7515165,
+    "cache_read_tokens": 7292177,
+    "output_tokens": 18427,
+    "cost_usd": 2.53885825
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run02-1787485905181374014/workspace"
+}

@@ -1,0 +1,134 @@
+diff --git a/pipedrive/v1/files.go b/pipedrive/v1/files.go
+index 99c0276..58bcdee 100644
+--- a/pipedrive/v1/files.go
++++ b/pipedrive/v1/files.go
+@@ -8,6 +8,7 @@ import (
+ 	"net/url"
+ 	"strings"
+ 
++	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+ 
+@@ -112,7 +113,30 @@ func (s *FilesService) Get(ctx context.Context, id FileID, opts ...FilesOption)
+ 	return payload.Data, nil
+ }
+ 
+-func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType string, opts ...FilesOption) (*File, error) {
++// Add uploads content as a file with fileName.
++//
++// The content is encoded into a replayable multipart request before it is
++// sent, so retry policies can safely resend uploads after a rate-limit or
++// transient response.
++func (s *FilesService) Add(ctx context.Context, fileName string, content io.Reader, opts ...FilesOption) (*File, error) {
++	if fileName == "" || content == nil {
++		return nil, fmt.Errorf("file name and content are required")
++	}
++
++	contentType, body, err := multipartbody.NewFile("file", fileName, content)
++	if err != nil {
++		return nil, err
++	}
++
++	return s.AddRaw(ctx, body, contentType, opts...)
++}
++
++// AddRaw sends a pre-encoded multipart file request.
++//
++// Add is preferred for ordinary uploads because it creates a replayable
++// request body that can be retried safely. AddRaw is available for callers
++// that need to provide additional multipart fields themselves.
++func (s *FilesService) AddRaw(ctx context.Context, body io.Reader, contentType string, opts ...FilesOption) (*File, error) {
+ 	cfg := newFilesOptions(opts)
+ 	if body == nil {
+ 		return nil, fmt.Errorf("file body is required")
+diff --git a/pipedrive/v1/files_test.go b/pipedrive/v1/files_test.go
+index 664e1c7..20458f5 100644
+--- a/pipedrive/v1/files_test.go
++++ b/pipedrive/v1/files_test.go
+@@ -4,8 +4,10 @@ import (
+ 	"bytes"
+ 	"context"
+ 	"errors"
++	"io"
+ 	"net/http"
+ 	"net/url"
++	"os"
+ 	"strings"
+ 	"testing"
+ 
+@@ -78,26 +80,69 @@ func TestFilesService_Get(t *testing.T) {
+ func TestFilesService_Add(t *testing.T) {
+ 	t.Parallel()
+ 
+-	contentType := "multipart/form-data; boundary=test"
+-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++	content := []byte("file contents")
++	path := t.TempDir() + "/upload.txt"
++	if err := os.WriteFile(path, content, 0o600); err != nil {
++		t.Fatalf("write test file: %v", err)
++	}
++
++	fileReader, err := os.Open(path)
++	if err != nil {
++		t.Fatalf("open test file: %v", err)
++	}
++	t.Cleanup(func() { _ = fileReader.Close() })
++
++	attempts := 0
++	client := newTestClientWithConfig(t, pipedrive.Config{RetryPolicy: &pipedrive.RetryPolicy{
++		MaxAttempts:     2,
++		BaseDelay:       0,
++		RetryAllMethods: true,
++	}}, func(w http.ResponseWriter, r *http.Request) {
+ 		if r.Method != http.MethodPost {
+ 			t.Fatalf("unexpected method: %s", r.Method)
+ 		}
+ 		if r.URL.Path != "/files" {
+ 			t.Fatalf("unexpected path: %s", r.URL.Path)
+ 		}
+-		if got := r.Header.Get("Content-Type"); got != contentType {
+-			t.Fatalf("unexpected content type: %q", got)
++		reader, err := r.MultipartReader()
++		if err != nil {
++			t.Fatalf("multipart reader: %v", err)
++		}
++		part, err := reader.NextPart()
++		if err != nil {
++			t.Fatalf("multipart part: %v", err)
++		}
++		if part.FormName() != "file" {
++			t.Fatalf("unexpected form name: %q", part.FormName())
++		}
++		if part.FileName() != "upload.txt" {
++			t.Fatalf("unexpected file name: %q", part.FileName())
++		}
++		body, err := io.ReadAll(part)
++		if err != nil {
++			t.Fatalf("read part: %v", err)
++		}
++		if !bytes.Equal(body, content) {
++			t.Fatalf("unexpected file contents: %q", body)
++		}
++
++		attempts++
++		if attempts == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			return
+ 		}
+ 
+ 		w.Header().Set("Content-Type", "application/json")
+ 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":12,"name":"upload.txt"}}`))
+ 	})
+ 
+-	file, err := client.Files.Add(context.Background(), strings.NewReader("file"), contentType)
++	file, err := client.Files.Add(context.Background(), "upload.txt", fileReader)
+ 	if err != nil {
+ 		t.Fatalf("Add error: %v", err)
+ 	}
++	if attempts != 2 {
++		t.Fatalf("expected 2 upload attempts, got %d", attempts)
++	}
+ 	if file.ID != 12 || file.Name != "upload.txt" {
+ 		t.Fatalf("unexpected file: %#v", file)
+ 	}

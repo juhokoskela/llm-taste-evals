@@ -1,0 +1,1679 @@
+{
+  "format_version": 1,
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "task_prompt_sha256": "b1f048c3d7ffefb7ef6171e55566098eeacdabdccbba3d4954e93b31feed4162",
+  "contract_sha256": "e96952a8deec00563a95e53c5a736b2aa95b24ff77261ec5f38e65b49816f177",
+  "anchor_sha256": "bd6f57dd74abae1323c60482f28189bf8054f3655f87645f8f538a4503d4c18e",
+  "votes_per_pair": 3,
+  "judge": {
+    "provider": "codex-subscription",
+    "model": "gpt-5.6-sol",
+    "effort": "xhigh"
+  },
+  "runs": [
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "run_id": "claude-fable-5-xhigh-run01-1787499709359416055",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 2653321,
+        "cache_read_tokens": 2558212,
+        "cache_creation_tokens": 95033,
+        "output_tokens": 37722,
+        "cost_usd": 6.347011000000001
+      },
+      "result_path": "claudecode/claude-fable-5-xhigh-run01-1787499709359416055/result.json",
+      "patch_path": "claudecode/claude-fable-5-xhigh-run01-1787499709359416055/diff.patch",
+      "patch_sha256": "a755cedf297020ffd3173902b15da0d29eda7568fba14709c14361214c219456",
+      "signals": {
+        "added_comment_ratio": "16/83",
+        "delegates_to_add": "false",
+        "diff_shortstat": "8 files changed, 498 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "8",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "run_id": "claude-fable-5-xhigh-run02-1787500319621635421",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 3220062,
+        "cache_read_tokens": 3141261,
+        "cache_creation_tokens": 78717,
+        "output_tokens": 36645,
+        "cost_usd": 6.549969999999999
+      },
+      "result_path": "claudecode/claude-fable-5-xhigh-run02-1787500319621635421/result.json",
+      "patch_path": "claudecode/claude-fable-5-xhigh-run02-1787500319621635421/diff.patch",
+      "patch_sha256": "9267ee54c2532eb481e6069e718c7e11ef7df29d317bb9e7f3512f04b5f0eadf",
+      "signals": {
+        "added_comment_ratio": "10/83",
+        "delegates_to_add": "false",
+        "diff_shortstat": "7 files changed, 487 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "7",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "run_id": "claude-fable-5-xhigh-run03-1787500982266101630",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 3501838,
+        "cache_read_tokens": 3421282,
+        "cache_creation_tokens": 80462,
+        "output_tokens": 39064,
+        "cost_usd": 6.9859409999999995
+      },
+      "result_path": "claudecode/claude-fable-5-xhigh-run03-1787500982266101630/result.json",
+      "patch_path": "claudecode/claude-fable-5-xhigh-run03-1787500982266101630/diff.patch",
+      "patch_sha256": "dcf0ccb15af9fc064877237f8ebb78492400d0eea22c20f61ada8d278f66f617",
+      "signals": {
+        "added_comment_ratio": "15/33",
+        "delegates_to_add": "false",
+        "diff_shortstat": "8 files changed, 602 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "8",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "run_id": "claude-opus-4-6-xhigh-run01-1787482425658791042",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 5270088,
+        "cache_read_tokens": 4960639,
+        "cache_creation_tokens": 309373,
+        "output_tokens": 32939,
+        "cost_usd": 7.131399249999999
+      },
+      "result_path": "claudecode/claude-opus-4-6-xhigh-run01-1787482425658791042/result.json",
+      "patch_path": "claudecode/claude-opus-4-6-xhigh-run01-1787482425658791042/diff.patch",
+      "patch_sha256": "02505c9c5338b1ceb08c6da5a5d71453897c4df50ac722cca3ea4b5da6f81d93",
+      "signals": {
+        "added_comment_ratio": "0/24",
+        "delegates_to_add": "false",
+        "diff_shortstat": "3 files changed, 106 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "pipedrive/retry_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "run_id": "claude-opus-4-6-xhigh-run02-1787483215624126963",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 3511099,
+        "cache_read_tokens": 3393053,
+        "cache_creation_tokens": 117987,
+        "output_tokens": 23208,
+        "cost_usd": 4.076108749999999
+      },
+      "result_path": "claudecode/claude-opus-4-6-xhigh-run02-1787483215624126963/result.json",
+      "patch_path": "claudecode/claude-opus-4-6-xhigh-run02-1787483215624126963/diff.patch",
+      "patch_sha256": "41d77400b407b7f540e62000b1a7a8a3346a23962c58a76061c8bf35d1a524c2",
+      "signals": {
+        "added_comment_ratio": "0/24",
+        "delegates_to_add": "true",
+        "diff_shortstat": "4 files changed, 142 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "4",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "run_id": "claude-opus-4-6-xhigh-run03-1787483699295762465",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 1534072,
+        "cache_read_tokens": 1450553,
+        "cache_creation_tokens": 83483,
+        "output_tokens": 10603,
+        "cost_usd": 2.238043
+      },
+      "result_path": "claudecode/claude-opus-4-6-xhigh-run03-1787483699295762465/result.json",
+      "patch_path": "claudecode/claude-opus-4-6-xhigh-run03-1787483699295762465/diff.patch",
+      "patch_sha256": "2bbef1cb4e9af3c2abd1566e57caa4551216468a735f57df5d28583fcfdaebe5",
+      "signals": {
+        "added_comment_ratio": "0/24",
+        "delegates_to_add": "false",
+        "diff_shortstat": "2 files changed, 104 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-4-8",
+      "effort": "xhigh",
+      "run_id": "claude-opus-4-8-xhigh-run01-1787482476279665885",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 6872243,
+        "cache_read_tokens": 6514609,
+        "cache_creation_tokens": 357508,
+        "output_tokens": 70411,
+        "cost_usd": 8.5945635
+      },
+      "result_path": "claudecode/claude-opus-4-8-xhigh-run01-1787482476279665885/result.json",
+      "patch_path": "claudecode/claude-opus-4-8-xhigh-run01-1787482476279665885/diff.patch",
+      "patch_sha256": "5d6c31a041660e9a1dedc6cf12c0a4b837e59efa3368b0a7f126f819bb6d93ac",
+      "signals": {
+        "added_comment_ratio": "11/27",
+        "delegates_to_add": "false",
+        "diff_shortstat": "7 files changed, 407 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "7",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody_test.go pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-4-8",
+      "effort": "xhigh",
+      "run_id": "claude-opus-4-8-xhigh-run02-1787483545634051880",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 4401658,
+        "cache_read_tokens": 4201542,
+        "cache_creation_tokens": 200022,
+        "output_tokens": 54397,
+        "cost_usd": 5.761646750000001
+      },
+      "result_path": "claudecode/claude-opus-4-8-xhigh-run02-1787483545634051880/result.json",
+      "patch_path": "claudecode/claude-opus-4-8-xhigh-run02-1787483545634051880/diff.patch",
+      "patch_sha256": "1ec2391c4e35d5794747ca8ae863fce5a14662ceb63fc4d3f490caec9c96a933",
+      "signals": {
+        "added_comment_ratio": "18/27",
+        "delegates_to_add": "false",
+        "diff_shortstat": "4 files changed, 218 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "4",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "run_id": "claude-opus-5-xhigh-run01-1787499680647075458",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 6208450,
+        "cache_read_tokens": 6062999,
+        "cache_creation_tokens": 145331,
+        "output_tokens": 59124,
+        "cost_usd": 5.964768500000001
+      },
+      "result_path": "claudecode/claude-opus-5-xhigh-run01-1787499680647075458/result.json",
+      "patch_path": "claudecode/claude-opus-5-xhigh-run01-1787499680647075458/diff.patch",
+      "patch_sha256": "9d1676af0f0de045008ef2bca629ba40d020be7daa4372d39f5e7f1e3e916d37",
+      "signals": {
+        "added_comment_ratio": "40/125",
+        "delegates_to_add": "false",
+        "diff_shortstat": "10 files changed, 1315 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "10",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/raw.go pipedrive/raw_body_test.go pipedrive/requestbody.go pipedrive/requestbody_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "run_id": "claude-opus-5-xhigh-run02-1787500436344803961",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 6344385,
+        "cache_read_tokens": 6209199,
+        "cache_creation_tokens": 135058,
+        "output_tokens": 50057,
+        "cost_usd": 5.708533499999998
+      },
+      "result_path": "claudecode/claude-opus-5-xhigh-run02-1787500436344803961/result.json",
+      "patch_path": "claudecode/claude-opus-5-xhigh-run02-1787500436344803961/diff.patch",
+      "patch_sha256": "305aa39d442cf59f881670a179cc4fd51cdd92ebf64e33ffc77733a50840a6de",
+      "signals": {
+        "added_comment_ratio": "27/87",
+        "delegates_to_add": "false",
+        "diff_shortstat": "9 files changed, 669 insertions(+), 2 deletions(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "9",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go pipedrive/raw.go pipedrive/raw_test.go pipedrive/retry.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "run_id": "claude-opus-5-xhigh-run03-1787501147580365971",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 4947777,
+        "cache_read_tokens": 4841895,
+        "cache_creation_tokens": 105774,
+        "output_tokens": 46637,
+        "cost_usd": 4.646431499999999
+      },
+      "result_path": "claudecode/claude-opus-5-xhigh-run03-1787501147580365971/result.json",
+      "patch_path": "claudecode/claude-opus-5-xhigh-run03-1787501147580365971/diff.patch",
+      "patch_sha256": "a30be8e87ccb057efd04d054d269c8a498b910a88b6d4b8788320c9a93f9cb92",
+      "signals": {
+        "added_comment_ratio": "27/96",
+        "delegates_to_add": "false",
+        "diff_shortstat": "8 files changed, 703 insertions(+), 9 deletions(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "8",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-sonnet-5",
+      "effort": "xhigh",
+      "run_id": "claude-sonnet-5-xhigh-run01-1787502347821666304",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 5293701,
+        "cache_read_tokens": 5056256,
+        "cache_creation_tokens": 237329,
+        "output_tokens": 38848,
+        "cost_usd": 3.525197799999999
+      },
+      "result_path": "claudecode/claude-sonnet-5-xhigh-run01-1787502347821666304/result.json",
+      "patch_path": "claudecode/claude-sonnet-5-xhigh-run01-1787502347821666304/diff.patch",
+      "patch_sha256": "26fac361f3353074c45e7d4653f0b1270df428e89aab3314b2532bb94fc8d7ad",
+      "signals": {
+        "added_comment_ratio": "5/24",
+        "delegates_to_add": "false",
+        "diff_shortstat": "3 files changed, 133 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-sonnet-5",
+      "effort": "xhigh",
+      "run_id": "claude-sonnet-5-xhigh-run02-1787502807898428003",
+      "end_reason": "simulator_end",
+      "gates_failed": 1,
+      "usage": {
+        "input_tokens": 5737794,
+        "cache_read_tokens": 5636582,
+        "cache_creation_tokens": 101094,
+        "output_tokens": 43439,
+        "cost_usd": 2.9507365999999986
+      },
+      "result_path": "claudecode/claude-sonnet-5-xhigh-run02-1787502807898428003/result.json",
+      "patch_path": "claudecode/claude-sonnet-5-xhigh-run02-1787502807898428003/diff.patch",
+      "patch_sha256": "1511358aa95e3ce3eddf3a4b7de4482c7e92b94b5d6576d2a61fe64506b6ea1a",
+      "signals": {
+        "added_comment_ratio": "19/76",
+        "delegates_to_add": "false",
+        "diff_shortstat": "4 files changed, 242 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "4",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "claudecode",
+      "model": "claude-sonnet-5",
+      "effort": "xhigh",
+      "run_id": "claude-sonnet-5-xhigh-run03-1787503346828545128",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 3509825,
+        "cache_read_tokens": 3422186,
+        "cache_creation_tokens": 87557,
+        "output_tokens": 30617,
+        "cost_usd": 2.0127577999999997
+      },
+      "result_path": "claudecode/claude-sonnet-5-xhigh-run03-1787503346828545128/result.json",
+      "patch_path": "claudecode/claude-sonnet-5-xhigh-run03-1787503346828545128/diff.patch",
+      "patch_sha256": "11b767b62dbe6076aa4722a5b5526a9971a38f2483cd15818c8e241abccd337b",
+      "signals": {
+        "added_comment_ratio": "11/24",
+        "delegates_to_add": "false",
+        "diff_shortstat": "2 files changed, 164 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run01-1787481156783672969",
+      "end_reason": "simulator_end",
+      "gates_failed": 1,
+      "usage": {
+        "input_tokens": 2266179,
+        "cache_read_tokens": 2165415,
+        "output_tokens": 10902,
+        "cost_usd": 0.08000677999999999
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run01-1787481156783672969/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run01-1787481156783672969/diff.patch",
+      "patch_sha256": "18e1d69b84a84b4ff193b89e3bf2c821aecae82b7b27dfdc3bc24581efd27982",
+      "signals": {
+        "added_comment_ratio": "15/57",
+        "delegates_to_add": "false",
+        "diff_shortstat": "5 files changed, 309 insertions(+), 2 deletions(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "5",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go pipedrive/retry.go pipedrive/retry_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run02-1787481408878642835",
+      "end_reason": "simulator_error",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 1497679,
+        "cache_read_tokens": 1366975,
+        "output_tokens": 8682,
+        "cost_usd": 0.061392099999999984
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run02-1787481408878642835/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run02-1787481408878642835/diff.patch",
+      "patch_sha256": "f7fd488a04b97a71ccfd05e21cf077e42ef2555c20e82373171a3dedc72a5331",
+      "signals": {
+        "added_comment_ratio": "2/29",
+        "delegates_to_add": "false",
+        "diff_shortstat": "3 files changed, 208 insertions(+), 9 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run03-1787481776184962922",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 2846479,
+        "cache_read_tokens": 2713365,
+        "output_tokens": 12432,
+        "cost_usd": 0.10193665999999998
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run03-1787481776184962922/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run03-1787481776184962922/diff.patch",
+      "patch_sha256": "f84f704a02b819d69c2acb5611420bf56d6603ddf580886d2eb4ecb54c10c691",
+      "signals": {
+        "added_comment_ratio": "6/86",
+        "delegates_to_add": "false",
+        "diff_shortstat": "5 files changed, 445 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "5",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 1114754,
+        "cache_read_tokens": 1059257,
+        "output_tokens": 5008,
+        "cost_usd": 0.16364906799999998
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794/diff.patch",
+      "patch_sha256": "33df93cc79aaf41f49b7ddd4a957a74e3e4f1c6f91634b6ae83db532bb0a1a3b",
+      "signals": {
+        "added_comment_ratio": "0/12",
+        "delegates_to_add": "true",
+        "diff_shortstat": "2 files changed, 96 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run02-1787481301536185216",
+      "end_reason": "simulator_error",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 1741593,
+        "cache_read_tokens": 1661481,
+        "output_tokens": 6053,
+        "cost_usd": 0.24376136400000004
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run02-1787481301536185216/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run02-1787481301536185216/diff.patch",
+      "patch_sha256": "4c670378d238fb06230fb906f6c833cf20f1e05311f57a90236b133fb90db9d3",
+      "signals": {
+        "added_comment_ratio": "0/11",
+        "delegates_to_add": "false",
+        "diff_shortstat": "2 files changed, 126 insertions(+), 9 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run03-1787481533626230087",
+      "end_reason": "simulator_end",
+      "gates_failed": 1,
+      "usage": {
+        "input_tokens": 1719614,
+        "cache_read_tokens": 1606895,
+        "output_tokens": 7403,
+        "cost_usd": 0.2922733
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run03-1787481533626230087/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run03-1787481533626230087/diff.patch",
+      "patch_sha256": "689507d73cffb1f795e2d9bc1cb745ed125e8c1be1414c1fc28872a29d620ff4",
+      "signals": {
+        "added_comment_ratio": "5/80",
+        "delegates_to_add": "false",
+        "diff_shortstat": "3 files changed, 205 insertions(+), 2 deletions(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "max",
+      "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 2079106,
+        "cache_read_tokens": 2013839,
+        "output_tokens": 11007,
+        "cost_usd": 1.1246877000000002
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462/diff.patch",
+      "patch_sha256": "e6d6403506f260f0c7a006c58e12914d8e115747c24a2e978e18fa7eed894770",
+      "signals": {
+        "added_comment_ratio": "5/27",
+        "delegates_to_add": "false",
+        "diff_shortstat": "6 files changed, 447 insertions(+), 1 deletion(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "6",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "max",
+      "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run02-1787485949636337131",
+      "end_reason": "simulator_error",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 2282847,
+        "cache_read_tokens": 2213106,
+        "output_tokens": 12646,
+        "cost_usd": 1.2344298
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run02-1787485949636337131/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run02-1787485949636337131/diff.patch",
+      "patch_sha256": "1f2a4db84d7427d7220210065e37995ac896869901d8e42e34d47adca226d6c4",
+      "signals": {
+        "added_comment_ratio": "16/39",
+        "delegates_to_add": "false",
+        "diff_shortstat": "4 files changed, 262 insertions(+), 8 deletions(-)",
+        "existing_test_lines_deleted": "3",
+        "files_changed": "4",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "max",
+      "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run03-1787486425046706129",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 4235139,
+        "cache_read_tokens": 4135373,
+        "output_tokens": 18762,
+        "cost_usd": 2.1132699
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run03-1787486425046706129/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run03-1787486425046706129/diff.patch",
+      "patch_sha256": "9e2b5da6d02302e79f2a21047e154425a8a9cebf90e9fbd469b734794271e64d",
+      "signals": {
+        "added_comment_ratio": "19/52",
+        "delegates_to_add": "false",
+        "diff_shortstat": "5 files changed, 449 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "5",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run01-1787481897818754839",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 2878738,
+        "cache_read_tokens": 2807711,
+        "output_tokens": 12419,
+        "cost_usd": 1.4198342999999995
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run01-1787481897818754839/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run01-1787481897818754839/diff.patch",
+      "patch_sha256": "7410fe36e1a3d38f9522b419e248a0339901105248a14967a5c192c67ac1c8f5",
+      "signals": {
+        "added_comment_ratio": "19/82",
+        "delegates_to_add": "false",
+        "diff_shortstat": "6 files changed, 466 insertions(+), 10 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "6",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run02-1787482410884784716",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 1987079,
+        "cache_read_tokens": 1927215,
+        "output_tokens": 8256,
+        "cost_usd": 1.0155614999999998
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run02-1787482410884784716/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run02-1787482410884784716/diff.patch",
+      "patch_sha256": "de21c790f1a1999d94a91cd7ad4f8d485dfcea86d76421536a75900192590929",
+      "signals": {
+        "added_comment_ratio": "3/8",
+        "delegates_to_add": "false",
+        "diff_shortstat": "3 files changed, 153 insertions(+), 9 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run03-1787482815009971833",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 1454609,
+        "cache_read_tokens": 1396049,
+        "output_tokens": 7422,
+        "cost_usd": 0.8428647
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run03-1787482815009971833/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-xhigh-run03-1787482815009971833/diff.patch",
+      "patch_sha256": "f727ed9af01bf11c87a6a40a80aa6420f814e96d4e5fea828299300203db13a5",
+      "signals": {
+        "added_comment_ratio": "3/8",
+        "delegates_to_add": "false",
+        "diff_shortstat": "3 files changed, 112 insertions(+), 8 deletions(-)",
+        "existing_test_lines_deleted": "3",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "max",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run01-1787485516052691791",
+      "end_reason": "simulator_error",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 4509651,
+        "cache_read_tokens": 4339861,
+        "output_tokens": 13158,
+        "cost_usd": 1.6687272499999999
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run01-1787485516052691791/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run01-1787485516052691791/diff.patch",
+      "patch_sha256": "afe0f119dfa715496fa048931a12a2d33e88291a6c80ab36c5cee1b754699e40",
+      "signals": {
+        "added_comment_ratio": "7/27",
+        "delegates_to_add": "false",
+        "diff_shortstat": "5 files changed, 497 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "5",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "max",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run02-1787485905181374014",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 7515165,
+        "cache_read_tokens": 7292177,
+        "output_tokens": 18427,
+        "cost_usd": 2.53885825
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run02-1787485905181374014/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run02-1787485905181374014/diff.patch",
+      "patch_sha256": "5e1350b2f23f8c1e8c749564fe1bede5e3a273435237f6c64aa9f47008ee129c",
+      "signals": {
+        "added_comment_ratio": "20/149",
+        "delegates_to_add": "false",
+        "diff_shortstat": "10 files changed, 590 insertions(+), 37 deletions(-)",
+        "existing_test_lines_deleted": "16",
+        "files_changed": "10",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/raw.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "max",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run03-1787486351497357720",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 3632352,
+        "cache_read_tokens": 3437844,
+        "output_tokens": 10353,
+        "cost_usd": 1.495959
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run03-1787486351497357720/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run03-1787486351497357720/diff.patch",
+      "patch_sha256": "fb057ac846f7dd36b10b60ad890a14e34dfa22ae37ffe715b6f27350b63c69c8",
+      "signals": {
+        "added_comment_ratio": "6/24",
+        "delegates_to_add": "false",
+        "diff_shortstat": "6 files changed, 372 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "6",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run01-1787481948864951877",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 4956497,
+        "cache_read_tokens": 4747959,
+        "output_tokens": 17838,
+        "cost_usd": 1.8628337500000003
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run01-1787481948864951877/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run01-1787481948864951877/diff.patch",
+      "patch_sha256": "837841fac62914a88efbf7af7d39089a5248ebfe9c5f2c3d454c924c93ce6da5",
+      "signals": {
+        "added_comment_ratio": "17/155",
+        "delegates_to_add": "false",
+        "diff_shortstat": "9 files changed, 789 insertions(+), 3 deletions(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "9",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run02-1787482391132772220",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 2860207,
+        "cache_read_tokens": 2719556,
+        "output_tokens": 8653,
+        "cost_usd": 1.086387
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run02-1787482391132772220/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run02-1787482391132772220/diff.patch",
+      "patch_sha256": "47ea26c027e34a9c19aced12a4928d46b75df63d3b85d9eb5eb0dca5f8c74692",
+      "signals": {
+        "added_comment_ratio": "0/11",
+        "delegates_to_add": "false",
+        "diff_shortstat": "4 files changed, 247 insertions(+), 9 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "4",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "pipedrive/retry_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run03-1787482646817101755",
+      "end_reason": "simulator_end",
+      "gates_failed": 1,
+      "usage": {
+        "input_tokens": 5972466,
+        "cache_read_tokens": 5849959,
+        "output_tokens": 16704,
+        "cost_usd": 2.0359137499999993
+      },
+      "result_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run03-1787482646817101755/result.json",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run03-1787482646817101755/diff.patch",
+      "patch_sha256": "b56611429baa71df0949316c0c60e1439e8aa91c77b5eab0de05431946b0db2d",
+      "signals": {
+        "added_comment_ratio": "9/27",
+        "delegates_to_add": "false",
+        "diff_shortstat": "10 files changed, 849 insertions(+), 7 deletions(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "10",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/raw_test.go pipedrive/retry.go pipedrive/retry_test.go pipedrive/v2/products.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/qwen3.8-27b",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-qwen3.8-27b-xhigh-run01-1787495244858199878",
+      "end_reason": "simulator_end",
+      "gates_failed": 1,
+      "usage": {
+        "input_tokens": 6810290,
+        "cache_read_tokens": 6698392,
+        "output_tokens": 20432
+      },
+      "result_path": "opencode/fireworks-ai-qwen3.8-27b-xhigh-run01-1787495244858199878/result.json",
+      "patch_path": "opencode/fireworks-ai-qwen3.8-27b-xhigh-run01-1787495244858199878/diff.patch",
+      "patch_sha256": "df37cbd7f43bd12d075173f607ec46b1a79b669925fdd9a7ccc53e427f880570",
+      "signals": {
+        "added_comment_ratio": "15/55",
+        "delegates_to_add": "false",
+        "diff_shortstat": "9 files changed, 802 insertions(+), 1 deletion(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "9",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/body_replacer_test.go pipedrive/options.go pipedrive/options_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/qwen3.8-27b",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-qwen3.8-27b-xhigh-run02-1787495535694409721",
+      "end_reason": "simulator_error",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 3625229,
+        "cache_read_tokens": 3539272,
+        "output_tokens": 13099
+      },
+      "result_path": "opencode/fireworks-ai-qwen3.8-27b-xhigh-run02-1787495535694409721/result.json",
+      "patch_path": "opencode/fireworks-ai-qwen3.8-27b-xhigh-run02-1787495535694409721/diff.patch",
+      "patch_sha256": "c4651cd34c16c0613fbc88a4d2f98e5b064581b5ac464d398d6090329a655b2b",
+      "signals": {
+        "added_comment_ratio": "13/78",
+        "delegates_to_add": "false",
+        "diff_shortstat": "8 files changed, 490 insertions(+), 13 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "8",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/retry_test.go pipedrive/v2/products.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "opencode",
+      "model": "fireworks-ai/qwen3.8-27b",
+      "effort": "xhigh",
+      "run_id": "fireworks-ai-qwen3.8-27b-xhigh-run03-1787495719769284750",
+      "end_reason": "simulator_end",
+      "gates_failed": 1,
+      "usage": {
+        "input_tokens": 5404232,
+        "cache_read_tokens": 5297546,
+        "output_tokens": 20858
+      },
+      "result_path": "opencode/fireworks-ai-qwen3.8-27b-xhigh-run03-1787495719769284750/result.json",
+      "patch_path": "opencode/fireworks-ai-qwen3.8-27b-xhigh-run03-1787495719769284750/diff.patch",
+      "patch_sha256": "320c381e39e6bebeb28b8f4456859363b1f18dfa46d90a814e063bfc3c43beef",
+      "signals": {
+        "added_comment_ratio": "10/58",
+        "delegates_to_add": "false",
+        "diff_shortstat": "7 files changed, 626 insertions(+), 1 deletion(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "7",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/raw.go pipedrive/raw_test.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.5",
+      "effort": "xhigh",
+      "run_id": "gpt-5.5-xhigh-run01-1787481624172786671",
+      "end_reason": "simulator_end",
+      "gates_failed": 1,
+      "usage": {
+        "input_tokens": 2251045,
+        "cache_read_tokens": 2146560,
+        "output_tokens": 15646
+      },
+      "result_path": "codex/gpt-5.5-xhigh-run01-1787481624172786671/result.json",
+      "patch_path": "codex/gpt-5.5-xhigh-run01-1787481624172786671/diff.patch",
+      "patch_sha256": "85adbb21e47a00502012650112ac598388ee5d9a0e7e6e36dd9507131dbfedbf",
+      "signals": {
+        "added_comment_ratio": "0/12",
+        "delegates_to_add": "true",
+        "diff_shortstat": "3 files changed, 192 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "pipedrive/raw.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.5",
+      "effort": "xhigh",
+      "run_id": "gpt-5.5-xhigh-run02-1787481823687274513",
+      "end_reason": "simulator_end",
+      "gates_failed": 1,
+      "usage": {
+        "input_tokens": 2042118,
+        "cache_read_tokens": 1942272,
+        "output_tokens": 16254
+      },
+      "result_path": "codex/gpt-5.5-xhigh-run02-1787481823687274513/result.json",
+      "patch_path": "codex/gpt-5.5-xhigh-run02-1787481823687274513/diff.patch",
+      "patch_sha256": "c4a66d72e0f1ef5a0734980c223dbfb586216b9b281810e61cf8e9af773dd57d",
+      "signals": {
+        "added_comment_ratio": "0/12",
+        "delegates_to_add": "true",
+        "diff_shortstat": "4 files changed, 187 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "4",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "pipedrive/raw.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.5",
+      "effort": "xhigh",
+      "run_id": "gpt-5.5-xhigh-run03-1787482019336379298",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 1441523,
+        "cache_read_tokens": 1348608,
+        "output_tokens": 17931
+      },
+      "result_path": "codex/gpt-5.5-xhigh-run03-1787482019336379298/result.json",
+      "patch_path": "codex/gpt-5.5-xhigh-run03-1787482019336379298/diff.patch",
+      "patch_sha256": "b3275cd2b986172d16a7716b6ab8f2903573148dc63f74badd08e1cc6c7cc921",
+      "signals": {
+        "added_comment_ratio": "0/30",
+        "delegates_to_add": "false",
+        "diff_shortstat": "3 files changed, 274 insertions(+), 2 deletions(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "pipedrive/raw.go",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-luna",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-luna-xhigh-run01-1787481347912349876",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 3690258,
+        "cache_read_tokens": 3515693,
+        "cache_creation_tokens": 174406,
+        "output_tokens": 24635
+      },
+      "result_path": "codex/gpt-5.6-luna-xhigh-run01-1787481347912349876/result.json",
+      "patch_path": "codex/gpt-5.6-luna-xhigh-run01-1787481347912349876/diff.patch",
+      "patch_sha256": "cdf37bd08ed8facbb4ef95d6ccf3ab7ac48ffeec3d0505465bca938de208265e",
+      "signals": {
+        "added_comment_ratio": "0/8",
+        "delegates_to_add": "false",
+        "diff_shortstat": "2 files changed, 98 insertions(+), 9 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-luna",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-luna-xhigh-run02-1787481510403551215",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 3634072,
+        "cache_read_tokens": 3463589,
+        "cache_creation_tokens": 170315,
+        "output_tokens": 27616
+      },
+      "result_path": "codex/gpt-5.6-luna-xhigh-run02-1787481510403551215/result.json",
+      "patch_path": "codex/gpt-5.6-luna-xhigh-run02-1787481510403551215/diff.patch",
+      "patch_sha256": "03bdca63f388c0c3c5789db9d0bc43333dc9e124ccb5c051daf345c21bdf7b86",
+      "signals": {
+        "added_comment_ratio": "1/8",
+        "delegates_to_add": "false",
+        "diff_shortstat": "2 files changed, 97 insertions(+), 9 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-luna",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-luna-xhigh-run03-1787481664223102176",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 2376147,
+        "cache_read_tokens": 2232184,
+        "cache_creation_tokens": 143831,
+        "output_tokens": 20717
+      },
+      "result_path": "codex/gpt-5.6-luna-xhigh-run03-1787481664223102176/result.json",
+      "patch_path": "codex/gpt-5.6-luna-xhigh-run03-1787481664223102176/diff.patch",
+      "patch_sha256": "e62f9420560d4e0e572974b6093879d9fa37ec868e56eeac5d63620103bab00a",
+      "signals": {
+        "added_comment_ratio": "0/8",
+        "delegates_to_add": "false",
+        "diff_shortstat": "2 files changed, 82 insertions(+), 9 deletions(-)",
+        "existing_test_lines_deleted": "4",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-sol-xhigh-run01-1787502411320655083",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 1460574,
+        "cache_read_tokens": 1381308,
+        "cache_creation_tokens": 79191,
+        "output_tokens": 11923
+      },
+      "result_path": "codex/gpt-5.6-sol-xhigh-run01-1787502411320655083/result.json",
+      "patch_path": "codex/gpt-5.6-sol-xhigh-run01-1787502411320655083/diff.patch",
+      "patch_sha256": "92217afc08e8301836dd04d51b6b93434c44315139d958964c4f009f7c4de452",
+      "signals": {
+        "added_comment_ratio": "2/18",
+        "delegates_to_add": "true",
+        "diff_shortstat": "4 files changed, 144 insertions(+), 7 deletions(-)",
+        "existing_test_lines_deleted": "6",
+        "files_changed": "4",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-sol-xhigh-run01-1787503580372491514",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 2347708,
+        "cache_read_tokens": 2227376,
+        "cache_creation_tokens": 120182,
+        "output_tokens": 26231
+      },
+      "result_path": "codex/gpt-5.6-sol-xhigh-run02-1787502665926813674/result.json",
+      "patch_path": "codex/gpt-5.6-sol-xhigh-run02-1787502665926813674/diff.patch",
+      "patch_sha256": "2b3543d58e9252e4e02f9c5f38b44265c76f2257c6809232d50a124f439bd43c",
+      "signals": {
+        "added_comment_ratio": "3/21",
+        "delegates_to_add": "true",
+        "diff_shortstat": "2 files changed, 173 insertions(+)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-sol-xhigh-run03-1787502875393137548",
+      "end_reason": "simulator_end",
+      "gates_failed": 0,
+      "usage": {
+        "input_tokens": 1762791,
+        "cache_read_tokens": 1689104,
+        "cache_creation_tokens": 73594,
+        "output_tokens": 13323
+      },
+      "result_path": "codex/gpt-5.6-sol-xhigh-run03-1787502875393137548/result.json",
+      "patch_path": "codex/gpt-5.6-sol-xhigh-run03-1787502875393137548/diff.patch",
+      "patch_sha256": "74af2bbab12dbd106b1c4425a209b2f07fe6d1a00486536e625643747e1bb88f",
+      "signals": {
+        "added_comment_ratio": "5/18",
+        "delegates_to_add": "true",
+        "diff_shortstat": "3 files changed, 156 insertions(+), 1 deletion(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "true"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-terra",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-terra-xhigh-run01-1787481204692760254",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 1433504,
+        "cache_read_tokens": 1330516,
+        "cache_creation_tokens": 102880,
+        "output_tokens": 19269
+      },
+      "result_path": "codex/gpt-5.6-terra-xhigh-run01-1787481204692760254/result.json",
+      "patch_path": "codex/gpt-5.6-terra-xhigh-run01-1787481204692760254/diff.patch",
+      "patch_sha256": "ebd67ce6d23e5792fee947a89a8689b2ac32f3c2d590eb7c9793026a54ed137f",
+      "signals": {
+        "added_comment_ratio": "11/28",
+        "delegates_to_add": "true",
+        "diff_shortstat": "2 files changed, 168 insertions(+), 3 deletions(-)",
+        "existing_test_lines_deleted": "2",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-terra",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-terra-xhigh-run02-1787481328244830756",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 1840985,
+        "cache_read_tokens": 1706939,
+        "cache_creation_tokens": 133944,
+        "output_tokens": 20885
+      },
+      "result_path": "codex/gpt-5.6-terra-xhigh-run02-1787481328244830756/result.json",
+      "patch_path": "codex/gpt-5.6-terra-xhigh-run02-1787481328244830756/diff.patch",
+      "patch_sha256": "9559b9630a4bb57d41535868ef5519aed10f0c25417ee931c0f20ef7dc62ab32",
+      "signals": {
+        "added_comment_ratio": "9/25",
+        "delegates_to_add": "true",
+        "diff_shortstat": "3 files changed, 123 insertions(+), 1 deletion(-)",
+        "existing_test_lines_deleted": "0",
+        "files_changed": "3",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    },
+    {
+      "task": "pd-files-upload",
+      "task_version": 2,
+      "harness": "codex",
+      "model": "gpt-5.6-terra",
+      "effort": "xhigh",
+      "run_id": "gpt-5.6-terra-xhigh-run03-1787481472470120878",
+      "end_reason": "simulator_end",
+      "gates_failed": 2,
+      "usage": {
+        "input_tokens": 2405103,
+        "cache_read_tokens": 2278171,
+        "cache_creation_tokens": 126788,
+        "output_tokens": 17728
+      },
+      "result_path": "codex/gpt-5.6-terra-xhigh-run03-1787481472470120878/result.json",
+      "patch_path": "codex/gpt-5.6-terra-xhigh-run03-1787481472470120878/diff.patch",
+      "patch_sha256": "5a59df0c4aaf52525436f2c261c01ccb251bed92ab5e8232f74372d046189b8b",
+      "signals": {
+        "added_comment_ratio": "10/13",
+        "delegates_to_add": "false",
+        "diff_shortstat": "2 files changed, 75 insertions(+), 6 deletions(-)",
+        "existing_test_lines_deleted": "5",
+        "files_changed": "2",
+        "handrolls_multipart": "false",
+        "out_of_scope_paths": "none",
+        "reuses_multipartbody": "true",
+        "upload_method_present": "false"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "claude-fable-5-xhigh-run01-1787499709359416055",
+      "kind": "run",
+      "run_id": "claude-fable-5-xhigh-run01-1787499709359416055",
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-fable-5-xhigh-run01-1787499709359416055/diff.patch",
+      "patch_sha256": "a755cedf297020ffd3173902b15da0d29eda7568fba14709c14361214c219456"
+    },
+    {
+      "id": "claude-fable-5-xhigh-run02-1787500319621635421",
+      "kind": "run",
+      "run_id": "claude-fable-5-xhigh-run02-1787500319621635421",
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-fable-5-xhigh-run02-1787500319621635421/diff.patch",
+      "patch_sha256": "9267ee54c2532eb481e6069e718c7e11ef7df29d317bb9e7f3512f04b5f0eadf"
+    },
+    {
+      "id": "claude-fable-5-xhigh-run03-1787500982266101630",
+      "kind": "run",
+      "run_id": "claude-fable-5-xhigh-run03-1787500982266101630",
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-fable-5-xhigh-run03-1787500982266101630/diff.patch",
+      "patch_sha256": "dcf0ccb15af9fc064877237f8ebb78492400d0eea22c20f61ada8d278f66f617"
+    },
+    {
+      "id": "claude-opus-4-6-xhigh-run01-1787482425658791042",
+      "kind": "run",
+      "run_id": "claude-opus-4-6-xhigh-run01-1787482425658791042",
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-opus-4-6-xhigh-run01-1787482425658791042/diff.patch",
+      "patch_sha256": "02505c9c5338b1ceb08c6da5a5d71453897c4df50ac722cca3ea4b5da6f81d93"
+    },
+    {
+      "id": "claude-opus-4-6-xhigh-run02-1787483215624126963",
+      "kind": "run",
+      "run_id": "claude-opus-4-6-xhigh-run02-1787483215624126963",
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-opus-4-6-xhigh-run02-1787483215624126963/diff.patch",
+      "patch_sha256": "41d77400b407b7f540e62000b1a7a8a3346a23962c58a76061c8bf35d1a524c2"
+    },
+    {
+      "id": "claude-opus-4-6-xhigh-run03-1787483699295762465",
+      "kind": "run",
+      "run_id": "claude-opus-4-6-xhigh-run03-1787483699295762465",
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-opus-4-6-xhigh-run03-1787483699295762465/diff.patch",
+      "patch_sha256": "2bbef1cb4e9af3c2abd1566e57caa4551216468a735f57df5d28583fcfdaebe5"
+    },
+    {
+      "id": "claude-opus-4-8-xhigh-run01-1787482476279665885",
+      "kind": "run",
+      "run_id": "claude-opus-4-8-xhigh-run01-1787482476279665885",
+      "harness": "claudecode",
+      "model": "claude-opus-4-8",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-opus-4-8-xhigh-run01-1787482476279665885/diff.patch",
+      "patch_sha256": "5d6c31a041660e9a1dedc6cf12c0a4b837e59efa3368b0a7f126f819bb6d93ac"
+    },
+    {
+      "id": "claude-opus-4-8-xhigh-run02-1787483545634051880",
+      "kind": "run",
+      "run_id": "claude-opus-4-8-xhigh-run02-1787483545634051880",
+      "harness": "claudecode",
+      "model": "claude-opus-4-8",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-opus-4-8-xhigh-run02-1787483545634051880/diff.patch",
+      "patch_sha256": "1ec2391c4e35d5794747ca8ae863fce5a14662ceb63fc4d3f490caec9c96a933"
+    },
+    {
+      "id": "claude-opus-5-xhigh-run01-1787499680647075458",
+      "kind": "run",
+      "run_id": "claude-opus-5-xhigh-run01-1787499680647075458",
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-opus-5-xhigh-run01-1787499680647075458/diff.patch",
+      "patch_sha256": "9d1676af0f0de045008ef2bca629ba40d020be7daa4372d39f5e7f1e3e916d37"
+    },
+    {
+      "id": "claude-opus-5-xhigh-run02-1787500436344803961",
+      "kind": "run",
+      "run_id": "claude-opus-5-xhigh-run02-1787500436344803961",
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-opus-5-xhigh-run02-1787500436344803961/diff.patch",
+      "patch_sha256": "305aa39d442cf59f881670a179cc4fd51cdd92ebf64e33ffc77733a50840a6de"
+    },
+    {
+      "id": "claude-opus-5-xhigh-run03-1787501147580365971",
+      "kind": "run",
+      "run_id": "claude-opus-5-xhigh-run03-1787501147580365971",
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-opus-5-xhigh-run03-1787501147580365971/diff.patch",
+      "patch_sha256": "a30be8e87ccb057efd04d054d269c8a498b910a88b6d4b8788320c9a93f9cb92"
+    },
+    {
+      "id": "claude-sonnet-5-xhigh-run01-1787502347821666304",
+      "kind": "run",
+      "run_id": "claude-sonnet-5-xhigh-run01-1787502347821666304",
+      "harness": "claudecode",
+      "model": "claude-sonnet-5",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-sonnet-5-xhigh-run01-1787502347821666304/diff.patch",
+      "patch_sha256": "26fac361f3353074c45e7d4653f0b1270df428e89aab3314b2532bb94fc8d7ad"
+    },
+    {
+      "id": "claude-sonnet-5-xhigh-run03-1787503346828545128",
+      "kind": "run",
+      "run_id": "claude-sonnet-5-xhigh-run03-1787503346828545128",
+      "harness": "claudecode",
+      "model": "claude-sonnet-5",
+      "effort": "xhigh",
+      "patch_path": "claudecode/claude-sonnet-5-xhigh-run03-1787503346828545128/diff.patch",
+      "patch_sha256": "11b767b62dbe6076aa4722a5b5526a9971a38f2483cd15818c8e241abccd337b"
+    },
+    {
+      "id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run03-1787481776184962922",
+      "kind": "run",
+      "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run03-1787481776184962922",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+      "effort": "xhigh",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run03-1787481776184962922/diff.patch",
+      "patch_sha256": "f84f704a02b819d69c2acb5611420bf56d6603ddf580886d2eb4ecb54c10c691"
+    },
+    {
+      "id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794",
+      "kind": "run",
+      "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813",
+      "effort": "xhigh",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794/diff.patch",
+      "patch_sha256": "33df93cc79aaf41f49b7ddd4a957a74e3e4f1c6f91634b6ae83db532bb0a1a3b"
+    },
+    {
+      "id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462",
+      "kind": "run",
+      "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "max",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462/diff.patch",
+      "patch_sha256": "e6d6403506f260f0c7a006c58e12914d8e115747c24a2e978e18fa7eed894770"
+    },
+    {
+      "id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run03-1787486425046706129",
+      "kind": "run",
+      "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run03-1787486425046706129",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "max",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run03-1787486425046706129/diff.patch",
+      "patch_sha256": "9e2b5da6d02302e79f2a21047e154425a8a9cebf90e9fbd469b734794271e64d"
+    },
+    {
+      "id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run01-1787485516052691791",
+      "kind": "run",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run01-1787485516052691791",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "max",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run01-1787485516052691791/diff.patch",
+      "patch_sha256": "afe0f119dfa715496fa048931a12a2d33e88291a6c80ab36c5cee1b754699e40"
+    },
+    {
+      "id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run03-1787486351497357720",
+      "kind": "run",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run03-1787486351497357720",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "max",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run03-1787486351497357720/diff.patch",
+      "patch_sha256": "fb057ac846f7dd36b10b60ad890a14e34dfa22ae37ffe715b6f27350b63c69c8"
+    },
+    {
+      "id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run01-1787481948864951877",
+      "kind": "run",
+      "run_id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run01-1787481948864951877",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "xhigh",
+      "patch_path": "opencode/fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run01-1787481948864951877/diff.patch",
+      "patch_sha256": "837841fac62914a88efbf7af7d39089a5248ebfe9c5f2c3d454c924c93ce6da5"
+    },
+    {
+      "id": "gpt-5.6-sol-xhigh-run01-1787502411320655083",
+      "kind": "run",
+      "run_id": "gpt-5.6-sol-xhigh-run01-1787502411320655083",
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "patch_path": "codex/gpt-5.6-sol-xhigh-run01-1787502411320655083/diff.patch",
+      "patch_sha256": "92217afc08e8301836dd04d51b6b93434c44315139d958964c4f009f7c4de452"
+    },
+    {
+      "id": "gpt-5.6-sol-xhigh-run01-1787503580372491514",
+      "kind": "run",
+      "run_id": "gpt-5.6-sol-xhigh-run01-1787503580372491514",
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "patch_path": "codex/gpt-5.6-sol-xhigh-run02-1787502665926813674/diff.patch",
+      "patch_sha256": "2b3543d58e9252e4e02f9c5f38b44265c76f2257c6809232d50a124f439bd43c"
+    },
+    {
+      "id": "gpt-5.6-sol-xhigh-run03-1787502875393137548",
+      "kind": "run",
+      "run_id": "gpt-5.6-sol-xhigh-run03-1787502875393137548",
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "patch_path": "codex/gpt-5.6-sol-xhigh-run03-1787502875393137548/diff.patch",
+      "patch_sha256": "74af2bbab12dbd106b1c4425a209b2f07fe6d1a00486536e625643747e1bb88f"
+    },
+    {
+      "id": "reference",
+      "kind": "reference",
+      "patch_path": "reference/reference.patch",
+      "patch_sha256": "bd6f57dd74abae1323c60482f28189bf8054f3655f87645f8f538a4503d4c18e"
+    }
+  ],
+  "excluded": [
+    {
+      "result_path": "claudecode/claude-opus-4-8-xhigh-run03-1787484294417000046/result.json",
+      "run_id": "claude-opus-4-8-xhigh-run03-1787484294417000046",
+      "reason": "harness_error"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "claudecode",
+  "model": "claude-opus-4-8",
+  "effort": "xhigh",
+  "run_id": "claude-opus-4-8-xhigh-run03-1787484294417000046",
+  "started_at": "2026-08-23T11:24:56.054082463Z",
+  "duration_sec": 443.391171869,
+  "turns": 1,
+  "end_reason": "harness_error",
+  "gates_failed": 1,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": false,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "0/0",
+    "delegates_to_add": "false",
+    "diff_shortstat": "none",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "0",
+    "handrolls_multipart": "false",
+    "reuses_multipartbody": "false",
+    "upload_method_present": "false"
+  },
+  "metrics": {
+    "turns": 1,
+    "tool_calls": 1,
+    "reads": 0,
+    "edits": 0,
+    "shell_commands": 0,
+    "test_runs": 0,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/claudecode/claude-opus-4-8-xhigh-run03-1787484294417000046/workspace"
+}

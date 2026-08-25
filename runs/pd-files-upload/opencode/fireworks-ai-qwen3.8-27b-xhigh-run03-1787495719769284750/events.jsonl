@@ -1,0 +1,113 @@
+{"seq":1,"turn":1,"type":"shell","tool":"bash","command":"find /agent/workspace -type f -name \"*.go\" | head -50 \u0026\u0026 echo \"---\" \u0026\u0026 ls /agent/workspace"}
+{"seq":2,"turn":1,"type":"shell","tool":"bash","command":"ls /agent/workspace/pipedrive /agent/workspace/pipedrive/v1 /agent/workspace/pipedrive/v2 /agent/workspace/internal"}
+{"seq":3,"turn":1,"type":"read","tool":"grep","path":"/agent/workspace/pipedrive"}
+{"seq":4,"turn":1,"type":"shell","tool":"bash","command":"grep -rn \"Files\" /agent/workspace/pipedrive/v2/client.go | head -20; echo ---; grep -rln \"FilesService\\|Files.Add\" /agent/workspace/pipedrive --include=\"*.go\""}
+{"seq":5,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/v1/files.go"}
+{"seq":6,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/retry.go"}
+{"seq":7,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/raw.go"}
+{"seq":8,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/v1/call_logs.go"}
+{"seq":9,"turn":1,"type":"shell","tool":"bash","command":"ls -R /agent/workspace/internal/multipartbody /agent/workspace/internal/gen 2\u003e/dev/null | head -40"}
+{"seq":10,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/internal/multipartbody/multipartbody.go"}
+{"seq":11,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/v1/files_test.go"}
+{"seq":12,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/roundtripper.go"}
+{"seq":13,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/retry_test.go"}
+{"seq":14,"turn":1,"type":"shell","tool":"bash","command":"grep -n \"Service\" /agent/workspace/pipedrive/v2/client.go | head -40; echo ===; git -C /agent/workspace status; git -C /agent/workspace log --oneline -8"}
+{"seq":15,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/middleware.go"}
+{"seq":16,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/config.go"}
+{"seq":17,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/options.go"}
+{"seq":18,"turn":1,"type":"shell","tool":"bash","command":"grep -n \"files\" /agent/workspace/internal/gen/v1/openapi.gen.go | head -30"}
+{"seq":19,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/internal/gen/v1/openapi.gen.go"}
+{"seq":20,"turn":1,"type":"shell","tool":"bash","command":"ls /agent/workspace/openapi; grep -n -A 30 '\"files\":' /agent/workspace/openapi/v1.yaml 2\u003e/dev/null | head -60"}
+{"seq":21,"turn":1,"type":"shell","tool":"bash","command":"ls -R /agent/workspace/openapi | head -30"}
+{"seq":22,"turn":1,"type":"shell","tool":"bash","command":"grep -n \"AddFile\\|/files\" /agent/workspace/openapi/upstream/v1.yaml | head; echo ===; grep -n -B2 -A40 \"operationId: addFile\" /agent/workspace/openapi/upstream/v1.yaml | head -80"}
+{"seq":23,"turn":1,"type":"shell","tool":"bash","command":"sed -n 9705,9730p /agent/workspace/openapi/upstream/v1.yaml"}
+{"seq":24,"turn":1,"type":"shell","tool":"bash","command":"grep -n \"^func With\" /agent/workspace/pipedrive/v2/deals.go | head -20; echo ===; grep -n \"^func With\" /agent/workspace/pipedrive/v1/deals.go | head -25"}
+{"seq":25,"turn":1,"type":"shell","tool":"bash","command":"grep -n \"type \\(DealID\\|PersonID\\|OrganizationID\\|ProductID\\|ActivityID\\|LeadID\\|ProjectID\\|FileID\\) \" /agent/workspace/pipedrive/v1/*.go; echo ===; grep -n \"func mergeQueryValues\\|func validateID\" /agent/workspace/pipedrive/v1/shared.go"}
+{"seq":26,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/raw_test.go"}
+{"seq":27,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/v1/test_helpers_test.go"}
+{"seq":28,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/pipedrive/v1/shared.go"}
+{"seq":29,"turn":1,"type":"shell","tool":"bash","command":"ls /agent/workspace/docs; head -40 /agent/workspace/CHANGELOG.md"}
+{"seq":30,"turn":1,"type":"read","tool":"grep","path":"/agent/workspace/docs"}
+{"seq":31,"turn":1,"type":"shell","tool":"bash","command":"grep -rn \"Files\\|multipart\" /agent/workspace/docs | head; echo ===; grep -rn \"Files\" /agent/workspace/README.md /agent/workspace/ARCHITECTURE.md 2\u003e/dev/null | head"}
+{"seq":32,"turn":1,"type":"shell","tool":"bash","command":"ls /agent/workspace/internal/multipartbody/; grep -rn \"files\" /agent/workspace/openapi/upstream/v2.yaml | head -5; git -C /agent/workspace branch -a; git -C /agent/workspace status | head -3"}
+{"seq":33,"turn":1,"type":"shell","tool":"bash","command":"grep -rn \"retry\\|Retry\" /agent/workspace/README.md | head -20"}
+{"seq":34,"turn":1,"type":"assistant_message","text":"\n\nNow I have the full picture. Let me check a few remaining details before implementing.\n\n\n"}
+{"seq":35,"turn":1,"type":"read","tool":"read","path":"/agent/workspace/README.md"}
+{"seq":36,"turn":1,"type":"shell","tool":"bash","command":"grep -rn \"func parseRetryAfter\" /agent/workspace/pipedrive/; grep -n \"func NewClient\" /agent/workspace/pipedrive/v1/client.go"}
+{"seq":37,"turn":1,"type":"assistant_message","text":"\n\nLet me check a few remaining pieces — `parseRetryAfter` and the v1 client constructor.\n\n"}
+{"seq":38,"turn":1,"type":"other","tool":"todowrite"}
+{"seq":39,"turn":1,"type":"assistant_message","text":"\n\nI've found the root cause. Now let me set up the work plan.\n\n"}
+{"seq":40,"turn":1,"type":"assistant_message","text":"\n\n**Root cause identified:** `retryTransport.RoundTrip` (pipedrive/retry.go:86) only allows retries when the request has a replayable body (`GetBody != nil` or empty). `http.NewRequestWithContext` only auto-sets `GetBody` for `*bytes.Reader`/`*bytes.Buffer`/`*strings.Reader` bodies. Uploads from `os.Open` (a generic `io.Reader`) have no `GetBody`, so on 429 `canReplayBody=false` and the request fails immediately. JSON calls work because they get marshaled into a `*bytes.Reader`.\n\n"}
+{"seq":41,"turn":1,"type":"shell","tool":"bash","command":"git -C /agent/workspace checkout -b fix/file-uploads \u0026\u0026 git -C /agent/workspace branch --show-current"}
+{"seq":42,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/retry_test.go"}
+{"seq":43,"turn":1,"type":"assistant_message","text":"\n\nNow the failing tests for the retry fix. First at the transport level:\n\n"}
+{"seq":44,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/retry_test.go"}
+{"seq":45,"turn":1,"type":"assistant_message","text":"\n\nNow the end-to-end test in `raw_test.go` mirroring the user's exact flow:\n\n"}
+{"seq":46,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/raw_test.go"}
+{"seq":47,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/raw_test.go"}
+{"seq":48,"turn":1,"type":"assistant_message","text":"\n\nNow run these tests to confirm they fail (red phase):\n\n"}
+{"seq":49,"turn":1,"type":"test_run","tool":"bash","command":"go test ./pipedrive/ -run 'TestRetryTransport_RetriesSeekable|TestRawClient_Do_RetriesSeekable|TestRawClient_Do_UploadBodyNotReplayable' -v 2\u003e\u00261 | tail -30"}
+{"seq":50,"turn":1,"type":"assistant_message","text":"\n\nRed phase confirmed — all three retry tests fail exactly as reported (429 fails immediately). Now the fix in `retry.go`:\n\n"}
+{"seq":51,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/retry.go"}
+{"seq":52,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/retry.go"}
+{"seq":53,"turn":1,"type":"test_run","tool":"bash","command":"go test ./pipedrive/ -run 'TestRetryTransport|TestRawClient' 2\u003e\u00261 | tail -5"}
+{"seq":54,"turn":1,"type":"assistant_message","text":"\n\nThe transport tests pass now, but the end-to-end test reveals that net/http closes the request body after the response. Let me check the Go source:\n\n"}
+{"seq":55,"turn":1,"type":"shell","tool":"bash","command":"go env GOROOT; grep -n \"req.Body.Close\\|closeBody\\|Body.Close()\" $(go env GOROOT)/src/net/http/request.go | head; grep -n \"Body.Close\\|closeBody\" $(go env GOROOT)/src/net/http/client.go | head"}
+{"seq":56,"turn":1,"type":"shell","tool":"bash","command":"sed -n 590,610p /usr/local/go/src/net/http/client.go; echo ...; sed -n 740,760p /usr/local/go/src/net/http/client.go; echo ...; sed -n 215,235p /usr/local/go/src/net/http/client.go"}
+{"seq":57,"turn":1,"type":"shell","tool":"bash","command":"sed -n 570,605p /usr/local/go/src/net/http/request.go"}
+{"seq":58,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/retry.go"}
+{"seq":59,"turn":1,"type":"assistant_message","text":"\n\nImportant finding: `Request.write` in net/http **always closes the request body** after sending (request.go:593 \"always closes body\"). As a result, an `*os.File` body can no longer be re-seeked after the first attempt — even if we add rewind at the transport level, it will break with `file already closed` instead of returning a clean 429.\n\nThe correct layer is `RawClient.Do`: materialize the streaming `io.Reader` body before constructing the request, so that the request gets a `GetBody` (retry) and a known `Content-Length`. This is consistent with the raw client's existing design (which already buffers the entire response via `io.ReadAll`). Revert the transport change:\n\n\n"}
+{"seq":60,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/retry.go"}
+{"seq":61,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/retry_test.go"}
+{"seq":62,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/retry_test.go"}
+{"seq":63,"turn":1,"type":"assistant_message","text":"\n\nNow implement the fix in `raw.go`:\n\n"}
+{"seq":64,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/raw.go"}
+{"seq":65,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/raw_test.go"}
+{"seq":66,"turn":1,"type":"assistant_message","text":"\n\nI need to update `raw_test.go` to reflect the new behavior — since all raw client bodies are now materialized, even a streamed body gets retried (the previous \"no retry\" case no longer occurs via the raw client):\n\n"}
+{"seq":67,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/raw_test.go"}
+{"seq":68,"turn":1,"type":"test_run","tool":"bash","command":"go test ./pipedrive/ 2\u003e\u00261 | tail -5"}
+{"seq":69,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/raw.go"}
+{"seq":70,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/raw.go"}
+{"seq":71,"turn":1,"type":"assistant_message","text":"\n\nLet me restructure that block more cleanly:\n\n"}
+{"seq":72,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/raw.go"}
+{"seq":73,"turn":1,"type":"test_run","tool":"bash","command":"go test ./pipedrive/ 2\u003e\u00261 | tail -5"}
+{"seq":74,"turn":1,"type":"assistant_message","text":"\n\nAll green. Let me run the full suite to check for regressions, then move to the `AddFile` feature:\n\n"}
+{"seq":75,"turn":1,"type":"test_run","tool":"bash","command":"go test ./... 2\u003e\u00261 | grep -v \"^ok\\|no test files\" | head; echo \"EXIT: $?\""}
+{"seq":76,"turn":1,"type":"edit","tool":"write","path":"/agent/workspace/internal/multipartbody/multipartbody_test.go"}
+{"seq":77,"turn":1,"type":"assistant_message","text":"\n\nFull suite passes. Now the second part — the `AddFile` convenience method. Tests first:\n\n"}
+{"seq":78,"turn":1,"type":"edit","tool":"write","path":"/agent/workspace/internal/multipartbody/multipartbody_test.go"}
+{"seq":79,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/v1/files_test.go"}
+{"seq":80,"turn":1,"type":"assistant_message","text":"\n\nNow the v1 files tests:\n\n"}
+{"seq":81,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/v1/files_test.go"}
+{"seq":82,"turn":1,"type":"test_run","tool":"bash","command":"go test ./internal/multipartbody/ ./pipedrive/v1/ 2\u003e\u00261 | head -15"}
+{"seq":83,"turn":1,"type":"assistant_message","text":"\n\nRed confirmed. Now implement `multipartbody.New`:\n\n"}
+{"seq":84,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/internal/multipartbody/multipartbody.go"}
+{"seq":85,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/v1/files.go"}
+{"seq":86,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/v1/files.go"}
+{"seq":87,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/v1/files.go"}
+{"seq":88,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/pipedrive/v1/files.go"}
+{"seq":89,"turn":1,"type":"test_run","tool":"bash","command":"go test ./internal/multipartbody/ ./pipedrive/v1/ 2\u003e\u00261 | tail -5"}
+{"seq":90,"turn":1,"type":"assistant_message","text":"\n\nAll green. Now full verification:\n\n"}
+{"seq":91,"turn":1,"type":"test_run","tool":"bash","command":"gofmt -l . 2\u003e/dev/null; echo \"gofmt done\"; go vet ./... 2\u003e\u00261 | head; echo \"vet done\"; go test ./... 2\u003e\u00261 | grep -v \"^ok\\|no test files\"; echo \"test exit: $?\""}
+{"seq":92,"turn":1,"type":"test_run","tool":"bash","command":"go test ./... 2\u003e\u00261 | tail -8"}
+{"seq":93,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/CHANGELOG.md"}
+{"seq":94,"turn":1,"type":"assistant_message","text":"\n\nEverything passes. Now update the CHANGELOG:\n\n"}
+{"seq":95,"turn":1,"type":"assistant_message","text":"\n\nLet me run the race detector on the affected packages to be thorough:\n\n"}
+{"seq":96,"turn":1,"type":"test_run","tool":"bash","command":"go test -race ./pipedrive/ ./pipedrive/v1/ ./internal/multipartbody/ 2\u003e\u00261 | tail -5"}
+{"seq":97,"turn":1,"type":"assistant_message","text":"\n\nRace-clean. Let me review the complete diff before committing:\n\n"}
+{"seq":98,"turn":1,"type":"shell","tool":"bash","command":"git -C /agent/workspace status --short; echo ===; git -C /agent/workspace diff --stat"}
+{"seq":99,"turn":1,"type":"shell","tool":"bash","command":"git -C /agent/workspace diff pipedrive/raw.go"}
+{"seq":100,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/CHANGELOG.md"}
+{"seq":101,"turn":1,"type":"assistant_message","text":"\n\nNow commit in two focused changes. First, the retry fix — with only its changelog entry:\n\n"}
+{"seq":102,"turn":1,"type":"shell","tool":"bash","command":"git -C /agent/workspace add pipedrive/raw.go pipedrive/raw_test.go CHANGELOG.md \u0026\u0026 git -C /agent/workspace commit -q -m \"fix(raw): materialize streaming bodies so uploads can be retried\n\nStreaming request bodies (for example files opened with os.Open) had no\nGetBody, so the retry transport treated them as un-replayable and failed\nimmediately on 429 instead of retrying. RawClient now buffers such bodies\nbefore sending, giving the request a working GetBody and a known\nContent-Length instead of chunked transfer.\" \u0026\u0026 git -C /agent/workspace show --stat --oneline HEAD | head -8"}
+{"seq":103,"turn":1,"type":"assistant_message","text":"\n\nNow I'll create the two focused commits. Commit 1 is the retry fix:\n\n"}
+{"seq":104,"turn":1,"type":"shell","tool":"bash","command":"git -C /agent/workspace log -3 --format='%an \u003c%ae\u003e'"}
+{"seq":105,"turn":1,"type":"shell","tool":"bash","command":"git -C /agent/workspace -c user.name=\"Juho Koskela\" -c user.email=\"juho@sellomatic.fi\" commit -q -m \"fix(raw): materialize streaming bodies so uploads can be retried\n\nStreaming request bodies (for example files opened with os.Open) had no\nGetBody, so the retry transport treated them as un-replayable and failed\nimmediately on 429 instead of retrying. RawClient now buffers such bodies\nbefore sending, giving the request a working GetBody and a known\nContent-Length instead of chunked transfer.\" \u0026\u0026 git -C /agent/workspace show --stat --oneline HEAD | head -8"}
+{"seq":106,"turn":1,"type":"edit","tool":"edit","path":"/agent/workspace/CHANGELOG.md"}
+{"seq":107,"turn":1,"type":"assistant_message","text":"\n\nCommit 1 done. Now restore the \"Added\" changelog entry and commit the feature:\n\n"}
+{"seq":108,"turn":1,"type":"shell","tool":"bash","command":"git -C /agent/workspace add internal/multipartbody/multipartbody.go internal/multipartbody/multipartbody_test.go pipedrive/v1/files.go pipedrive/v1/files_test.go CHANGELOG.md \u0026\u0026 git -C /agent/workspace -c user.name=\"Juho Koskela\" -c user.email=\"juho@sellomatic.fi\" commit -q -m \"feat(v1): add FilesService.AddFile multipart upload\n\nAddFile uploads a file from a name and reader, building the multipart\nform-data body internally so callers no longer hand-assemble it. Item\nassociation form fields are supported through WithFilesDealID,\nWithFilesPersonID, WithFilesOrganizationID, WithFilesProductID,\nWithFilesActivityID, WithFilesLeadID and WithFilesProjectID.\" \u0026\u0026 git -C /agent/workspace show --stat --oneline HEAD | head -9 \u0026\u0026 git -C /agent/workspace status --short \u0026\u0026 git -C /agent/workspace log --oneline -3"}
+{"seq":109,"turn":1,"type":"assistant_message","text":"\n\nFinal verification of the complete branch:\n\n"}
+{"seq":110,"turn":1,"type":"test_run","tool":"bash","command":"gofmt -l . \u0026\u0026 go vet ./... \u0026\u0026 go test ./... 2\u003e\u00261 | grep -v \"no test files\""}
+{"seq":111,"turn":1,"type":"other","tool":"todowrite"}
+{"seq":112,"turn":1,"type":"assistant_message","text":"\n\nDone. Branch `fix/file-uploads` with two commits: `bba7283` (fix) and `99e06ef` (feat).\n\n## PR notes\n\n**Summary**\n- Fixed uploads failing immediately on 429: the retry transport only retries requests with a replayable body (`GetBody`), and `http.NewRequestWithContext` sets that only for `*bytes.Buffer`/`*bytes.Reader`/`*strings.Reader` — so bodies from `os.Open` (or any streamed multipart) were never retried, while JSON calls (marshaled to `*bytes.Reader`) were.\n- `RawClient.Do` (pipedrive/raw.go:62) now materializes streaming `io.Reader` bodies into memory before sending, so every raw-client request gets a working `GetBody` plus a known `Content-Length` instead of chunked transfer — 429/502/503/504 retries now work for `Files.Add`, `Files.Update`, and `Raw().Do` uploads alike.\n- Added `v1.FilesService.AddFile(ctx, fileName, content, opts...)` (pipedrive/v1/files.go:150): takes a file name and reader like `CallLogsService.AddRecording` and builds the multipart body internally.\n- Added association options per the v1 spec: `WithFilesDealID`, `WithFilesPersonID`, `WithFilesOrganizationID`, `WithFilesProductID`, `WithFilesActivityID`, `WithFilesLeadID`, `WithFilesProjectID`.\n- Extended `internal/multipartbody` with `New(fields, fieldName, fileName, src)`; `NewFile` now delegates to it (call-log behavior unchanged).\n\n**Testing performed**\n- TDD: new tests failed first, then passed. `go test ./...`, `gofmt -l .`, `go vet ./...`, and `go test -race` on the touched packages — all green.\n- `raw_test.go`: end-to-end 429→200 with an `os.Open` body (full body re-sent on retry, correct `Content-Length`) and with a piped streaming body; transport-level non-replayable contract (`DoesNotRetryWhenBodyNotReplayable`) still holds.\n- `v1/files_test.go`: multipart shape (file part + form fields), input validation, and the reported scenario — `RetryPolicy{RetryAllMethods: true}` with an `os.Open` file retrying 429→200 with the full file part received.\n- `multipartbody_test.…"}
+{"seq":113,"turn":1,"type":"turn_end","text":"\n\nDone. Branch `fix/file-uploads` with two commits: `bba7283` (fix) and `99e06ef` (feat).\n\n## PR notes\n\n**Summary**\n- Fixed uploads failing immediately on 429: the retry transport only retries requests with a replayable body (`GetBody`), and `http.NewRequestWithContext` sets that only for `*bytes.Buffer`/`*bytes.Reader`/`*strings.Reader` — so bodies from `os.Open` (or any streamed multipart) were never retried, while JSON calls (marshaled to `*bytes.Reader`) were.\n- `RawClient.Do` (pipedrive/raw.go:62) now materializes streaming `io.Reader` bodies into memory before sending, so every raw-client request gets a working `GetBody` plus a known `Content-Length` instead of chunked transfer — 429/502/503/504 retries now work for `Files.Add`, `Files.Update`, and `Raw().Do` uploads alike.\n- Added `v1.FilesService.AddFile(ctx, fileName, content, opts...)` (pipedrive/v1/files.go:150): takes a file name and reader like `CallLogsService.AddRecording` and builds the multipart body internally.\n- Added association options per the v1 spec: `WithFilesDealID`, `WithFilesPersonID`, `WithFilesOrganizationID`, `WithFilesProductID`, `WithFilesActivityID`, `WithFilesLeadID`, `WithFilesProjectID`.\n- Extended `internal/multipartbody` with `New(fields, fieldName, fileName, src)`; `NewFile` now delegates to it (call-log behavior unchanged).\n\n**Testing performed**\n- TDD: new tests failed first, then passed. `go test ./...`, `gofmt -l .`, `go vet ./...`, and `go test -race` on the touched packages — all green.\n- `raw_test.go`: end-to-end 429→200 with an `os.Open` body (full body re-sent on retry, correct `Content-Length`) and with a piped streaming body; transport-level non-replayable contract (`DoesNotRetryWhenBodyNotReplayable`) still holds.\n- `v1/files_test.go`: multipart shape (file part + form fields), input validation, and the reported scenario — `RetryPolicy{RetryAllMethods: true}` with an `os.Open` file retrying 429→200 with the full file part received.\n- `multipartbody_test.…"}

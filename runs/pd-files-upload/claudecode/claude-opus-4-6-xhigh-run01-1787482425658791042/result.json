@@ -1,0 +1,51 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "claudecode",
+  "model": "claude-opus-4-6",
+  "effort": "xhigh",
+  "run_id": "claude-opus-4-6-xhigh-run01-1787482425658791042",
+  "started_at": "2026-08-23T10:53:46.701079876Z",
+  "duration_sec": 780.984628271,
+  "turns": 4,
+  "end_reason": "simulator_end",
+  "gates_failed": 0,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": true,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "0/24",
+    "delegates_to_add": "false",
+    "diff_shortstat": "3 files changed, 106 insertions(+)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "3",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "pipedrive/retry_test.go",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "true"
+  },
+  "metrics": {
+    "turns": 4,
+    "tool_calls": 104,
+    "reads": 45,
+    "edits": 23,
+    "shell_commands": 27,
+    "test_runs": 8,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 5270088,
+    "cache_read_tokens": 4960639,
+    "cache_creation_tokens": 309373,
+    "output_tokens": 32939,
+    "cost_usd": 7.131399249999999
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/claudecode/claude-opus-4-6-xhigh-run01-1787482425658791042/workspace"
+}

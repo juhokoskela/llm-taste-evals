@@ -1,0 +1,1901 @@
+{
+  "complete": true,
+  "votes_completed": 828,
+  "votes_expected": 828,
+  "pairs_completed": 276,
+  "pairs_expected": 276,
+  "candidate_scores": [
+    {
+      "rank": 1,
+      "id": "reference",
+      "kind": "reference",
+      "bradley_terry_elo": 1500,
+      "win_probability_vs_reference": 0.5,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": false
+    },
+    {
+      "rank": 2,
+      "id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794",
+      "kind": "run",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813",
+      "effort": "xhigh",
+      "bradley_terry_elo": 1302.179685197857,
+      "win_probability_vs_reference": 0.24255080543198068,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 3,
+      "id": "claude-opus-4-6-xhigh-run02-1787483215624126963",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "bradley_terry_elo": 1149.1557499155258,
+      "win_probability_vs_reference": 0.11715809800046811,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 4,
+      "id": "claude-sonnet-5-xhigh-run03-1787503346828545128",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-sonnet-5",
+      "effort": "xhigh",
+      "bradley_terry_elo": 1017.1119047514601,
+      "win_probability_vs_reference": 0.05842955514001473,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 5,
+      "id": "claude-opus-4-8-xhigh-run02-1787483545634051880",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-opus-4-8",
+      "effort": "xhigh",
+      "bradley_terry_elo": 897.5849392837318,
+      "win_probability_vs_reference": 0.030243027140723404,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 6,
+      "id": "claude-sonnet-5-xhigh-run01-1787502347821666304",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-sonnet-5",
+      "effort": "xhigh",
+      "bradley_terry_elo": 786.3813253362661,
+      "win_probability_vs_reference": 0.016175984898584402,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 7,
+      "id": "claude-opus-4-6-xhigh-run03-1787483699295762465",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "bradley_terry_elo": 681.032902249751,
+      "win_probability_vs_reference": 0.008885991027281078,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 8,
+      "id": "claude-opus-4-6-xhigh-run01-1787482425658791042",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "bradley_terry_elo": 579.9165803531353,
+      "win_probability_vs_reference": 0.004984496535540725,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 9,
+      "id": "gpt-5.6-sol-xhigh-run01-1787503580372491514",
+      "kind": "run",
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "bradley_terry_elo": 481.87328719635866,
+      "win_probability_vs_reference": 0.002840846044705117,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 10,
+      "id": "gpt-5.6-sol-xhigh-run03-1787502875393137548",
+      "kind": "run",
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "bradley_terry_elo": 386.01683654891394,
+      "win_probability_vs_reference": 0.0016380611383473229,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 11,
+      "id": "gpt-5.6-sol-xhigh-run01-1787502411320655083",
+      "kind": "run",
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "bradley_terry_elo": 291.6266463470695,
+      "win_probability_vs_reference": 0.0009520350888720577,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 12,
+      "id": "claude-opus-4-8-xhigh-run01-1787482476279665885",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-opus-4-8",
+      "effort": "xhigh",
+      "bradley_terry_elo": 198.0811243697774,
+      "win_probability_vs_reference": 0.0005558547729281741,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 13,
+      "id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run03-1787486425046706129",
+      "kind": "run",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "max",
+      "bradley_terry_elo": 104.81160228445424,
+      "win_probability_vs_reference": 0.00032500334856237913,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 14,
+      "id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run03-1787486351497357720",
+      "kind": "run",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "max",
+      "bradley_terry_elo": 11.266080307162383,
+      "win_probability_vs_reference": 0.00018970675893591253,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 15,
+      "id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-max-run01-1787485516052691791",
+      "kind": "run",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "max",
+      "bradley_terry_elo": -83.12410989468208,
+      "win_probability_vs_reference": 0.00011018991999832361,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 16,
+      "id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462",
+      "kind": "run",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "max",
+      "bradley_terry_elo": -178.9805605421268,
+      "win_probability_vs_reference": 0.00006346306401184095,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 17,
+      "id": "claude-fable-5-xhigh-run03-1787500982266101630",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "bradley_terry_elo": -277.0238536989036,
+      "win_probability_vs_reference": 0.00003609314202250103,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 18,
+      "id": "claude-opus-5-xhigh-run01-1787499680647075458",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "bradley_terry_elo": -378.1401755955194,
+      "win_probability_vs_reference": 0.000020166976977922126,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 19,
+      "id": "claude-fable-5-xhigh-run02-1787500319621635421",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "bradley_terry_elo": -483.4885986820343,
+      "win_probability_vs_reference": 0.000010996987397064259,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 20,
+      "id": "claude-opus-5-xhigh-run02-1787500436344803961",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "bradley_terry_elo": -594.6922126295003,
+      "win_probability_vs_reference": 0.000005797849668910806,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 21,
+      "id": "fireworks-ai-accounts-fireworks-models-qwen3p8-max-xhigh-run01-1787481948864951877",
+      "kind": "run",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "xhigh",
+      "bradley_terry_elo": -714.2191780972285,
+      "win_probability_vs_reference": 0.0000029137399551023245,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 22,
+      "id": "claude-opus-5-xhigh-run03-1787501147580365971",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "bradley_terry_elo": -846.2630232612942,
+      "win_probability_vs_reference": 0.0000013625167505142418,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 23,
+      "id": "claude-fable-5-xhigh-run01-1787499709359416055",
+      "kind": "run",
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "bradley_terry_elo": -999.2869585436251,
+      "win_probability_vs_reference": 5.646539342013939e-7,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    },
+    {
+      "rank": 24,
+      "id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-flash-0731-xhigh-run03-1787481776184962922",
+      "kind": "run",
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+      "effort": "xhigh",
+      "bradley_terry_elo": -1197.1072733457686,
+      "win_probability_vs_reference": 1.8081386855089148e-7,
+      "direct_result_vs_reference": 0,
+      "direct_pair_complete": true
+    }
+  ],
+  "model_scores": [
+    {
+      "rank": 1,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 1,
+      "average_merge_probability": 0.08085026847732689,
+      "passed_run_probability": 0.24255080543198068
+    },
+    {
+      "rank": 2,
+      "harness": "claudecode",
+      "model": "claude-opus-4-6",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 3,
+      "average_merge_probability": 0.043676195187763306,
+      "passed_run_probability": 0.043676195187763306
+    },
+    {
+      "rank": 3,
+      "harness": "claudecode",
+      "model": "claude-sonnet-5",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 2,
+      "average_merge_probability": 0.024868513346199713,
+      "passed_run_probability": 0.03730277001929957
+    },
+    {
+      "rank": 4,
+      "harness": "claudecode",
+      "model": "claude-opus-4-8",
+      "effort": "xhigh",
+      "runs": 2,
+      "gate_passes": 2,
+      "average_merge_probability": 0.015399440956825789,
+      "passed_run_probability": 0.015399440956825789
+    },
+    {
+      "rank": 5,
+      "harness": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 3,
+      "average_merge_probability": 0.0018103140906414992,
+      "passed_run_probability": 0.0018103140906414992
+    },
+    {
+      "rank": 6,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "max",
+      "runs": 3,
+      "gate_passes": 2,
+      "average_merge_probability": 0.0001294888041914067,
+      "passed_run_probability": 0.00019423320628711004
+    },
+    {
+      "rank": 7,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "max",
+      "runs": 3,
+      "gate_passes": 2,
+      "average_merge_probability": 0.00009996555964474539,
+      "passed_run_probability": 0.00014994833946711808
+    },
+    {
+      "rank": 8,
+      "harness": "claudecode",
+      "model": "claude-fable-5",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 3,
+      "average_merge_probability": 0.000015884927784588894,
+      "passed_run_probability": 0.000015884927784588894
+    },
+    {
+      "rank": 9,
+      "harness": "claudecode",
+      "model": "claude-opus-5",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 3,
+      "average_merge_probability": 0.000009109114465782392,
+      "passed_run_probability": 0.000009109114465782392
+    },
+    {
+      "rank": 10,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/qwen3p8-max",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 1,
+      "average_merge_probability": 9.712466517007748e-7,
+      "passed_run_probability": 0.0000029137399551023245
+    },
+    {
+      "rank": 11,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 1,
+      "average_merge_probability": 6.027128951696382e-8,
+      "passed_run_probability": 1.8081386855089148e-7
+    },
+    {
+      "rank": 12,
+      "harness": "codex",
+      "model": "gpt-5.5",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 0,
+      "average_merge_probability": 0
+    },
+    {
+      "rank": 13,
+      "harness": "codex",
+      "model": "gpt-5.6-luna",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 0,
+      "average_merge_probability": 0
+    },
+    {
+      "rank": 14,
+      "harness": "codex",
+      "model": "gpt-5.6-terra",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 0,
+      "average_merge_probability": 0
+    },
+    {
+      "rank": 15,
+      "harness": "opencode",
+      "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 0,
+      "average_merge_probability": 0
+    },
+    {
+      "rank": 16,
+      "harness": "opencode",
+      "model": "fireworks-ai/qwen3.8-27b",
+      "effort": "xhigh",
+      "runs": 3,
+      "gate_passes": 0,
+      "average_merge_probability": 0
+    }
+  ],
+  "head_to_head": [
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0.5555555555555556,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.8888888888888888,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-fable-5 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.5555555555555556,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-6 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.5,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0.5,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-4-8 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 1,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0.4444444444444444,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.8888888888888888,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-opus-5 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0.4444444444444444,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0.5,
+      "samples": 6
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.7777777777777778,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.5555555555555556,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.7222222222222222,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.7222222222222222,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.7777777777777778,
+      "samples": 9
+    },
+    {
+      "row": "claudecode / claude-sonnet-5 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.5 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-luna / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0.5,
+      "samples": 6
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-sol / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 1,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "codex / gpt-5.6-terra / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.2222222222222222,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.4444444444444444,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.2222222222222222,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.2222222222222222,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.4444444444444444,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 6
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.4444444444444444,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.5555555555555556,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.4444444444444444,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.4444444444444444,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.5555555555555556,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.2777777777777778,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.7777777777777778,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.5555555555555556,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.7777777777777778,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.2777777777777778,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.7777777777777778,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.5555555555555556,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.7777777777777778,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.8333333333333334,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0.1111111111111111,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0.1111111111111111,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.2222222222222222,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.5555555555555556,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.4444444444444444,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.2222222222222222,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.2222222222222222,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "column": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "probability": 0.6666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "claudecode / claude-fable-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "claudecode / claude-opus-4-6 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "claudecode / claude-opus-4-8 / xhigh",
+      "probability": 0,
+      "samples": 6
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "claudecode / claude-opus-5 / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "claudecode / claude-sonnet-5 / xhigh",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "codex / gpt-5.5 / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "codex / gpt-5.6-luna / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "codex / gpt-5.6-sol / xhigh",
+      "probability": 0,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "codex / gpt-5.6-terra / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813 / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/kimi-k3 / xhigh",
+      "probability": 0.5,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / max",
+      "probability": 0.16666666666666666,
+      "samples": 9
+    },
+    {
+      "row": "opencode / fireworks-ai/qwen3.8-27b / xhigh",
+      "column": "opencode / fireworks-ai/accounts/fireworks/models/qwen3p8-max / xhigh",
+      "probability": 0.3333333333333333,
+      "samples": 9
+    }
+  ],
+  "judge_usage": {
+    "input_tokens": 16990646,
+    "cache_read_tokens": 4292864,
+    "output_tokens": 1191249
+  },
+  "presentation_a_wins": 408,
+  "presentation_b_wins": 419,
+  "tied_votes": 1
+}

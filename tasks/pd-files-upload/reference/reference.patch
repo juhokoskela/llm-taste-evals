@@ -1,0 +1,184 @@
+diff --git a/pipedrive/v1/files.go b/pipedrive/v1/files.go
+index 99c0276..a1d1972 100644
+--- a/pipedrive/v1/files.go
++++ b/pipedrive/v1/files.go
+@@ -8,6 +8,7 @@ import (
+ 	"net/url"
+ 	"strings"
+ 
++	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+ 
+@@ -136,6 +137,25 @@ func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType stri
+ 	return payload.Data, nil
+ }
+ 
++// Upload adds a file by encoding content as a multipart/form-data body.
++// Unlike Add, the encoded body is replayable, so uploads participate in
++// retries even when content itself is not seekable.
++func (s *FilesService) Upload(ctx context.Context, fileName string, content io.Reader, opts ...FilesOption) (*File, error) {
++	if fileName == "" {
++		return nil, fmt.Errorf("file name is required")
++	}
++	if content == nil {
++		return nil, fmt.Errorf("file content is required")
++	}
++
++	contentType, body, err := multipartbody.NewFile("file", fileName, content)
++	if err != nil {
++		return nil, err
++	}
++
++	return s.Add(ctx, body, contentType, opts...)
++}
++
+ func (s *FilesService) AddRemoteFile(ctx context.Context, form url.Values, opts ...FilesOption) (*File, error) {
+ 	cfg := newFilesOptions(opts)
+ 	if len(form) == 0 {
+diff --git a/pipedrive/v1/files_test.go b/pipedrive/v1/files_test.go
+index 664e1c7..8cce97e 100644
+--- a/pipedrive/v1/files_test.go
++++ b/pipedrive/v1/files_test.go
+@@ -4,10 +4,13 @@ import (
+ 	"bytes"
+ 	"context"
+ 	"errors"
++	"io"
+ 	"net/http"
+ 	"net/url"
+ 	"strings"
++	"sync/atomic"
+ 	"testing"
++	"time"
+ 
+ 	"github.com/juhokoskela/pipedrive-go/pipedrive"
+ )
+@@ -292,3 +295,127 @@ func TestFilesService_DownloadTo_DisablesResponseLimit(t *testing.T) {
+ 		t.Fatalf("unexpected payload: %q", got)
+ 	}
+ }
++
++func TestFilesService_Upload(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		if r.Method != http.MethodPost {
++			t.Fatalf("unexpected method: %s", r.Method)
++		}
++		if r.URL.Path != "/files" {
++			t.Fatalf("unexpected path: %s", r.URL.Path)
++		}
++		if r.URL.RawQuery != "" {
++			t.Fatalf("unexpected query: %q", r.URL.RawQuery)
++		}
++		mr, err := r.MultipartReader()
++		if err != nil {
++			t.Fatalf("multipart reader: %v", err)
++		}
++		part, err := mr.NextPart()
++		if err != nil {
++			t.Fatalf("next part: %v", err)
++		}
++		if part.FormName() != "file" {
++			t.Fatalf("unexpected form name: %q", part.FormName())
++		}
++		if part.FileName() != "report.pdf" {
++			t.Fatalf("unexpected file name: %q", part.FileName())
++		}
++		data, err := io.ReadAll(part)
++		if err != nil {
++			t.Fatalf("read part: %v", err)
++		}
++		if string(data) != "pdf-bytes" {
++			t.Fatalf("unexpected content: %q", data)
++		}
++
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":31,"name":"report.pdf"}}`))
++	})
++
++	file, err := client.Files.Upload(context.Background(), "report.pdf", strings.NewReader("pdf-bytes"))
++	if err != nil {
++		t.Fatalf("Upload error: %v", err)
++	}
++	if file.ID != 31 || file.Name != "report.pdf" {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
++func TestFilesService_Upload_RetriesStreamedContent(t *testing.T) {
++	t.Parallel()
++
++	var attempts atomic.Int32
++	client := newTestClientWithConfig(t, pipedrive.Config{
++		RetryPolicy: &pipedrive.RetryPolicy{
++			MaxAttempts:     2,
++			BaseDelay:       time.Millisecond,
++			MaxDelay:        2 * time.Millisecond,
++			RetryAllMethods: true,
++		},
++	}, func(w http.ResponseWriter, r *http.Request) {
++		if attempts.Add(1) == 1 {
++			w.WriteHeader(http.StatusTooManyRequests)
++			return
++		}
++		mr, err := r.MultipartReader()
++		if err != nil {
++			t.Fatalf("multipart reader: %v", err)
++		}
++		part, err := mr.NextPart()
++		if err != nil {
++			t.Fatalf("next part: %v", err)
++		}
++		data, err := io.ReadAll(part)
++		if err != nil {
++			t.Fatalf("read part: %v", err)
++		}
++		if string(data) != "streamed" {
++			t.Fatalf("retried request lost content: %q", data)
++		}
++		w.Header().Set("Content-Type", "application/json")
++		_, _ = w.Write([]byte(`{"success":true,"data":{"id":7,"name":"s.bin"}}`))
++	})
++
++	content := io.MultiReader(strings.NewReader("streamed"))
++	file, err := client.Files.Upload(context.Background(), "s.bin", content)
++	if err != nil {
++		t.Fatalf("Upload error: %v", err)
++	}
++	if attempts.Load() != 2 {
++		t.Fatalf("expected retry, got %d attempts", attempts.Load())
++	}
++	if file.ID != 7 {
++		t.Fatalf("unexpected file: %#v", file)
++	}
++}
++
++func TestFilesService_Upload_ValidatesInput(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		t.Fatal("request should not be sent")
++	})
++
++	if _, err := client.Files.Upload(context.Background(), "", strings.NewReader("x")); err == nil {
++		t.Fatal("expected error for empty file name")
++	}
++	if _, err := client.Files.Upload(context.Background(), "a.txt", nil); err == nil {
++		t.Fatal("expected error for nil content")
++	}
++}
++
++func TestFilesService_Upload_SourceReadError(t *testing.T) {
++	t.Parallel()
++
++	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
++		t.Fatal("request should not be sent")
++	})
++
++	_, err := client.Files.Upload(context.Background(), "a.txt", &errReader{err: errors.New("boom")})
++	if err == nil || !strings.Contains(err.Error(), "boom") {
++		t.Fatalf("expected source read error, got %v", err)
++	}
++}

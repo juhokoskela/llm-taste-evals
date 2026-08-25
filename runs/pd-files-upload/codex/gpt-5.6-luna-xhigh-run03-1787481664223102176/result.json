@@ -1,0 +1,50 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "codex",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "run_id": "gpt-5.6-luna-xhigh-run03-1787481664223102176",
+  "started_at": "2026-08-23T10:41:05.424022426Z",
+  "duration_sec": 137.059405646,
+  "turns": 2,
+  "end_reason": "simulator_end",
+  "gates_failed": 2,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": false,
+    "legacy_add_intact": false,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "0/8",
+    "delegates_to_add": "false",
+    "diff_shortstat": "2 files changed, 82 insertions(+), 9 deletions(-)",
+    "existing_test_lines_deleted": "4",
+    "files_changed": "2",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "none",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "false"
+  },
+  "metrics": {
+    "turns": 2,
+    "tool_calls": 38,
+    "reads": 0,
+    "edits": 3,
+    "shell_commands": 26,
+    "test_runs": 8,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 2376147,
+    "cache_read_tokens": 2232184,
+    "cache_creation_tokens": 143831,
+    "output_tokens": 20717
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/codex/gpt-5.6-luna-xhigh-run03-1787481664223102176/workspace"
+}

@@ -1,0 +1,20 @@
+.DS_Store
+
+# Private-repo tasks: reference patches and hidden tests contain private source.
+tasks-private/
+
+# Run artifacts are private by default; publishing is opt-in per task, because
+# a transcript for a private repo contains that repo's source.
+runs/*
+!runs/pd-files-upload/
+
+# Archived contestant workspaces are ~11 MB clones of the pinned base repo.
+# diff.patch plus the pinned base commit reproduces one exactly.
+runs/*/*/*/workspace/
+
+# Module-warm snapshots for private repos (go.mod/go.sum reveal module paths).
+docker/warm.d/*
+!docker/warm.d/README.md
+
+# Local mounts for private tasks and private repo mirrors.
+docker-compose.override.yml

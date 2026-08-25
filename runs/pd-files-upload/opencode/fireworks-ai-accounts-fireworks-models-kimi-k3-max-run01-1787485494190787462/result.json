@@ -1,0 +1,50 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "opencode",
+  "model": "fireworks-ai/accounts/fireworks/models/kimi-k3",
+  "effort": "max",
+  "run_id": "fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462",
+  "started_at": "2026-08-23T11:45:02.160932049Z",
+  "duration_sec": 438.475918282,
+  "turns": 1,
+  "end_reason": "simulator_end",
+  "gates_failed": 0,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": true,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "5/27",
+    "delegates_to_add": "false",
+    "diff_shortstat": "6 files changed, 447 insertions(+), 1 deletion(-)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "6",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "pipedrive/raw.go pipedrive/raw_test.go",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "true"
+  },
+  "metrics": {
+    "turns": 1,
+    "tool_calls": 58,
+    "reads": 13,
+    "edits": 16,
+    "shell_commands": 17,
+    "test_runs": 8,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 2079106,
+    "cache_read_tokens": 2013839,
+    "output_tokens": 11007,
+    "cost_usd": 1.1246877000000002
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/opencode/fireworks-ai-accounts-fireworks-models-kimi-k3-max-run01-1787485494190787462/workspace"
+}

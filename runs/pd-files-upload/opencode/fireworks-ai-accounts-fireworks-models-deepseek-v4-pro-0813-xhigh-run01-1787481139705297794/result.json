@@ -1,0 +1,50 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "opencode",
+  "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-pro-0813",
+  "effort": "xhigh",
+  "run_id": "fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794",
+  "started_at": "2026-08-23T10:32:20.596030877Z",
+  "duration_sec": 151.88782361,
+  "turns": 2,
+  "end_reason": "simulator_end",
+  "gates_failed": 0,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": true,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "0/12",
+    "delegates_to_add": "true",
+    "diff_shortstat": "2 files changed, 96 insertions(+)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "2",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "none",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "true"
+  },
+  "metrics": {
+    "turns": 2,
+    "tool_calls": 48,
+    "reads": 20,
+    "edits": 10,
+    "shell_commands": 13,
+    "test_runs": 5,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 1114754,
+    "cache_read_tokens": 1059257,
+    "output_tokens": 5008,
+    "cost_usd": 0.16364906799999998
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/opencode/fireworks-ai-accounts-fireworks-models-deepseek-v4-pro-0813-xhigh-run01-1787481139705297794/workspace"
+}

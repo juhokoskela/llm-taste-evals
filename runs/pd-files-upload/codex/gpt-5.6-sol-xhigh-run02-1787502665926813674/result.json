@@ -1,0 +1,50 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "run_id": "gpt-5.6-sol-xhigh-run01-1787503580372491514",
+  "started_at": "2026-08-23T16:46:21.481748167Z",
+  "duration_sec": 315.063758144,
+  "turns": 2,
+  "end_reason": "simulator_end",
+  "gates_failed": 0,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": true,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "3/21",
+    "delegates_to_add": "true",
+    "diff_shortstat": "2 files changed, 173 insertions(+)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "2",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "none",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "true"
+  },
+  "metrics": {
+    "turns": 2,
+    "tool_calls": 30,
+    "reads": 0,
+    "edits": 5,
+    "shell_commands": 16,
+    "test_runs": 7,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 2347708,
+    "cache_read_tokens": 2227376,
+    "cache_creation_tokens": 120182,
+    "output_tokens": 26231
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/codex/gpt-5.6-sol-xhigh-run01-1787503580372491514/workspace"
+}
