@@ -41,8 +41,7 @@ id parser, it is described as the shared parser rather than named.
 | 16 | GPT-5.6 Terra · max | 3.00 | 3 | $2.677 | 7,731,155 | 7,688,545 | 42,610 | 96.4% |
 | 17 | Qwen3.8-27B custom · xhigh | 2.79 | 3 | n/a | 4,110,577 | 4,098,809 | 11,769 | 97.8% |
 
-Cost for the custom Qwen3.8-27B arm is unreported: it ran against a private
-Fireworks deployment that no longer exists.
+Cost for Qwen3.8-27B doesn't exist: it ran against a private Fireworks deployment. Public pricing seems to hover around $0.40 per MTok in, $2.50-3.00 per MTok out, with cache read discounts varying wildly – anywhere from 20x to ~3x.
 
 Two runs out of 51 passed the hidden tests, both after the simulator corrected
 the model. The task hides one decision, what the parent parameter is called and
