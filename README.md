@@ -5,6 +5,8 @@ quality, not "does it compile with green tests". Modern frontier models mostly
 clear the correctness bar. What separates them is *how* they get to a solution
 and whether the diff they leave behind is mergeable.
 
+Summary piece available at [juhokoskela.fi](https://juhokoskela.fi/research/a-benchmark-score-is-not-a-model/).
+
 ## Methodology
 
 Each task is a real change on a real repository, scored in layers:
