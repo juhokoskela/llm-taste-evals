@@ -41,8 +41,8 @@ there.
 | 15 | DeepSeek V4 Flash 0731 · xhigh | 2.33 | 3 | $0.08111 | 2.224M | 2.203M | 20.7k | 94.48% |
 | 16 | Qwen3.8-27B custom · xhigh | 1.83 | 3 | n/a | 5.324M | 5.280M | 44.4k | 98.08% |
 
-Cost for the custom Qwen3.8-27B arm is unreported: it ran against a private
-Fireworks deployment that no longer exists.
+Cost for the custom Qwen3.8-27B doesn't exist: it ran against a private
+Fireworks deployment. Public pricing seems to hover around $0.40 per MTok in, $2.50-3.00 per MTok out, with cache read discounts varying wildly anywhere from 20x to ~3x.
 
 Nobody cleared 5.5 out of 10. The whole field either changed a stable public
 API, hand-rolled plumbing that already existed, or shipped several hundred
