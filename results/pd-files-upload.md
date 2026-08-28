@@ -1,6 +1,6 @@
 # pd-files-upload results
 
-16 configurations, 3 runs each, all at the pinned base commit behind the egress
+18 configurations, 3 runs each, all at the pinned base commit behind the egress
 proxy. Claude models ran through claudecode, GPT models through codex, the rest
 through opencode.
 
@@ -31,17 +31,29 @@ there.
 | 5 | Claude Sonnet 5 · xhigh | 5.17 | 3 | $2.830 | 4.885M | 4.847M | 37.6k | 97.07% |
 | 6 | Claude Fable 5 · xhigh | 5.00 | 3 | $6.628 | 3.163M | 3.125M | 37.8k | 97.29% |
 | 7 | DeepSeek V4 Pro 0813 · xhigh | 4.50 | 3 | $0.2332 | 1.541M | 1.525M | 15.3k | 94.57% |
-| 8 | Kimi K3 · max | 4.17 | 3 | $1.491 | 2.894M | 2.866M | 28.0k | 97.27% |
-| 9 | GPT-5.5 · xhigh | 3.67 | 3 | $1.900 | 1.928M | 1.912M | 16.6k | 94.82% |
-| 10 | Qwen3.8 Max · max | 3.50 | 3 | $1.901 | 5.261M | 5.219M | 42.3k | 96.25% |
-| 11 | GPT-5.6 Terra · xhigh | 3.17 | 3 | $0.8891 | 1.912M | 1.893M | 19.3k | 93.59% |
-| 12 | Qwen3.8 Max · xhigh | 2.83 | 3 | $1.662 | 4.636M | 4.596M | 39.6k | 96.58% |
-| 13 | Kimi K3 · xhigh | 2.83 | 3 | $1.093 | 2.126M | 2.107M | 19.3k | 97.00% |
-| 14 | GPT-5.6 Luna · xhigh | 2.67 | 3 | $0.1313 | 3.258M | 3.233M | 24.3k | 94.96% |
-| 15 | DeepSeek V4 Flash 0731 · xhigh | 2.33 | 3 | $0.08111 | 2.224M | 2.203M | 20.7k | 94.48% |
-| 16 | Qwen3.8-27B custom · xhigh | 1.83 | 3 | n/a | 5.324M | 5.280M | 44.4k | 98.08% |
+| 8 | GLM-5.3 Flash | 4.18 | 1 | $0.07974 normal / $0.03987 promo* | 2.278M | 2.268M | 9.9k | 97.51% |
+| 9 | Kimi K3 · max | 4.17 | 3 | $1.491 | 2.894M | 2.866M | 28.0k | 97.27% |
+| 10 | GPT-5.5 · xhigh | 3.67 | 3 | $1.900 | 1.928M | 1.912M | 16.6k | 94.82% |
+| 11 | GLM-5.3 | 3.65 | 0 | $1.775 | 5.739M | 5.723M | 15.6k | 98.38% |
+| 12 | Qwen3.8 Max · max | 3.50 | 3 | $1.901 | 5.261M | 5.219M | 42.3k | 96.25% |
+| 13 | GPT-5.6 Terra · xhigh | 3.17 | 3 | $0.8891 | 1.912M | 1.893M | 19.3k | 93.59% |
+| 14 | Qwen3.8 Max · xhigh | 2.83 | 3 | $1.662 | 4.636M | 4.596M | 39.6k | 96.58% |
+| 15 | Kimi K3 · xhigh | 2.83 | 3 | $1.093 | 2.126M | 2.107M | 19.3k | 97.00% |
+| 16 | GPT-5.6 Luna · xhigh | 2.67 | 3 | $0.1313 | 3.258M | 3.233M | 24.3k | 94.96% |
+| 17 | DeepSeek V4 Flash 0731 · xhigh | 2.33 | 3 | $0.08111 | 2.224M | 2.203M | 20.7k | 94.48% |
+| 18 | Qwen3.8-27B custom · xhigh | 1.83 | 3 | n/a | 5.324M | 5.280M | 44.4k | 98.08% |
 
 Cost for Qwen3.8-27B doesn't exist: it ran against a private Fireworks deployment. Public pricing seems to hover around $0.40 per MTok in, $2.50-3.00 per MTok out, with cache read discounts varying wildly – anywhere from 20x to ~3x.
+
+*GLM-5.3 Flash uses $0.15 per million uncached input tokens, $0.03 per million
+cache-read tokens, and $0.50 per million output tokens. The temporary promotion
+halves all three rates. OpenCode emitted zero cost for every step and omitted
+`cost_usd` from the aggregate result, so both figures are calculated from the
+recorded token use.
+
+The existing pairwise tournament remains frozen to its original candidate
+manifest. Of the six GLM runs, only GLM-5.3 Flash run 2 passed the mandatory
+gates and is eligible for a future tournament extension.
 
 Nobody cleared 5.5 out of 10. The whole field either changed a stable public
 API, hand-rolled plumbing that already existed, or shipped several hundred
@@ -187,7 +199,32 @@ after a naming correction. The other two never exposed the required method.
 and retry on its own. I would not ship a single unreviewed run, but four
 attempts still cost less than one Claude run.
 
-## 8. Kimi K3 · max
+## 8. GLM-5.3 Flash
+
+- Run 1: 83 calls, 414 insertions and 19 deletions. Replaced both Add and
+  Update, never added Upload, and failed the hidden and legacy-Add gates. It
+  reused multipartbody and wrote thorough tests for the wrong public contract.
+  Score 2.85; 36 calls were defensibly wasted.
+- Run 2: 54 calls, 301 insertions and one deletion. Inferred the exact Upload
+  signature and passed every gate. It then made Add and Update read every body
+  fully into memory and duplicated Add's transport path inside Upload. Score
+  5.65; 12 calls were defensibly wasted.
+- Run 3: 53 calls, 261 insertions. Reused the helper and delegated cleanly, but
+  called the method AddUpload, invented FilesUploadOption plus seven association
+  options, and failed the hidden API gate. Score 4.05; 7 calls were defensibly
+  wasted.
+
+Flash understood replayability in every run and produced one behaviorally
+complete result. Its public API judgment was inconsistent: one run broke both
+stable methods, one inferred the exact API but widened legacy semantics, and one
+built the right structure under the wrong name and option type.
+
+At standard rates, Flash averaged $0.07974 a run. The temporary half-price rate
+cuts that to $0.03987. The model also used less than half GLM-5.3's tokens. That
+makes it attractive for validated generation loops, but one valid run in three
+still makes an unchecked patch a bad bet.
+
+## 9. Kimi K3 · max
 
 - Run 1: 58 calls, 447 additions. Found the exact Upload API unaided and passed
   every gate, then added broad raw-body replay, tests, and docs that dwarf the
@@ -205,7 +242,7 @@ association work.
 Priced within a cent of Sol. Given the quality gap and much heavier tool use,
 there is no reason to pick it here.
 
-## 9. GPT-5.5 · xhigh
+## 10. GPT-5.5 · xhigh
 
 - Run 1: 52 calls, 192 additions. Kept Add, reused multipartbody, delegated
   correctly, and named the method AddFile. Also modified Raw.Do to replay
@@ -222,7 +259,32 @@ deliberately does not have.
 
 More expensive than Sol and substantially worse. No price argument for it.
 
-## 10. Qwen3.8 Max · max
+## 11. GLM-5.3
+
+- Run 1: 105 calls, 656 insertions and one deletion. Added AddFile and seven
+  association options, duplicated Add, and made Raw.Do buffer almost every
+  reader body in memory. Upload never existed. Score 4.10; 6 calls were
+  defensibly wasted.
+- Run 2: 87 calls, 644 insertions and three deletions. Again implemented
+  AddFile with a new option hierarchy and multipart fields. Its io.Pipe retry
+  test was strong, but the hidden Upload contract failed. Score 4.15; 5 calls
+  were defensibly wasted.
+- Run 3: 108 calls, 876 insertions and three deletions. Repeated AddFile and the
+  association expansion, then changed Raw.Do so GetBody reused one mutable
+  seeker and suppressed some seek failures. That is unsafe generic transport
+  behavior. Score 2.70; 27 calls were defensibly wasted.
+
+GLM-5.3 diagnosed the body-replay problem three times and missed the requested
+public method three times. All runs asked zero questions, mined OpenAPI
+association fields, and spent hundreds of lines solving a larger problem than
+the one posed. The code was often competent locally, but none of it was
+mergeable as submitted.
+
+$1.78 and 5.74M tokens per run is poor value for zero valid runs. GPT-5.5 made
+similarly wrong naming decisions with roughly a third of the tokens, while
+DeepSeek V4 Pro cost an eighth as much and produced one near-reference result.
+
+## 12. Qwen3.8 Max · max
 
 - Run 1: 80 calls, 497 additions. Exact Upload, Add preserved, every gate green.
   Also changed raw request handling to replay seekers and added a large test and
@@ -240,7 +302,7 @@ were several times the size of the reference.
 
 Sol's price, three times Sol's tokens, two points below Sol's score.
 
-## 11. GPT-5.6 Terra · xhigh
+## 13. GPT-5.6 Terra · xhigh
 
 - Run 1: 17 calls, 168 additions. Tried to hold source compatibility by making
   Add take any arguments and dispatch between file-name and raw-body forms, plus
@@ -259,7 +321,7 @@ Under a dollar is attractive until you notice every run misses the required
 public contract. DeepSeek Pro is a quarter the price and produced one
 near-perfect result.
 
-## 12. Qwen3.8 Max · xhigh
+## 14. Qwen3.8 Max · xhigh
 
 - Run 1: 82 calls, 789 additions. Added Upload and kept Add, but changed the
   signature to take a new FilesUploadOption type. Hidden tests passed by luck,
@@ -278,7 +340,7 @@ probe.
 
 Close to Sol's price, above Kimi max's, with a 4.6M-token appetite. Poor value.
 
-## 13. Kimi K3 · xhigh
+## 15. Kimi K3 · xhigh
 
 - Run 1: 67 calls, 466 additions. Replaced Add, added seven association options,
   expanded the multipart helper. Hidden and compatibility checks failed.
@@ -294,7 +356,7 @@ substantial repository reading.
 A dollar a run is not cheap next to DeepSeek Pro, Luna, or Terra, and the
 consistency runs in the wrong direction.
 
-## 14. GPT-5.6 Luna · xhigh
+## 16. GPT-5.6 Luna · xhigh
 
 - Run 1: 42 calls, 98 additions. Replaced Add with the ergonomic file-name and
   reader signature, reused the existing helper, wrote retry tests. Hidden and
@@ -311,7 +373,7 @@ the decisive problem.
 13 cents a run makes bulk experimentation viable. It does not make these patches
 mergeable, though the mistakes are at least simple to spot.
 
-## 15. DeepSeek V4 Flash 0731 · xhigh
+## 17. DeepSeek V4 Flash 0731 · xhigh
 
 - Run 1: 61 calls, 309 additions. Kept Add, added AddFile, several association
   options, helper changes, and retry transport work. No Upload.
@@ -329,7 +391,7 @@ tests are not enough: the exported method still was not the specified method.
 The cheapest row in the table, which makes it useful for generating candidate
 ideas and useless for producing a patch you can trust unread.
 
-## 16. Qwen3.8-27B custom · xhigh
+## 18. Qwen3.8-27B custom · xhigh
 
 - Run 1: 104 calls, 802 additions across nine files. AddFile, seven
   associations, multipart helper extensions, and a new general WithBodyReplacer
