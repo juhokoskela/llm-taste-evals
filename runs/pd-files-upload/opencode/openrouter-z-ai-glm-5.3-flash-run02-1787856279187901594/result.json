@@ -1,0 +1,48 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "opencode",
+  "model": "openrouter/z-ai/glm-5.3-flash",
+  "run_id": "openrouter-z-ai-glm-5.3-flash-run02-1787856279187901594",
+  "started_at": "2026-08-27T18:44:40.857613678Z",
+  "duration_sec": 398.179850805,
+  "turns": 1,
+  "end_reason": "simulator_end",
+  "gates_failed": 0,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": true,
+    "legacy_add_intact": true,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "11/34",
+    "delegates_to_add": "false",
+    "diff_shortstat": "3 files changed, 301 insertions(+), 1 deletion(-)",
+    "existing_test_lines_deleted": "0",
+    "files_changed": "3",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "none",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "true"
+  },
+  "metrics": {
+    "turns": 1,
+    "tool_calls": 54,
+    "reads": 13,
+    "edits": 13,
+    "shell_commands": 20,
+    "test_runs": 6,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 1820998,
+    "cache_read_tokens": 1771904,
+    "output_tokens": 7463
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/opencode/openrouter-z-ai-glm-5.3-flash-run02-1787856279187901594/workspace"
+}
