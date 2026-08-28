@@ -10,8 +10,7 @@ import (
 	"time"
 )
 
-// OpenAI is a Simulator backed by the OpenAI Chat Completions API, so a
-// codex-contestant run needs no second vendor key.
+// OpenAI is a Simulator backed by an OpenAI-compatible Chat Completions API.
 type OpenAI struct {
 	APIKey     string
 	Model      string
@@ -68,7 +67,7 @@ func (o *OpenAI) Decide(ctx context.Context, agentMessage string) (Decision, err
 		return Decision{}, fmt.Errorf("read response: %w", err)
 	}
 	if resp.StatusCode != http.StatusOK {
-		return Decision{}, fmt.Errorf("openai api: http %d: %s", resp.StatusCode, respBody)
+		return Decision{}, fmt.Errorf("chat completions api: http %d: %s", resp.StatusCode, respBody)
 	}
 
 	var parsed struct {

@@ -78,6 +78,7 @@ func TestCommandUsesPrivateIdentityAndEnvironment(t *testing.T) {
 	t.Setenv(uidEnv, "1234")
 	t.Setenv(gidEnv, "5678")
 	t.Setenv("EVAL_SHOULD_NOT_LEAK", "secret")
+	t.Setenv("OPENROUTER_API_KEY", "fixture-key")
 
 	cmd, err := Command(context.Background(), "/workspace", []string{"CODEX_HOME=/wrong"}, "codex", "exec")
 	if err != nil {
@@ -103,6 +104,7 @@ func TestCommandUsesPrivateIdentityAndEnvironment(t *testing.T) {
 		"PWD=/workspace",
 		"HOME=" + filepath.Join(root, "home"),
 		"CODEX_HOME=" + filepath.Join(root, "home", ".codex"),
+		"OPENROUTER_API_KEY=fixture-key",
 	} {
 		if !strings.Contains(env, want) {
 			t.Errorf("environment missing %q", want)

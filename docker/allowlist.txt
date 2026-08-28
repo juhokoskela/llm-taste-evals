@@ -3,5 +3,6 @@
 # blocked so agents cannot fetch a task's published solution.
 .anthropic.com
 .openai.com
+.openrouter.ai
 .chatgpt.com
 .fireworks.ai

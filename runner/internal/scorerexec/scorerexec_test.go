@@ -48,6 +48,7 @@ func TestCommandDropsPrivilegesAndUsesMinimalEnvironment(t *testing.T) {
 	t.Setenv(uidEnv, "1234")
 	t.Setenv(gidEnv, "5678")
 	t.Setenv("OPENAI_API_KEY", "secret")
+	t.Setenv("OPENROUTER_API_KEY", "secret")
 	t.Setenv("HTTP_PROXY", "http://egress:3128")
 	t.Setenv("EVAL_PRIVATE_VALUE", "secret")
 
@@ -70,7 +71,7 @@ func TestCommandDropsPrivilegesAndUsesMinimalEnvironment(t *testing.T) {
 	}
 
 	env := strings.Join(cmd.Env, "\n")
-	for _, forbidden := range []string{"OPENAI_API_KEY", "HTTP_PROXY", "EVAL_PRIVATE_VALUE"} {
+	for _, forbidden := range []string{"OPENAI_API_KEY", "OPENROUTER_API_KEY", "HTTP_PROXY", "EVAL_PRIVATE_VALUE"} {
 		if strings.Contains(env, forbidden) {
 			t.Errorf("environment leaked %s:\n%s", forbidden, env)
 		}

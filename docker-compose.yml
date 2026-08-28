@@ -38,6 +38,7 @@ services:
       CLAUDE_CODE_OAUTH_TOKEN: ${CLAUDE_CODE_OAUTH_TOKEN:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       FIREWORKS_API_KEY: ${FIREWORKS_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
     volumes:
       # All evaluator inputs and stored attempts sit behind /eval-private,
       # whose root-only permissions keep them outside contestant reach.

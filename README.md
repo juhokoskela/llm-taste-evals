@@ -107,6 +107,10 @@ prompting and tooling. It authenticates from the same env keys and works offline
 behind the egress proxy, because its bundled model catalog covers the blocked
 models.dev fetch.
 
+For an OpenRouter-only run, set `OPENROUTER_API_KEY` and use OpenCode's
+`openrouter/<model-id>` form. The same form works with `-sim-model` when the
+simulator should use a different OpenRouter model.
+
 Each attempt writes `runs/<task>/<harness>/<run-id>/` containing
 `events.jsonl` (normalized trajectory), `raw-turn-N.jsonl` (untouched CLI
 output), `result.json` (gates, signals, metrics, usage), and the `workspace/`
@@ -140,9 +144,10 @@ that:
 - Fresh `HOME` inside the container – no global `CLAUDE.md`/`AGENTS.md`,
   settings, or MCP servers leak in. Auth comes from env vars, and one vendor key
   is enough per run: the user simulator rides whichever key is present
-  (`ANTHROPIC_API_KEY` → Haiku, `OPENAI_API_KEY` → gpt-5-mini, override with
-  `-sim-model`). The runner copies Codex auth from `OPENAI_API_KEY` into a
-  fresh `CODEX_HOME` for each attempt.
+  (`ANTHROPIC_API_KEY` → Haiku, `OPENAI_API_KEY` → gpt-5-mini,
+  `FIREWORKS_API_KEY` → gpt-oss-120b, `OPENROUTER_API_KEY` → gpt-5-mini;
+  override with `-sim-model`). The runner copies Codex auth from
+  `OPENAI_API_KEY` into a fresh `CODEX_HOME` for each attempt.
 - Pinned toolchain: Go 1.26.6, Node 26, exact agent CLI versions as build
   args (see [docker/Dockerfile](docker/Dockerfile)).
 - Post-run checks use a frozen copy of the contestant workspace under a
@@ -154,6 +159,15 @@ that:
 ANTHROPIC_API_KEY=... docker compose run --rm runner \
   -task /eval-private/tasks/pd-files-upload \
   -harness claudecode -model claude-sonnet-5 -runs 3 \
+  -repo /eval-private/mirrors/pipedrive-go -out /eval-private/runs
+```
+
+The equivalent OpenRouter-only OpenCode run is:
+
+```sh
+OPENROUTER_API_KEY=... docker compose run --rm runner \
+  -task /eval-private/tasks/pd-files-upload \
+  -harness opencode -model openrouter/openai/gpt-5-mini -runs 3 \
   -repo /eval-private/mirrors/pipedrive-go -out /eval-private/runs
 ```
 

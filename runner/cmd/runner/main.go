@@ -29,9 +29,9 @@ func main() {
 func realMain() error {
 	var (
 		taskDir     = flag.String("task", "", "task directory (contains task.json)")
-		harnessName = flag.String("harness", "", "agent harness: claudecode or codex")
+		harnessName = flag.String("harness", "", "agent harness: claudecode, codex, or opencode")
 		model       = flag.String("model", "", "model id to pass to the harness")
-		effort      = flag.String("effort", "", "reasoning effort, in the harness's own vocabulary (claudecode: low..max, codex: minimal..xhigh)")
+		effort      = flag.String("effort", "", "reasoning effort in the harness's own vocabulary (claudecode: low..max, codex: minimal..xhigh, opencode: provider-specific variant)")
 		runs        = flag.Int("runs", 1, "number of attempts")
 		outDir      = flag.String("out", "runs", "output directory")
 		repo        = flag.String("repo", "", "override the task's repo source (e.g. a local clone)")
@@ -95,6 +95,7 @@ func buildSimulator(model string, t *task.Task) (simulator.Simulator, error) {
 	anthropicKey := os.Getenv("ANTHROPIC_API_KEY")
 	openaiKey := os.Getenv("OPENAI_API_KEY")
 	fireworksKey := os.Getenv("FIREWORKS_API_KEY")
+	openRouterKey := os.Getenv("OPENROUTER_API_KEY")
 	oauthToken := os.Getenv("CLAUDE_CODE_OAUTH_TOKEN")
 
 	if model == "" {
@@ -105,8 +106,10 @@ func buildSimulator(model string, t *task.Task) (simulator.Simulator, error) {
 			model = "gpt-5-mini"
 		case fireworksKey != "":
 			model = "accounts/fireworks/models/gpt-oss-120b"
+		case openRouterKey != "":
+			model = "openrouter/openai/gpt-5-mini"
 		default:
-			return nil, fmt.Errorf("the user simulator needs ANTHROPIC_API_KEY, CLAUDE_CODE_OAUTH_TOKEN, OPENAI_API_KEY, or FIREWORKS_API_KEY")
+			return nil, fmt.Errorf("the user simulator needs ANTHROPIC_API_KEY, CLAUDE_CODE_OAUTH_TOKEN, OPENAI_API_KEY, FIREWORKS_API_KEY, or OPENROUTER_API_KEY")
 		}
 	}
 
@@ -134,6 +137,19 @@ func buildSimulator(model string, t *task.Task) (simulator.Simulator, error) {
 		return &simulator.OpenAI{
 			APIKey: fireworksKey, Model: model,
 			BaseURL:    "https://api.fireworks.ai/inference",
+			TaskPrompt: t.Prompt(), FactSheet: t.FactSheetText(),
+		}, nil
+	case strings.HasPrefix(model, "openrouter/"):
+		if openRouterKey == "" {
+			return nil, fmt.Errorf("simulator model %q needs OPENROUTER_API_KEY", model)
+		}
+		openRouterModel := strings.TrimPrefix(model, "openrouter/")
+		if openRouterModel == "" {
+			return nil, fmt.Errorf("simulator model %q must include an OpenRouter model id", model)
+		}
+		return &simulator.OpenAI{
+			APIKey: openRouterKey, Model: openRouterModel,
+			BaseURL: "https://openrouter.ai/api", ReasoningEffort: "minimal",
 			TaskPrompt: t.Prompt(), FactSheet: t.FactSheetText(),
 		}, nil
 	default:
