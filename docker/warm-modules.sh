@@ -10,7 +10,7 @@ shift
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
-git clone --quiet "$url" "$tmp"
+git -c http.version=HTTP/1.1 clone --quiet "$url" "$tmp"
 # --force: `go mod download all` may add entries to go.sum, which would
 # otherwise block switching to the next ref.
 for ref in "$@"; do

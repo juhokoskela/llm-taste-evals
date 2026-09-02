@@ -238,12 +238,30 @@ var prepareWorkspace = workspace.Prepare
 // writeDiff exports the candidate's full diff from the scorer copy. Candidate
 // git configuration therefore cannot execute helpers as root.
 func writeDiff(ctx context.Context, ws, baseCommit, dst string, scorer *scorerexec.Paths) {
-	cmd := scoringCommand(ctx, scorer, ws, "git", "-C", ws, "diff", baseCommit)
+	cmd := scoringCommand(ctx, scorer, ws, "git", "-C", ws, "diff", "--binary", baseCommit)
+	patch, err := cmd.Output()
+	if err != nil {
+		return
+	}
+
+	cmd = scoringCommand(ctx, scorer, ws, "git", "-C", ws, "ls-files", "--others", "--exclude-standard", "-z")
 	out, err := cmd.Output()
 	if err != nil {
 		return
 	}
-	_ = os.WriteFile(dst, out, 0o644)
+	for _, path := range strings.Split(string(out), "\x00") {
+		if path == "" {
+			continue
+		}
+		cmd = scoringCommand(ctx, scorer, ws, "git", "-C", ws, "diff", "--no-index", "--binary", "--", "/dev/null", path)
+		filePatch, err := cmd.Output()
+		var exitErr *exec.ExitError
+		if !errors.As(err, &exitErr) || exitErr.ExitCode() != 1 {
+			return
+		}
+		patch = append(patch, filePatch...)
+	}
+	_ = os.WriteFile(dst, patch, 0o644)
 }
 
 // filterPreexisting drops paths that do not exist at the base commit:

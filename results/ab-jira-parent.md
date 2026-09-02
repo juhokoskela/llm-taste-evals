@@ -1,6 +1,6 @@
 # ab-jira-parent results
 
-19 configurations, 3 runs each. Claude models ran through claudecode, GPT models
+20 configurations, 3 runs each. Claude models ran through claudecode, GPT models
 through codex, the rest through opencode.
 
 Score is a weighted composite out of 10:
@@ -25,25 +25,33 @@ id parser, it is described as the shared parser rather than named.
 | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 1 | Claude Fable 5 · xhigh | 4.57 | 3 | $4.187 | 1,817,749 | 1,799,403 | 18,345 | 95.7% |
 | 2 | Claude Opus 4.6 · xhigh | 4.43 | 3 | $2.653 | 1,467,457 | 1,455,679 | 11,778 | 93.4% |
-| 3 | Qwen3.8 Max · xhigh | 4.17 | 3 | $1.115 | 2,959,955 | 2,950,914 | 9,041 | 94.9% |
-| 4 | Claude Opus 4.8 · xhigh | 3.67 | 3 | $3.661 | 2,520,623 | 2,502,386 | 18,237 | 94.1% |
-| 5 | DeepSeek V4 Flash · xhigh | 3.67 | 3 | $0.037 | 968,689 | 963,362 | 5,328 | 92.4% |
-| 6 | GLM-5.3 · default | 3.64 | 3 | $0.672 | 1,994,456 | 1,987,541 | 6,915 | 96.0% |
-| 7 | GLM-5.3 Flash · default | 3.58 | 3 | $0.064 normal / $0.032 promo | 1,865,321 | 1,859,312 | 6,009 | 97.5% |
-| 8 | GPT-5.6 Sol · max | 3.43 | 3 | $2.994 | 4,230,835 | 4,201,013 | 29,822 | 96.2% |
-| 9 | GPT-5.6 Sol · xhigh | 3.37 | 3 | $1.971 | 2,415,505 | 2,395,068 | 20,437 | 94.3% |
-| 10 | GPT-5.6 Luna · max | 3.30 | 3 | $0.207 | 5,807,832 | 5,775,607 | 32,225 | 95.8% |
-| 11 | Claude Opus 5 · xhigh | 3.27 | 3 | $6.452 | 7,304,805 | 7,262,352 | 42,453 | 97.0% |
-| 12 | GPT-5.5 · xhigh | 3.27 | 3 | $3.780 | 4,065,479 | 4,041,264 | 24,215 | 94.3% |
-| 13 | DeepSeek V4 Pro · xhigh | 3.22 | 3 | $0.219 | 1,366,408 | 1,361,096 | 5,312 | 92.5% |
-| 14 | GPT-5.6 Terra · xhigh | 3.20 | 3 | $1.221 | 3,025,831 | 3,005,740 | 20,091 | 94.5% |
-| 15 | GPT-5.6 Luna · xhigh | 3.17 | 3 | $0.181 | 5,043,474 | 5,020,680 | 22,795 | 95.3% |
-| 16 | Kimi K3 · xhigh | 3.12 | 3 | $0.950 | 2,047,961 | 2,039,805 | 8,156 | 97.3% |
-| 17 | Claude Sonnet 5 · xhigh | 3.10 | 3 | $1.678 | 2,612,398 | 2,598,882 | 13,517 | 97.2% |
-| 18 | GPT-5.6 Terra · max | 3.00 | 3 | $2.677 | 7,731,155 | 7,688,545 | 42,610 | 96.4% |
-| 19 | Qwen3.8-27B custom · xhigh | 2.79 | 3 | n/a | 4,110,577 | 4,098,809 | 11,769 | 97.8% |
+| 3 | Claude Fable 5.1 · xhigh | 4.20 | 3 | $6.649 | 1,746,485 | 1,706,514 | 39,972 | 85.8% |
+| 4 | Qwen3.8 Max · xhigh | 4.17 | 3 | $1.115 | 2,959,955 | 2,950,914 | 9,041 | 94.9% |
+| 5 | Claude Opus 4.8 · xhigh | 3.67 | 3 | $3.661 | 2,520,623 | 2,502,386 | 18,237 | 94.1% |
+| 6 | DeepSeek V4 Flash · xhigh | 3.67 | 3 | $0.037 | 968,689 | 963,362 | 5,328 | 92.4% |
+| 7 | GLM-5.3 · default | 3.64 | 3 | $0.672 | 1,994,456 | 1,987,541 | 6,915 | 96.0% |
+| 8 | GLM-5.3 Flash · default | 3.58 | 3 | $0.064 normal / $0.032 promo | 1,865,321 | 1,859,312 | 6,009 | 97.5% |
+| 9 | GPT-5.6 Sol · max | 3.43 | 3 | $2.994 | 4,230,835 | 4,201,013 | 29,822 | 96.2% |
+| 10 | GPT-5.6 Sol · xhigh | 3.37 | 3 | $1.971 | 2,415,505 | 2,395,068 | 20,437 | 94.3% |
+| 11 | GPT-5.6 Luna · max | 3.30 | 3 | $0.207 | 5,807,832 | 5,775,607 | 32,225 | 95.8% |
+| 12 | Claude Opus 5 · xhigh | 3.27 | 3 | $6.452 | 7,304,805 | 7,262,352 | 42,453 | 97.0% |
+| 13 | GPT-5.5 · xhigh | 3.27 | 3 | $3.780 | 4,065,479 | 4,041,264 | 24,215 | 94.3% |
+| 14 | DeepSeek V4 Pro · xhigh | 3.22 | 3 | $0.219 | 1,366,408 | 1,361,096 | 5,312 | 92.5% |
+| 15 | GPT-5.6 Terra · xhigh | 3.20 | 3 | $1.221 | 3,025,831 | 3,005,740 | 20,091 | 94.5% |
+| 16 | GPT-5.6 Luna · xhigh | 3.17 | 3 | $0.181 | 5,043,474 | 5,020,680 | 22,795 | 95.3% |
+| 17 | Kimi K3 · xhigh | 3.12 | 3 | $0.950 | 2,047,961 | 2,039,805 | 8,156 | 97.3% |
+| 18 | Claude Sonnet 5 · xhigh | 3.10 | 3 | $1.678 | 2,612,398 | 2,598,882 | 13,517 | 97.2% |
+| 19 | GPT-5.6 Terra · max | 3.00 | 3 | $2.677 | 7,731,155 | 7,688,545 | 42,610 | 96.4% |
+| 20 | Qwen3.8-27B custom · xhigh | 2.79 | 3 | n/a | 4,110,577 | 4,098,809 | 11,769 | 97.8% |
 
 Cost for Qwen3.8-27B doesn't exist: it ran against a private Fireworks deployment. Public pricing seems to hover around $0.40 per MTok in, $2.50-3.00 per MTok out, with cache read discounts varying wildly – anywhere from 20x to ~3x.
+
+Fable 5.1 uses the Fable 5 rate card except for cache reads, which cost
+$0.25/MTok instead of $1.00/MTok. The recorded totals already use the lower
+rate, so its $6.649 mean does not change. Repricing the three model calls gives
+$2.842159, $5.079913, and $12.022295. Each aggregate run total also includes a
+$0.001194 auxiliary Haiku call, producing the leaderboard costs of
+$2.843353, $5.081107, and $12.023489.
 
 GLM-5.3 Flash cost is calculated from the supplied rates rather than a provider
 total. Uncached input is total input less cache reads. The normal run cost is
@@ -52,7 +60,12 @@ The temporary price applies the stated 50% discount to all three rates. Its
 three normal-price runs cost $0.083948, $0.058558, and $0.050758; discounted,
 they cost $0.041974, $0.029279, and $0.025379.
 
-Two runs out of 57 passed the hidden tests, both after the simulator corrected
+Fable 5.1 also produced three earlier run-number directories that ended in a
+harness error after about two seconds. They contain zero tokens, no edits, and
+no usable model output, so they are failed launch attempts rather than scored
+runs and are excluded from the averages.
+
+Three runs out of 60 passed the hidden tests, all after the simulator corrected
 the model. The task hides one decision, what the parent parameter is called and
 what JSON it accepts, and almost nothing in the field went looking for it. The
 common failure is confident invention: a plausible parameter name, tests written
@@ -103,7 +116,52 @@ The best price-to-quality balance among models that produced a passing run. One
 success in three is still poor reliability, but $2.653 is far easier to defend
 than Fable or either newer Opus.
 
-## 3. Qwen3.8 Max · xhigh
+## 3. Claude Fable 5.1 · xhigh
+
+| Run | Idiomatic Go | Correctness | Tests, docs, scope | Execution | Efficiency | Weighted | Calls | Wasted |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 4.5 | 2.5 | 4.5 | 3.0 | 6.0 | 3.75 | 26 | 5 |
+| 2 | 4.0 | 2.5 | 4.5 | 2.0 | 3.0 | 3.13 | 48 | 11 |
+| 3 | 5.5 | 8.0 | 7.0 | 3.0 | 3.0 | 5.73 | 61 | 13 |
+
+- Run 1: a polished implementation of the wrong API. It exposed
+  `parent_key`, so correctly named `parent` input is silently ignored and a
+  bare numeric parent cannot decode. The service correctly maps numeric strings
+  to Jira's ID member and other strings to Key. Its handler regex, tests, two
+  OpenAPI files, system prompt, README, E2E guide, and optional live E2E path all
+  reinforce the invented field. The run's own repository search surfaced the
+  shared parser, but it did not open or reuse it and never asked about the
+  ambiguous contract. Hidden tests failed; the other five gates passed. Five of
+  26 calls went to unnecessary E2E work or duplicate validation.
+- Run 2: repeated the same `parent_key` design at greater cost. Even under that
+  name, the string field rejects a bare JSON number and the regex accepts quoted
+  zero. The service's ID-or-Key choice is correct, omission works, and no
+  existing behavior broke. The model printed the complete shared parser and
+  still added a Jira-specific regex, error, and helper. It changed 11 files,
+  including an optional E2E flow and CI secret, and documented the wrong API in
+  every caller-facing location. Three test insertion attempts failed because it
+  chose an unwritable temporary directory, and the run ended with unrelated
+  agent-memory work. Eleven of 48 calls were wasted. Hidden failed; all public
+  gates passed.
+- Run 3: the only shippable result. It first completed and committed the same
+  `parent_key` implementation. Simulator feedback then supplied the required
+  name and input matrix. The corrected handler accepts trimmed keys, bare
+  positive integers, numeric strings, null, and omission; rejects the required
+  invalid values; and the service maps ID and Key correctly. All six gates pass.
+  It still hand-writes a 35-line parser after inspecting the existing helper and
+  adds regex-based Jira-key validation that the reference deliberately leaves to
+  Jira. The 11-file, 317-line patch includes unnecessary E2E and CI work. Turns
+  3 and 4 drift into commit-history advice and two history rewrites, the first
+  faulty, plus unrelated agent-memory writes. At least 13 of 61 calls were
+  wasted.
+
+Fable 5.1 ranks third because its corrected run is genuinely good, but the model
+is poor value here. It averages $6.649, about 59% more than Fable 5, while
+scoring 0.37 lower and matching its one-in-three hidden-pass rate. Opus 4.6 is
+0.23 higher and costs 60% less. The extra Fable 5.1 spend mostly bought a long
+recovery and repository ceremony.
+
+## 4. Qwen3.8 Max · xhigh
 
 - Run 1: correct parent name, trimmed, numeric strings to IDs and other strings
   to keys. Good handler and service tests, extensive docs, an optional
@@ -125,7 +183,7 @@ One of the better values. Two runs sit close enough that a careful review could
 repair them cheaply. Zero hidden-test passes rules it out as an unsupervised
 implementer, but at $1.115 it drafts as well as the Claude and Codex models.
 
-## 4. Claude Opus 4.8 · xhigh
+## 5. Claude Opus 4.8 · xhigh
 
 - Run 1: 50 calls. Correct parent field, numeric strings sent through Jira's ID
   member, useful OpenAPI notes and a request example. The handler decoded
@@ -143,7 +201,7 @@ implementer, but at $1.115 it drafts as well as the Claude and Codex models.
 38% more expensive than Opus 4.6, substantially lower score, zero hidden-test
 passes. There is no version of this task where I would pick it over 4.6.
 
-## 5. DeepSeek V4 Flash · xhigh
+## 6. DeepSeek V4 Flash · xhigh
 
 - Run 1: a compact three-file patch on parent_key and the key member. Tests for
   key mapping and omission, no handler boundary tests, no documentation. Hidden
@@ -161,7 +219,7 @@ passes. There is no version of this task where I would pick it over 4.6.
 which makes it excellent for a first patch and still leaves all three outputs
 needing a contract-focused review before anything ships.
 
-## 6. GLM-5.3 · default
+## 7. GLM-5.3 · default
 
 | Run | Idiomatic Go | Correctness | Tests, docs, scope | Execution | Efficiency | Weighted | Calls | Wasted |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -206,7 +264,7 @@ runs and three different incompatible request shapes make it unsuitable without
 a contract-aware reviewer. Flash is about 10 times cheaper at list price and
 loses only 0.06 score.
 
-## 7. GLM-5.3 Flash · default
+## 8. GLM-5.3 Flash · default
 
 | Run | Idiomatic Go | Correctness | Tests, docs, scope | Execution | Efficiency | Weighted | Calls | Wasted |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -251,7 +309,7 @@ better measured option at normal price: it scores 0.09 higher for $0.037. The
 promotion makes GLM Flash slightly cheaper, but neither model produced a
 shippable run.
 
-## 8. GPT-5.6 Sol · max
+## 9. GPT-5.6 Sol · max
 
 - Run 1: 51 calls. parent_key, key-only mapping, OpenAPI examples, service
   tests. No numeric IDs, no null, no invalid input, no system prompt. The
@@ -269,7 +327,7 @@ shippable run.
 Too expensive for this. Sol xhigh scored within 0.06 for about a third less, and
 much cheaper models produced equally repairable patches.
 
-## 9. GPT-5.6 Sol · xhigh
+## 10. GPT-5.6 Sol · xhigh
 
 - Run 1: parent_issue_key, always sending a Jira key. It followed TDD and stayed
   fairly focused, and missed every heterogeneous-input requirement. Its second
@@ -287,7 +345,7 @@ The better of the two Sol settings: 0.06 score for about 34% less money. The
 absolute result is weak either way, because all three runs failed the same
 judgment test.
 
-## 10. GPT-5.6 Luna · max
+## 11. GPT-5.6 Luna · max
 
 - Run 1: parent_key, key-only mapping, both OpenAPI files, and the system
   prompt. It ran 11 test commands and read the neighbouring handler that already
@@ -304,7 +362,7 @@ Cheap enough to be useful for routine scaffolding, and 0.13 above Luna xhigh for
 2.6 cents more, which makes max the better Luna setting. Neither showed usable
 autonomous contract judgment.
 
-## 11. Claude Opus 5 · xhigh
+## 12. Claude Opus 5 · xhigh
 
 - Run 1: 63 calls, 15 test runs, the wrong parent_key design spread across 12
   files. Alias rejection, reference helpers, end-to-end tests, CI workflow
@@ -324,7 +382,7 @@ The clearest bad value in either ranking. Most expensive model in the task, no
 passing run, and every extra dollar went into expanding scope around an
 assumption it never checked.
 
-## 12. GPT-5.5 · xhigh
+## 13. GPT-5.5 · xhigh
 
 - Run 1: invented separate parent_key and parent_id parameters, rejected using
   both together, and populated the matching Jira member correctly. That shows
@@ -342,7 +400,7 @@ More expensive than Opus 4.6 and much lower scoring. It reasons well about Jira
 and reaches for new fields whenever it is unsure, which is the wrong instinct on
 a task about restraint.
 
-## 13. DeepSeek V4 Pro · xhigh
+## 14. DeepSeek V4 Pro · xhigh
 
 - Run 1: parent_key, key-only mapping, handler and service tests, omission
   coverage, one OpenAPI update. Clean, compact, wrong at every decisive
@@ -357,7 +415,7 @@ a task about restraint.
 Flash dominates it here: almost six times cheaper, higher scoring, and Pro's
 most ambitious run made the API worse through speculative configuration.
 
-## 14. GPT-5.6 Terra · xhigh
+## 15. GPT-5.6 Terra · xhigh
 
 - Run 1: parent_issue_key, key-only mapping, and useful examples in both OpenAPI
   files. No real field name, no numeric support, no null handling, no parser
@@ -374,7 +432,7 @@ Much better value than Terra max, though Luna max costs about a sixth as much
 and scores higher. Run 3 shows the same habit as GPT-5.5: turning uncertainty
 into API design.
 
-## 15. GPT-5.6 Luna · xhigh
+## 16. GPT-5.6 Luna · xhigh
 
 - Run 1: 30 calls, lean. parent_key, redundant service-side trimming, key-only
   mapping. It edited an existing happy-path test to include a parent, which
@@ -389,7 +447,7 @@ The cheapest Codex configuration, and its 2.6-cent saving over Luna max costs
 0.13 score. Max is the more sensible Luna choice, though neither came close to
 shippable.
 
-## 16. Kimi K3 · xhigh
+## 17. Kimi K3 · xhigh
 
 - Run 1: parent_key, key-only mapping, TDD, both OpenAPI files, a focused
   six-file patch. Having finished the wrong implementation, it spent further
@@ -406,7 +464,7 @@ Roughly 26 times DeepSeek Flash's price for a lower score. The disciplined TDD
 counts in its favor. Treating repository ceremony as more urgent than the
 product contract does not.
 
-## 17. Claude Sonnet 5 · xhigh
+## 18. Claude Sonnet 5 · xhigh
 
 - Run 1: 34 calls. parent_key, trimming, key-only mapping, handler and service
   tests, both OpenAPI notes. A small, direct patch to the wrong result.
@@ -420,7 +478,7 @@ Cheaper than the Opus models and still about 45 times DeepSeek Flash's price for
 a lower score. It may draft ordinary changes well enough. This task found no
 evidence of autonomous contract reasoning.
 
-## 18. GPT-5.6 Terra · max
+## 19. GPT-5.6 Terra · max
 
 - Run 1: parent_key, key-only mapping, separate tests, two OpenAPI notes.
   Missing the correct field, ID mapping, validation, examples, system prompt, and
@@ -435,7 +493,7 @@ evidence of autonomous contract reasoning.
 Plainly dominated: about 13 times Luna max's price and more than twice Terra
 xhigh's, for the lowest score among the priced models.
 
-## 19. Qwen3.8-27B custom · xhigh
+## 20. Qwen3.8-27B custom · xhigh
 
 - Run 1: 84 calls, 19 edits. parent_key plus an invented epic_name mode that
   brought a new field-client interface, mutex-protected per-tenant caching, field

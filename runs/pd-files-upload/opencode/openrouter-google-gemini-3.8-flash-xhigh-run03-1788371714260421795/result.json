@@ -1,0 +1,49 @@
+{
+  "task": "pd-files-upload",
+  "task_version": 2,
+  "harness": "opencode",
+  "model": "openrouter/google/gemini-3.8-flash",
+  "effort": "xhigh",
+  "run_id": "openrouter-google-gemini-3.8-flash-xhigh-run03-1788371714260421795",
+  "started_at": "2026-09-02T17:55:22.955472757Z",
+  "duration_sec": 579.792104848,
+  "turns": 2,
+  "end_reason": "simulator_end",
+  "gates_failed": 2,
+  "gates": {
+    "build": true,
+    "deps_unchanged": true,
+    "full_suite": true,
+    "gofmt": true,
+    "hidden_tests": false,
+    "legacy_add_intact": false,
+    "vet": true
+  },
+  "signals": {
+    "added_comment_ratio": "0/94",
+    "delegates_to_add": "false",
+    "diff_shortstat": "4 files changed, 350 insertions(+), 3 deletions(-)",
+    "existing_test_lines_deleted": "2",
+    "files_changed": "4",
+    "handrolls_multipart": "false",
+    "out_of_scope_paths": "internal/multipartbody/multipartbody.go",
+    "reuses_multipartbody": "true",
+    "upload_method_present": "false"
+  },
+  "metrics": {
+    "turns": 2,
+    "tool_calls": 115,
+    "reads": 51,
+    "edits": 6,
+    "shell_commands": 45,
+    "test_runs": 13,
+    "questions_asked": 0,
+    "edited_without_read": null
+  },
+  "usage": {
+    "input_tokens": 9624386,
+    "cache_read_tokens": 8660745,
+    "output_tokens": 14359
+  },
+  "workspace": "/eval-private/runs/pd-files-upload/opencode/openrouter-google-gemini-3.8-flash-xhigh-run03-1788371714260421795/workspace"
+}
