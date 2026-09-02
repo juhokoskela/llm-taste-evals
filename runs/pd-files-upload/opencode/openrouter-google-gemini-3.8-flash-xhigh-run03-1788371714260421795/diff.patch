@@ -463,3 +463,150 @@ index bea88d1..d6e221c 100644
  	requireOneV1RequestOption(t, "files", cfg.requestOptions)
  }
  
+diff --git a/internal/multipartbody/multipartbody_test.go b/internal/multipartbody/multipartbody_test.go
+new file mode 100644
+index 0000000..8b583d4
+--- /dev/null
++++ b/internal/multipartbody/multipartbody_test.go
+@@ -0,0 +1,141 @@
++package multipartbody
++
++import (
++	"io"
++	"mime"
++	"mime/multipart"
++	"strings"
++	"testing"
++)
++
++func TestNewFile(t *testing.T) {
++	t.Parallel()
++
++	contentType, reader, err := NewFile("audio", "recording.mp3", strings.NewReader("mp3data"))
++	if err != nil {
++		t.Fatalf("unexpected error: %v", err)
++	}
++
++	mediaType, params, err := mime.ParseMediaType(contentType)
++	if err != nil {
++		t.Fatalf("parse media type: %v", err)
++	}
++	if mediaType != "multipart/form-data" {
++		t.Fatalf("unexpected media type: %s", mediaType)
++	}
++
++	mr := multipart.NewReader(reader, params["boundary"])
++	part, err := mr.NextPart()
++	if err != nil {
++		t.Fatalf("next part: %v", err)
++	}
++	if got := part.FormName(); got != "audio" {
++		t.Fatalf("unexpected form name: %q", got)
++	}
++	if got := part.FileName(); got != "recording.mp3" {
++		t.Fatalf("unexpected file name: %q", got)
++	}
++	body, err := io.ReadAll(part)
++	if err != nil {
++		t.Fatalf("read part: %v", err)
++	}
++	if string(body) != "mp3data" {
++		t.Fatalf("unexpected body: %q", string(body))
++	}
++
++	if _, err := mr.NextPart(); err != io.EOF {
++		t.Fatalf("expected EOF, got %v", err)
++	}
++}
++
++func TestNewFileWithFields(t *testing.T) {
++	t.Parallel()
++
++	fields := []Field{
++		{Name: "deal_id", Value: "123"},
++		{Name: "note", Value: "some note"},
++	}
++	contentType, reader, err := NewFileWithFields("file", "doc.pdf", strings.NewReader("pdf-content"), fields...)
++	if err != nil {
++		t.Fatalf("unexpected error: %v", err)
++	}
++
++	mediaType, params, err := mime.ParseMediaType(contentType)
++	if err != nil {
++		t.Fatalf("parse media type: %v", err)
++	}
++	if mediaType != "multipart/form-data" {
++		t.Fatalf("unexpected media type: %s", mediaType)
++	}
++
++	mr := multipart.NewReader(reader, params["boundary"])
++
++	// deal_id part
++	p1, err := mr.NextPart()
++	if err != nil {
++		t.Fatalf("p1: %v", err)
++	}
++	if p1.FormName() != "deal_id" {
++		t.Fatalf("p1 FormName: %q", p1.FormName())
++	}
++	b1, err := io.ReadAll(p1)
++	if err != nil {
++		t.Fatalf("p1 read: %v", err)
++	}
++	if string(b1) != "123" {
++		t.Fatalf("p1 value: %q", string(b1))
++	}
++
++	// note part
++	p2, err := mr.NextPart()
++	if err != nil {
++		t.Fatalf("p2: %v", err)
++	}
++	if p2.FormName() != "note" {
++		t.Fatalf("p2 FormName: %q", p2.FormName())
++	}
++	b2, err := io.ReadAll(p2)
++	if err != nil {
++		t.Fatalf("p2 read: %v", err)
++	}
++	if string(b2) != "some note" {
++		t.Fatalf("p2 value: %q", string(b2))
++	}
++
++	// file part
++	p3, err := mr.NextPart()
++	if err != nil {
++		t.Fatalf("p3: %v", err)
++	}
++	if p3.FormName() != "file" {
++		t.Fatalf("p3 FormName: %q", p3.FormName())
++	}
++	if p3.FileName() != "doc.pdf" {
++		t.Fatalf("p3 FileName: %q", p3.FileName())
++	}
++	b3, err := io.ReadAll(p3)
++	if err != nil {
++		t.Fatalf("p3 read: %v", err)
++	}
++	if string(b3) != "pdf-content" {
++		t.Fatalf("p3 value: %q", string(b3))
++	}
++
++	if _, err := mr.NextPart(); err != io.EOF {
++		t.Fatalf("expected EOF, got %v", err)
++	}
++}
++
++func TestNewFileWithFields_Validation(t *testing.T) {
++	t.Parallel()
++
++	if _, _, err := NewFileWithFields("", "file.txt", strings.NewReader("a")); err == nil {
++		t.Fatal("expected error for empty field name")
++	}
++	if _, _, err := NewFileWithFields("file", "", strings.NewReader("a")); err == nil {
++		t.Fatal("expected error for empty file name")
++	}
++	if _, _, err := NewFileWithFields("file", "file.txt", nil); err == nil {
++		t.Fatal("expected error for nil reader")
++	}
++}

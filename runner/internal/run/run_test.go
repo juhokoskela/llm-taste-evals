@@ -115,6 +115,60 @@ func TestFilterPreexisting(t *testing.T) {
 	}
 }
 
+func TestWriteDiffIncludesUntrackedFiles(t *testing.T) {
+	t.Parallel()
+
+	runGit := func(dir string, args ...string) string {
+		t.Helper()
+		cmd := exec.Command("git", args...)
+		cmd.Dir = dir
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatalf("git %v: %v: %s", args, err, out)
+		}
+		return strings.TrimSpace(string(out))
+	}
+
+	ws := t.TempDir()
+	runGit(ws, "init", "--quiet")
+	runGit(ws, "config", "user.email", "t@e.st")
+	runGit(ws, "config", "user.name", "t")
+	if err := os.WriteFile(filepath.Join(ws, "tracked.txt"), []byte("before\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	runGit(ws, "add", ".")
+	runGit(ws, "commit", "--quiet", "-m", "base")
+	base := runGit(ws, "rev-parse", "HEAD")
+
+	if err := os.WriteFile(filepath.Join(ws, "tracked.txt"), []byte("after\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(ws, "untracked.txt"), []byte("new\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	patch := filepath.Join(t.TempDir(), "diff.patch")
+	writeDiff(context.Background(), ws, base, patch, nil)
+
+	cloneDir := t.TempDir()
+	rebuilt := filepath.Join(cloneDir, "rebuilt")
+	runGit(cloneDir, "clone", "--quiet", ws, rebuilt)
+	runGit(rebuilt, "apply", patch)
+	for name, want := range map[string]string{
+		"tracked.txt":   "after\n",
+		"untracked.txt": "new\n",
+	} {
+		got, err := os.ReadFile(filepath.Join(rebuilt, name))
+		if err != nil {
+			t.Errorf("read reconstructed %s: %v", name, err)
+			continue
+		}
+		if string(got) != want {
+			t.Errorf("reconstructed %s = %q, want %q", name, got, want)
+		}
+	}
+}
+
 func TestRunChecksTrustsOnlyCandidateWorkspace(t *testing.T) {
 	t.Setenv("GIT_CONFIG_COUNT", "1")
 	t.Setenv("GIT_CONFIG_KEY_0", "safe.directory")

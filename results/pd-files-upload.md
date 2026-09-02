@@ -196,7 +196,8 @@ value in the top half.
   It inferred the exact Upload API, reused multipartbody, preserved Add, and
   passed every gate. It also added seven association options and generic
   seekable-body replay. A failed seek restore can leave the first request at
-  EOF. An untracked 140-line helper test was missing from the recorded patch.
+  EOF. The corrected run patch includes its previously omitted 140-line helper
+  test.
   Score 5.15; 20 calls were conservatively wasted.
 - Run 2: 65 calls, 860 insertions and two deletions across eight files. It
   passed every gate and wrote strong retry tests, but changed Upload to take a
@@ -424,9 +425,9 @@ mergeable, though the mistakes are at least simple to spot.
   calls were conservatively wasted.
 - Run 3: 115 calls, 350 insertions and three deletions across four recorded
   files. It avoided the raw transport rewrite and was the least invasive run,
-  but still replaced Add, omitted Upload, duplicated the request path, and left
-  a 141-line helper test out of the recorded patch. Score 2.63; 51 calls were
-  conservatively wasted.
+  but still replaced Add, omitted Upload, and duplicated the request path. It
+  also added a 141-line helper test, which the corrected run patch now includes.
+  Score 2.63; 51 calls were conservatively wasted.
 
 Every run found the existing multipart helper and produced retryable behavior
 under its invented API. Every run also failed the hidden and legacy-Add gates.

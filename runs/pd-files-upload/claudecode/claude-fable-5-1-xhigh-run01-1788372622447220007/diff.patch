@@ -983,3 +983,149 @@ index 664e1c7..c0be367 100644
 +		}
 +	}
 +}
+diff --git a/internal/multipartbody/multipartbody_test.go b/internal/multipartbody/multipartbody_test.go
+new file mode 100644
+index 0000000..11500ed
+--- /dev/null
++++ b/internal/multipartbody/multipartbody_test.go
+@@ -0,0 +1,140 @@
++package multipartbody
++
++import (
++	"io"
++	"mime"
++	"mime/multipart"
++	"net/url"
++	"strings"
++	"testing"
++)
++
++type part struct {
++	name     string
++	fileName string
++	value    string
++}
++
++func readParts(t *testing.T, contentType string, body io.Reader) []part {
++	t.Helper()
++
++	mediaType, params, err := mime.ParseMediaType(contentType)
++	if err != nil {
++		t.Fatalf("parse content type: %v", err)
++	}
++	if mediaType != "multipart/form-data" {
++		t.Fatalf("unexpected media type %q", mediaType)
++	}
++
++	var parts []part
++	reader := multipart.NewReader(body, params["boundary"])
++	for {
++		p, err := reader.NextPart()
++		if err == io.EOF {
++			return parts
++		}
++		if err != nil {
++			t.Fatalf("next part: %v", err)
++		}
++		value, err := io.ReadAll(p)
++		if err != nil {
++			t.Fatalf("read part: %v", err)
++		}
++		parts = append(parts, part{name: p.FormName(), fileName: p.FileName(), value: string(value)})
++	}
++}
++
++func TestNewFile(t *testing.T) {
++	t.Parallel()
++
++	contentType, body, err := NewFile("file", "doc.txt", strings.NewReader("hello"))
++	if err != nil {
++		t.Fatalf("NewFile error: %v", err)
++	}
++
++	parts := readParts(t, contentType, body)
++	if len(parts) != 1 {
++		t.Fatalf("expected 1 part, got %d: %#v", len(parts), parts)
++	}
++	if parts[0] != (part{name: "file", fileName: "doc.txt", value: "hello"}) {
++		t.Fatalf("unexpected part: %#v", parts[0])
++	}
++}
++
++func TestNewFileWithFields_WritesFieldsBeforeFileInKeyOrder(t *testing.T) {
++	t.Parallel()
++
++	fields := url.Values{
++		"person_id": {"8"},
++		"deal_id":   {"7"},
++		"tags":      {"a", "b"},
++	}
++	contentType, body, err := NewFileWithFields("file", "doc.txt", strings.NewReader("hello"), fields)
++	if err != nil {
++		t.Fatalf("NewFileWithFields error: %v", err)
++	}
++
++	got := readParts(t, contentType, body)
++	want := []part{
++		{name: "deal_id", value: "7"},
++		{name: "person_id", value: "8"},
++		{name: "tags", value: "a"},
++		{name: "tags", value: "b"},
++		{name: "file", fileName: "doc.txt", value: "hello"},
++	}
++	if len(got) != len(want) {
++		t.Fatalf("expected %d parts, got %d: %#v", len(want), len(got), got)
++	}
++	for i := range want {
++		if got[i] != want[i] {
++			t.Fatalf("part %d: got %#v, want %#v", i, got[i], want[i])
++		}
++	}
++}
++
++func TestNewFileWithFields_BodyIsReplayable(t *testing.T) {
++	t.Parallel()
++
++	_, body, err := NewFileWithFields("file", "doc.txt", strings.NewReader("hello"), nil)
++	if err != nil {
++		t.Fatalf("NewFileWithFields error: %v", err)
++	}
++
++	first, err := io.ReadAll(body)
++	if err != nil {
++		t.Fatalf("read body: %v", err)
++	}
++	if _, err := body.Seek(0, io.SeekStart); err != nil {
++		t.Fatalf("seek: %v", err)
++	}
++	second, err := io.ReadAll(body)
++	if err != nil {
++		t.Fatalf("read body again: %v", err)
++	}
++	if string(first) != string(second) || len(first) == 0 {
++		t.Fatalf("expected identical non-empty reads, got %d and %d bytes", len(first), len(second))
++	}
++}
++
++func TestNewFile_Validation(t *testing.T) {
++	t.Parallel()
++
++	cases := []struct {
++		name      string
++		fieldName string
++		fileName  string
++		src       io.Reader
++	}{
++		{name: "missing field name", fieldName: "", fileName: "doc.txt", src: strings.NewReader("x")},
++		{name: "missing file name", fieldName: "file", fileName: "", src: strings.NewReader("x")},
++		{name: "missing content", fieldName: "file", fileName: "doc.txt", src: nil},
++	}
++	for _, tc := range cases {
++		t.Run(tc.name, func(t *testing.T) {
++			t.Parallel()
++			if _, _, err := NewFile(tc.fieldName, tc.fileName, tc.src); err == nil {
++				t.Fatalf("expected error")
++			}
++		})
++	}
++}
