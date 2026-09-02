@@ -1,0 +1,40 @@
+{
+  "name": "pd-files-upload",
+  "version": 2,
+  "repo": "https://github.com/juhokoskela/pipedrive-go.git",
+  "base_commit": "40ffab19c51ea1a210f17cf37bb1f08c1340352d",
+  "prompt_file": "task.md",
+  "checks_script": "checks.sh",
+  "max_turns": 10,
+  "turn_timeout_minutes": 30,
+  "fact_sheet": [
+    {
+      "question": "What should the new API look like? What should it be called?",
+      "answer": "Add a new method on FilesService: Upload(ctx context.Context, fileName string, content io.Reader, opts ...FilesOption) (*File, error). The content goes in the multipart form field named \"file\"."
+    },
+    {
+      "question": "Can the existing Add signature be changed or removed?",
+      "answer": "No — the SDK is at v1.x and its public API is stable. Keep Add working unchanged and add a new method."
+    },
+    {
+      "question": "Should Add be deprecated?",
+      "answer": "No. Leave Add as-is; it still serves callers that need custom multipart fields."
+    },
+    {
+      "question": "Should Update get the same treatment?",
+      "answer": "Out of scope for this change."
+    },
+    {
+      "question": "Is buffering the file in memory acceptable?",
+      "answer": "Yes — consistent with how recording and image uploads already work."
+    },
+    {
+      "question": "Should Upload support extra form fields or deal associations?",
+      "answer": "No new options. Existing FilesOption behavior stays as it is."
+    },
+    {
+      "question": "How large are the uploaded files?",
+      "answer": "Typically a few MB; buffering in memory is fine."
+    }
+  ]
+}
