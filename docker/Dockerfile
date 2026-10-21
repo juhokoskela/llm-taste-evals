@@ -1,7 +1,7 @@
 # Eval runner image: pinned Go toolchain, Node, and agent CLIs.
 # Network access exists only at build time; at runtime the container sits on
 # an internal network behind the allowlisting egress proxy (see compose file).
-FROM golang:1.26.6-bookworm
+FROM golang:1.27.3-bookworm
 
 ARG NODE_MAJOR=26
 ARG CLAUDE_CODE_VERSION=2.1.238

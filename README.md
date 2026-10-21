@@ -148,7 +148,7 @@ that:
   `FIREWORKS_API_KEY` → gpt-oss-120b, `OPENROUTER_API_KEY` → gpt-5-mini;
   override with `-sim-model`). The runner copies Codex auth from
   `OPENAI_API_KEY` into a fresh `CODEX_HOME` for each attempt.
-- Pinned toolchain: Go 1.26.6, Node 26, exact agent CLI versions as build
+- Pinned toolchain: Go 1.27.3, Node 26, exact agent CLI versions as build
   args (see [docker/Dockerfile](docker/Dockerfile)).
 - Post-run checks use a frozen copy of the contestant workspace under a
   separate UID. The scorer receives only `checks.sh` and the hidden overlay,
